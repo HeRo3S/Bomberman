@@ -11,6 +11,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.BombermanButton;
 import model.BombermanSubScene;
+import model.infoLabel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +76,9 @@ public class ViewManager {
         mainPane.getChildren().add(helpSubScene);
 
         creditsSubScene = new BombermanSubScene();
+        infoLabel creditsLabel = new infoLabel("Credits: \n");
+        creditsLabel.setTextFromFile("src/model/resources/Credits.txt");
+        creditsSubScene.getSubScene().getChildren().add(creditsLabel);
         mainPane.getChildren().add(creditsSubScene);
     }
 
@@ -97,7 +101,8 @@ public class ViewManager {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                handleSubScenes(levelSubScene);
+                GameViewManager gameViewManager = new GameViewManager();
+                gameViewManager.createNewLevel(mainStage);
             }
         });
     }

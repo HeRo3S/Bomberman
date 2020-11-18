@@ -9,6 +9,8 @@ public class GameViewManager {
     private Scene gameScene;
     private Stage gameStage;
 
+    private Stage menuStage;
+
     private static final int GAME_WIDTH = 1280;
     private static final int GAME_HEIGHT = 720;
 
@@ -22,6 +24,12 @@ public class GameViewManager {
         gameScene = new Scene(gamePane, GAME_WIDTH, GAME_HEIGHT);
         gameStage = new Stage();
         gameStage.setScene(gameScene);
+    }
+
+    public void createNewLevel(Stage menuStage) {
+        this.menuStage = menuStage;
+        menuStage.hide();
+        gameStage.show();
     }
 
 }

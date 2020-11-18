@@ -35,6 +35,11 @@ public class BombermanSubScene extends SubScene {
         setLayoutY(120);
     }
 
+    public AnchorPane getSubScene() {
+        AnchorPane anchorPane = (AnchorPane) this.getRoot();
+        return anchorPane;
+    }
+
     public void transitionSubScene() {
         TranslateTransition transition = new TranslateTransition();
         transition.setDuration(Duration.seconds(0.3));
