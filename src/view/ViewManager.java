@@ -8,11 +8,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.BombermanButton;
 import model.BombermanSubScene;
 import model.infoLabel;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +24,9 @@ public class ViewManager {
     private AnchorPane mainPane;
     private Stage mainStage;
     private Scene mainScene;
+
+    private MediaPlayer mediaPlayer;
+    private final static String TITLE_THEME_PATH = "src/view/resources/titleTheme.mp3";
 
     private final static int WIDTH = 1280;
     private final static int HEIGHT = 720;
@@ -48,6 +55,7 @@ public class ViewManager {
         createLogo();
         createMenuButtons();
         createSubScenes();
+        createBGM();
     }
 
     public Stage getMainStage(){
@@ -101,6 +109,7 @@ public class ViewManager {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                mediaPlayer.stop();
                 GameViewManager gameViewManager = new GameViewManager();
                 gameViewManager.createNewLevel(mainStage);
             }
@@ -170,5 +179,19 @@ public class ViewManager {
         });
 
         mainPane.getChildren().add(logo);
+    }
+
+    private void createBGM() {
+        Media media = new Media(new File(TITLE_THEME_PATH).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);
+
+        mediaPlayer.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                mediaPlayer.seek(Duration.ZERO);
+            }
+        });
+        mediaPlayer.play();
     }
 }
