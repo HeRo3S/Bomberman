@@ -15,7 +15,7 @@ public class infoLabel extends Label {
     public infoLabel(String text) {
         setPrefWidth(853);
         setPrefHeight(480);
-        setPadding(new Insets(40, 40, 40,40));
+        setPadding(new Insets(40, 40, 40, 40));
         setText(text);
         setTextAlignment(TextAlignment.CENTER);
         setAlignment(Pos.CENTER);
@@ -39,7 +39,7 @@ public class infoLabel extends Label {
             String line = bufferedReader.readLine();
             StringBuilder stringBuilder = new StringBuilder();
 
-            while (line!= null) {
+            while (line != null) {
                 stringBuilder.append(line).append('\n');
                 line = bufferedReader.readLine();
             }

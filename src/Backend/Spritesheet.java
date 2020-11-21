@@ -9,18 +9,26 @@ public class Spritesheet {
     private String filePath;
     private int rows;
     private int cols;
-    private int width;
-    private int height;
+    final static private int width = 32;
+    final static private int height = 32;
     private BufferedImage[][] sprites;
 
-    public Spritesheet(String filepath, int spriteWidth, int spriteHeight, int spriteRows, int spriteCols) throws IOException {
+    public Spritesheet(String filepath, int spriteRows, int spriteCols) throws IOException {
         filePath = filepath;
         rows = spriteRows;
         cols = spriteCols;
-        width = spriteWidth;
-        height = spriteHeight;
         sprites = new BufferedImage[rows][cols];
-        createSprites();
+        BufferedImage spritesheet = ImageIO.read(new File(filePath));
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                sprites[i][j] = spritesheet.getSubimage(
+                        j * width,
+                        i * height,
+                        width,
+                        height
+                );
+            }
+        }
     }
 
     public String getFilePath() {
@@ -51,33 +59,25 @@ public class Spritesheet {
         return width;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
     public int getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public void createSprites() throws IOException {
-        BufferedImage spritesheet = ImageIO.read(new File(filePath));
-        for (int i = 0; i < rows; i++)
-        {
-            for (int j = 0; j < cols; j++)
-            {
-                sprites[i][j] = spritesheet.getSubimage(
-                        j * width,
-                        i * height,
-                        width,
-                        height
-                );
-            }
-        }
-    }
+//    public void createSprites() throws IOException {
+//        BufferedImage spritesheet = ImageIO.read(new File(filePath));
+//        for (int i = 0; i < rows; i++)
+//        {
+//            for (int j = 0; j < cols; j++)
+//            {
+//                sprites[i][j] = spritesheet.getSubimage(
+//                        j * width,
+//                        i * height,
+//                        width,
+//                        height
+//                );
+//            }
+//        }
+//    }
 
     public BufferedImage getSprite(int number1, int number2) {
         return sprites[number1][number2];
