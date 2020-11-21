@@ -11,7 +11,7 @@ public class Spritesheet {
     private int cols;
     private int width;
     private int height;
-    private BufferedImage[] sprites;
+    private BufferedImage[][] sprites;
 
     public Spritesheet(String filepath, int spriteWidth, int spriteHeight, int spriteRows, int spriteCols) throws IOException {
         filePath = filepath;
@@ -19,7 +19,7 @@ public class Spritesheet {
         cols = spriteCols;
         width = spriteWidth;
         height = spriteHeight;
-        sprites = new BufferedImage[rows * cols];
+        sprites = new BufferedImage[rows][cols];
         createSprites();
     }
 
@@ -63,21 +63,13 @@ public class Spritesheet {
         this.height = height;
     }
 
-    public BufferedImage[] getSprites() {
-        return sprites;
-    }
-
-    public void setSprites(BufferedImage[] sprites) {
-        this.sprites = sprites;
-    }
-
     public void createSprites() throws IOException {
         BufferedImage spritesheet = ImageIO.read(new File(filePath));
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < cols; j++)
             {
-                sprites[(i * cols) + j] = spritesheet.getSubimage(
+                sprites[i][j] = spritesheet.getSubimage(
                         j * width,
                         i * height,
                         width,
@@ -87,8 +79,8 @@ public class Spritesheet {
         }
     }
 
-    public BufferedImage getSprite(int number) {
-        return sprites[number];
+    public BufferedImage getSprite(int number1, int number2) {
+        return sprites[number1][number2];
     }
 }
 
