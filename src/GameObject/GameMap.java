@@ -1,7 +1,5 @@
 package GameObject;
 
-import org.omg.IOP.ENCODING_CDR_ENCAPS;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -41,11 +39,26 @@ public class GameMap implements Serializable {
     public void addContent(double x_, double y_, Entity entity){
         int x = (int) (x_ / CHUNK_SIZE);
         int y = (int) (y_ / CHUNK_SIZE);
-        map.get(x).get(y).add(entity);
+        if(entity.getMap() == this) {
+            map.get(x).get(y).add(entity);
+            entity.setMap(this);
+        }
+        else {
+            System.out.println("Warning: trying to add entities to another map without removing first");
+        }
     }
     public void removeContent(double x_, double y_, Entity entity){
         int x = (int) (x_ / CHUNK_SIZE);
         int y = (int) (y_ / CHUNK_SIZE);
         map.get(x).get(y).remove(entity);
+    }
+    public void updateContent(){
+        for(int i = 0; i < map.size(); i++){
+            for (int j = 0; j < map.get(i).size(); j++){
+                for(int k = 0; k < map.get(i).get(j).size(); k++){
+                    map.get(i).get(j).get(k).update();
+                }
+            }
+        }
     }
 }

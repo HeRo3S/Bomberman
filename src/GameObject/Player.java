@@ -8,8 +8,8 @@ public abstract class Player extends Movable {
     protected double energyRegen = 10;
     protected double heathRegen = 0;
 
-    public Player(double x, double y, double maxHp, SpriteSheet spriteSheet, GameMap map) {
-        super(x, y, maxHp, spriteSheet, map);
+    public Player(double x, double y, double maxHp, GameMap map) {
+        super(x, y, maxHp, map);
         energy = maxEnergy;
     }
 

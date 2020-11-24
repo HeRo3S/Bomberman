@@ -5,8 +5,6 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 
-import java.util.List;
-
 public abstract class Entity {
     protected GameMap map;
     protected double x;
@@ -17,19 +15,17 @@ public abstract class Entity {
     protected double health;
     protected double width = 32;
     protected double height = 32;
-    protected SpriteSheet spriteSheet;
-    protected boolean passable;
+    protected boolean passable = false;
     protected Image display;
     protected int AnimationTimer;
     protected Status status;
-    public Entity(double x, double y, double maxHp, SpriteSheet spriteSheet, GameMap map) {
+    public Entity(double x, double y, double maxHp, GameMap map) {
         this.map = map;
         this.x = x;
         this.y = y;
         this.maxHp = maxHp;
-        this.spriteSheet = spriteSheet;
         health = maxHp;
-        map.addContent((int) x/GameMap.CHUNK_SIZE, (int) y / GameMap.CHUNK_SIZE, this);
+        map.addContent(x/GameMap.CHUNK_SIZE, y / GameMap.CHUNK_SIZE, this);
     }
 
     /**
@@ -54,7 +50,7 @@ public abstract class Entity {
         return getHitBox().intersects(entity.getHitBox());
     }
 
-    public abstract void update(List<Entity> entities);
+    public abstract void update();
     protected abstract void solveCollision(Entity entity);
     protected double getDistance(Entity entity){
         return (new Point2D(x,y).distance(entity.x, entity.y));
@@ -102,5 +98,13 @@ public abstract class Entity {
 
     public void setHealth(double health) {
         this.health = health;
+    }
+
+    public GameMap getMap() {
+        return map;
+    }
+
+    public void setMap(GameMap map) {
+        this.map = map;
     }
 }

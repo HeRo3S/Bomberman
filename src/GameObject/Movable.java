@@ -11,21 +11,26 @@ public abstract class Movable extends Entity {
     protected double dy;
     protected Point2D lastPos;
 
-    public Movable(double x, double y, double maxHp, SpriteSheet spriteSheet, GameMap map) {
-        super(x, y, maxHp, spriteSheet, map);
+    public Movable(double x, double y, double maxHp, GameMap map) {
+        super(x, y, maxHp, map);
         lastPos = new Point2D(x/ CHUNK_SIZE, y/ GameMap.CHUNK_SIZE);
     }
     public void move(){
         boolean canMoveX = true;
         boolean canMoveY = true;
         for(Entity entity : map.getContent(x,y,1)){
+            //Check and solve collision
+            if (collide(entity)) {
+                solveCollision(entity);
+            }
+            //Calculate 
             if (getModifiedHitBox(dx, 0).intersects(entity.getHitBox()) && canMoveX){
                 if(!entity.isPassable()){
                     dx = 0;
                     canMoveX = false;
                 }
             }
-            if (getModifiedHitBox(dy, 0).intersects(entity.getHitBox()) && canMoveY){
+            if (getModifiedHitBox(0, dy).intersects(entity.getHitBox()) && canMoveY){
                 if(!entity.isPassable()){
                     dy = 0;
                     canMoveY = false;

@@ -8,8 +8,8 @@ public abstract class Hostile extends Movable {
     protected double attackSpeed;
     protected int attackTimer;
     protected Entity target;
-    public Hostile(double x, double y, double maxHp, SpriteSheet spriteSheet, GameMap map) {
-        super(x, y, maxHp, spriteSheet, map);
+    public Hostile(double x, double y, double maxHp, GameMap map) {
+        super(x, y, maxHp , map);
     }
 
     public void moveToTarget(){

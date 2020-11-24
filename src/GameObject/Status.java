@@ -1,5 +1,7 @@
 package GameObject;
 
+import static jdk.nashorn.internal.objects.NativeMath.max;
+
 public class Status {
     private int channelTimer;
     private int stunTimer;
@@ -28,5 +30,11 @@ public class Status {
     }
     public boolean isBurning(){
         return burningTimer > 0;
+    }
+    public void update(){
+        max(--burningTimer,0);
+        max(--stunTimer, 0);
+        max(--channelTimer, 0);
+
     }
 }

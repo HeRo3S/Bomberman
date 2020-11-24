@@ -2,14 +2,25 @@ package GameObject;
 
 import SpriteManager.SpriteSheet;
 
-import java.util.List;
+import java.io.IOException;
 
 public class Wisp extends Hostile {
 
+    private static SpriteSheet spriteSheet;
+
+    static {
+        try {
+            spriteSheet = new SpriteSheet("/model/resources/wisp.png",1,4);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public Wisp(double x, double y, double maxHp, SpriteSheet spriteSheet, GameMap map) {
-        super(x, y, maxHp, spriteSheet, map);
+        super(x, y, maxHp, map);
         detectionRange = 120;
         damage = 20;
+        attackSpeed = 1;
     }
 
     @Override
@@ -18,19 +29,16 @@ public class Wisp extends Hostile {
     }
 
     @Override
-    public void update(List<Entity> entities) {
+    public void update() {
         //Reset
         dx = 0;
         dy = 0;
         target = null;
-        if(!status.isStunning()) {
+        if(!status.isStunning() && !status.isChannelling()) {
             for (Entity entity : map.getContent(x, y, detectionRange)) {
                 //Find target
                 if (entity instanceof Player) {
                     target = entity;
-                }
-                if (collide(entity)) {
-                    solveCollision(entity);
                 }
             }
         }
@@ -44,11 +52,17 @@ public class Wisp extends Hostile {
         //Finish and move to designated coordinate
         if(!status.isChannelling() && !status.isStunning())
         move();
+        status.update();
+        animate();
     }
 
     @Override
     protected void solveCollision(Entity entity) {
-
+        if(entity instanceof Player){
+            Player player = (Player) entity;
+            player.health -= damage;
+            status.add("channel",1 / attackSpeed);
+        }
     }
 
     @Override
