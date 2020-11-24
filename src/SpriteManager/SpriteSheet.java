@@ -14,7 +14,7 @@ public class SpriteSheet {
     private ArrayList<ArrayList<Image>> sprites = new ArrayList<>();
 
     public SpriteSheet(String filepath, int spriteRows, int spriteCols) throws IOException {
-        Image spriteSheet = new Image("filepath");
+        Image spriteSheet = new Image(filepath);
         int spriteW = (int) (spriteSheet.getWidth()/spriteCols);
         int spriteH = (int) (spriteSheet.getHeight()/spriteRows);
         for(int i = 0; i < spriteCols; i++){

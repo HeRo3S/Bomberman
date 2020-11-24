@@ -10,7 +10,7 @@ public class Wisp extends Hostile {
 
     static {
         try {
-            spriteSheet = new SpriteSheet("/model/resources/wisp.png",1,4);
+            spriteSheet = new SpriteSheet("assets/wisp.png",1,4);
         } catch (IOException e) {
             e.printStackTrace();
         }
