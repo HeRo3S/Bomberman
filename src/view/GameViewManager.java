@@ -45,6 +45,7 @@ public class GameViewManager {
         this.menuStage = menuStage;
         menuStage.hide();
         createGameMap();
+        keyboardCheck();
         createGameloop();
         gameStage.show();
     }
@@ -53,7 +54,8 @@ public class GameViewManager {
         gameTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-
+                gameMap.updateContent();
+                gameMap.render();
             }
         };
         gameTimer.start();
@@ -62,8 +64,7 @@ public class GameViewManager {
     private void createGameMap() {
         gameMap = new GameMap();
         green = new Green(10, 10, 100, gameMap);
-        gameMap.addContent(10 , 10, green);
-        gamePane.getChildren().add(green.setUp());
+        gamePane.getChildren().add(gameMap.getCanvas());
     }
 
     public void keyboardCheck() {
@@ -84,9 +85,5 @@ public class GameViewManager {
                 input.remove( code );
             }
         });
-    }
-
-    public void testGreenMovement() {
-        keyboardCheck();
     }
 }

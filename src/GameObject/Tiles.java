@@ -1,6 +1,7 @@
 package GameObject;
 
 import SpriteManager.SpriteSheet;
+import javafx.scene.canvas.GraphicsContext;
 
 public class Tiles extends Entity {
     private boolean destructible;
@@ -20,7 +21,7 @@ public class Tiles extends Entity {
     }
 
     @Override
-    protected void animate() {
+    protected void animate(GraphicsContext gc) {
 
     }
 

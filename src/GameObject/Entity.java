@@ -3,7 +3,10 @@ package GameObject;
 import SpriteManager.SpriteSheet;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+
+import java.awt.*;
 
 public abstract class Entity {
     protected GameMap map;
@@ -17,7 +20,6 @@ public abstract class Entity {
     protected double height = 32;
     protected boolean passable = false;
     protected Image display;
-    protected int AnimationTimer;
     protected Status status;
     public Entity(double x, double y, double maxHp, GameMap map) {
         this.map = map;
@@ -55,7 +57,7 @@ public abstract class Entity {
     protected double getDistance(Entity entity){
         return (new Point2D(x,y).distance(entity.x, entity.y));
     }
-    protected abstract void animate();
+    protected abstract void animate(GraphicsContext gc);
 
     /**
      * Setter/Getter

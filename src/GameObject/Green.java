@@ -1,16 +1,15 @@
 package GameObject;
 
 import SpriteManager.SpriteSheet;
-import javafx.scene.image.ImageView;
-import view.GameViewManager;
+import javafx.scene.canvas.GraphicsContext;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Green extends Player {
 
     private SpriteSheet mainSprite;
-    private ImageView mainImage = new ImageView();
 
     public Green(double x, double y, double maxHp, GameMap map) {
         super(x, y, maxHp, map);
@@ -26,17 +25,20 @@ public class Green extends Player {
         }
     }
 
+
     @Override
     public void update() {
-        move();
-        animate();
-    }
-
-    public ImageView setUp() {
-        mainImage.setImage(mainSprite.getSprite(0, 0));
-        mainImage.setLayoutX(this.x);
-        mainImage.setLayoutY(this.y);
-        return mainImage;
+        /**if (input.isEmpty())
+        {
+            return;
+        } else {
+            if (input.contains("S")) {
+                setDy(10);
+            } else {
+                setDy(0);
+            }
+            move();
+        }**/
     }
 
     @Override
@@ -45,6 +47,7 @@ public class Green extends Player {
     }
 
     @Override
-    protected void animate() {
+    protected void animate(GraphicsContext gc) {
+        gc.drawImage(mainSprite.getSprite(0, 1), getX(), getY());
     }
 }

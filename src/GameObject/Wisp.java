@@ -1,6 +1,7 @@
 package GameObject;
 
 import SpriteManager.SpriteSheet;
+import javafx.scene.canvas.GraphicsContext;
 
 import java.io.IOException;
 
@@ -53,7 +54,6 @@ public class Wisp extends Hostile {
         if(!status.isChannelling() && !status.isStunning())
         move();
         status.update();
-        animate();
     }
 
     @Override
@@ -66,7 +66,7 @@ public class Wisp extends Hostile {
     }
 
     @Override
-    protected void animate() {
+    protected void animate(GraphicsContext gc) {
 
     }
 }
