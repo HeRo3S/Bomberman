@@ -1,6 +1,9 @@
 package GameObject;
 
 import SpriteManager.SpriteSheet;
+import view.GameViewManager;
+
+import java.util.ArrayList;
 
 public abstract class Player extends Movable {
     protected double energy;
@@ -21,7 +24,9 @@ public abstract class Player extends Movable {
     /**
      * Getter/Setter
      */
-
+    private void processInput(){
+        ArrayList<String> input = GameViewManager.getInput();
+    }
     public double getEnergy() {
         return energy;
     }

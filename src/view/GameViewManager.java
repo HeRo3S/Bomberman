@@ -10,6 +10,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public class GameViewManager {
     public AnchorPane gamePane;
     private Scene gameScene;
@@ -21,12 +23,10 @@ public class GameViewManager {
 
     private static final int GAME_WIDTH = 1280;
     private static final int GAME_HEIGHT = 720;
-
-    public boolean leftIsPressed;
-    public boolean rightIsPressed;
-    public boolean upIsPressed;
-    public boolean downIsPressed;
-
+    private static ArrayList<String> input = new ArrayList<>();
+    public static ArrayList<String> getInput(){
+        return input;
+    }
     private GameMap gameMap;
     private Green green;
 
@@ -53,10 +53,7 @@ public class GameViewManager {
         gameTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                /**
-                 * Write your logic handles here.
-                 */
-                testGreenMovement();
+
             }
         };
         gameTimer.start();
@@ -73,51 +70,23 @@ public class GameViewManager {
         gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.W) {
-                    upIsPressed = true;
-                } else if (event.getCode() == KeyCode.A) {
-                    leftIsPressed = true;
-                } else if (event.getCode() == KeyCode.S) {
-                    downIsPressed = true;
-                } else if (event.getCode() == KeyCode.D) {
-                    rightIsPressed = true;
-                }
+                String code = event.getCode().toString();
+                if ( !input.contains(code) )
+                    input.add( code );
+
             }
         });
 
         gameScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.W) {
-                    upIsPressed = false;
-                } else if (event.getCode() == KeyCode.A) {
-                    leftIsPressed = false;
-                } else if (event.getCode() == KeyCode.S) {
-                    downIsPressed = false;
-                } else if (event.getCode() == KeyCode.D) {
-                    rightIsPressed = false;
-                }
+                String code = event.getCode().toString();
+                input.remove( code );
             }
         });
     }
 
     public void testGreenMovement() {
         keyboardCheck();
-        if (leftIsPressed) {
-            green.setUp().setLayoutX(green.getX() - 1);
-            green.setX(green.getX() - 1);
-        } else if (rightIsPressed) {
-            green.setUp().setLayoutX(green.getX() + 1);
-            green.setX(green.getX() + 1);
-        }
-
-        if (downIsPressed) {
-            green.setUp().setLayoutY(green.getY() + 1);
-            green.setY(green.getY() + 1);
-        } else if (upIsPressed) {
-            green.setUp().setLayoutY(green.getY() - 1);
-            green.setY(green.getY() - 1);
-        }
-
     }
 }
