@@ -14,7 +14,7 @@ public class GameMap implements Serializable {
      */
     public static final int MAP_WIDTH = 1280;
     public static final int MAP_HEIGHT = 720;
-    public static final int CHUNK_SIZE = 160;
+    public static final int CHUNK_SIZE = 80;
     public ArrayList<ArrayList<ArrayList<Entity>>> map = new ArrayList<>();
 
     private Canvas canvas;
@@ -86,11 +86,12 @@ public class GameMap implements Serializable {
         return this.canvas;
     }
 
-    public void render() {
+    public void render(double time) {
+        gc.clearRect(0 ,0, MAP_WIDTH, MAP_HEIGHT);
         for(int i = 0; i < map.size(); i++){
             for (int j = 0; j < map.get(i).size(); j++){
                 for(int k = 0; k < map.get(i).get(j).size(); k++){
-                    map.get(i).get(j).get(k).animate(gc);
+                    map.get(i).get(j).get(k).animate(gc, time);
                 }
             }
         }

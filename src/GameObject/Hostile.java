@@ -13,7 +13,7 @@ public abstract class Hostile extends Movable {
     }
 
     public void moveToTarget(){
-        dx = (target.x - x) / (target.x - x)/(target.y-y);
+        dx = (target.x - x) / ((target.x - x) + (target.y-y));
         dy = 1 - dx;
     }
     public abstract void idle();

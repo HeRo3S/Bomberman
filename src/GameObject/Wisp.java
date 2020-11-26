@@ -8,20 +8,23 @@ import java.io.IOException;
 public class Wisp extends Hostile {
 
     private static SpriteSheet spriteSheet;
+    private final double frameTime = 0.100;
 
-    static {
+    private void createSprite() {
         try {
-            spriteSheet = new SpriteSheet("assets/wisp.png",1,4);
+            spriteSheet = new SpriteSheet("GameObject/assets/wisp.png", 1, 4);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public Wisp(double x, double y, double maxHp, SpriteSheet spriteSheet, GameMap map) {
+    public Wisp(double x, double y, double maxHp, GameMap map) {
         super(x, y, maxHp, map);
         detectionRange = 120;
         damage = 20;
         attackSpeed = 1;
+        status = new Status();
+        createSprite();
     }
 
     @Override
@@ -66,7 +69,8 @@ public class Wisp extends Hostile {
     }
 
     @Override
-    protected void animate(GraphicsContext gc) {
-
+    protected void animate(GraphicsContext gc, double time) {
+        int frame = (int)((time % (4 * frameTime)) / frameTime);
+        gc.drawImage(spriteSheet.getSprite(frame, 0), getX(), getY());
     }
 }

@@ -21,7 +21,7 @@ public class Tiles extends Entity {
     }
 
     @Override
-    protected void animate(GraphicsContext gc) {
+    protected void animate(GraphicsContext gc, double time) {
 
     }
 

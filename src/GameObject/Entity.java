@@ -57,7 +57,7 @@ public abstract class Entity {
     protected double getDistance(Entity entity){
         return (new Point2D(x,y).distance(entity.x, entity.y));
     }
-    protected abstract void animate(GraphicsContext gc);
+    protected abstract void animate(GraphicsContext gc, double time);
 
     /**
      * Setter/Getter

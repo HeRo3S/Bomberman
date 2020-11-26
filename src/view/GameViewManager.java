@@ -2,6 +2,7 @@ package view;
 
 import GameObject.GameMap;
 import GameObject.Green;
+import GameObject.Wisp;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -20,6 +21,7 @@ public class GameViewManager {
     private Stage menuStage;
 
     private AnimationTimer gameTimer;
+    private long startTime = System.nanoTime();
 
     private static final int GAME_WIDTH = 1280;
     private static final int GAME_HEIGHT = 720;
@@ -29,6 +31,7 @@ public class GameViewManager {
     }
     private GameMap gameMap;
     private Green green;
+    private Wisp wisp;
 
     public GameViewManager() {
         initializeScene();
@@ -54,10 +57,11 @@ public class GameViewManager {
         gameTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                double t = (now - startTime) / 1000000000.0;
                 gameMap.updateContent();
                 gameMap.getCanvas().getGraphicsContext2D().clearRect(
                         0,0,gameMap.getCanvas().getWidth(),gameMap.getCanvas().getHeight());
-                gameMap.render();
+                gameMap.render(t);
             }
         };
         gameTimer.start();
@@ -66,6 +70,7 @@ public class GameViewManager {
     private void createGameMap() {
         gameMap = new GameMap();
         green = new Green(10, 10, 100, gameMap);
+        wisp = new Wisp(400, 300, 100, gameMap);
         gamePane.getChildren().add(gameMap.getCanvas());
     }
 

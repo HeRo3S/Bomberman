@@ -11,6 +11,9 @@ import java.util.ArrayList;
 public class Green extends Player {
 
     private SpriteSheet mainSprite;
+    private ArrayList<String> input = GameViewManager.getInput();
+    private final double frameTime = 0.100;
+    private int direction;
 
     public Green(double x, double y, double maxHp, GameMap map) {
         super(x, y, maxHp, map);
@@ -29,21 +32,36 @@ public class Green extends Player {
 
     @Override
     public void update() {
-        ArrayList<String> input = GameViewManager.getInput();
-        if (input.contains("W")) {
-            setDy(-10);
+        if (input.isEmpty())
+        {
+            setDx(0);
+            setDy(0);
+            setSpeed(0);
         }
-        if(input.contains("A")){
-            setDx(-10);
-        }
-        if (input.contains("S")) {
-                setDy(10);
+        else {
+            if (input.contains("W")) {
+                setDy(-1);
+                direction = 0;
             }
-        if(input.contains("D")){
-            setDx(10);
-        }
+
+            if (input.contains("A")) {
+                setDx(-1);
+                direction = 3;
+            }
+
+            if (input.contains("S")) {
+                setDy(1);
+                direction = 1;
+            }
+
+            if (input.contains("D")) {
+                setDx(1);
+                direction = 2;
+            }
+            setSpeed(5);
             move();
         }
+    }
 
     @Override
     protected void solveCollision(Entity entity) {
@@ -51,7 +69,8 @@ public class Green extends Player {
     }
 
     @Override
-    protected void animate(GraphicsContext gc) {
-        gc.drawImage(mainSprite.getSprite(0, 1), getX(), getY());
+    protected void animate(GraphicsContext gc, double time) {
+        int frame = (int)((time % (4 * frameTime)) / frameTime);
+        gc.drawImage(mainSprite.getSprite(frame, direction), getX(), getY());
     }
 }
