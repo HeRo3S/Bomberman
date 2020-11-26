@@ -14,7 +14,7 @@ public class GameMap implements Serializable {
      */
     public static final int MAP_WIDTH = 1280;
     public static final int MAP_HEIGHT = 720;
-    public static final int CHUNK_SIZE = 80;
+    public static final int CHUNK_SIZE = 160;
     public ArrayList<ArrayList<ArrayList<Entity>>> map = new ArrayList<>();
 
     private Canvas canvas;
@@ -35,11 +35,18 @@ public class GameMap implements Serializable {
         int x = (int) (x_ / CHUNK_SIZE);
         int y = (int) (y_ / CHUNK_SIZE);
         //Bound x and y
-        x = max(min(x, MAP_WIDTH - range), range);
-        y = max(min(y, MAP_HEIGHT - range), range);
+        range = max(min(range,MAP_WIDTH/CHUNK_SIZE/2),0);
+        x = max(min(x, MAP_WIDTH/CHUNK_SIZE - range - 1), range);
+        y = max(min(y, MAP_HEIGHT/CHUNK_SIZE - range - 1), range);
         ArrayList<Entity> result = new ArrayList<>();
-        for(int i = x - range; i <= x + range; i++){
-            for(int j = y -range; j <= y + range; j++){
+        for(int i = x - range; i < x + range; i++){
+            if(i < 0){
+                break;
+            }
+            for(int j = y - range; j < y + range; j++){
+                if(j < 0 || j >= MAP_HEIGHT/CHUNK_SIZE){
+                    break;
+                }
                 result.addAll(map.get(i).get(j));
             }
         }
@@ -48,6 +55,8 @@ public class GameMap implements Serializable {
     public void addContent(double x_, double y_, Entity entity){
         int x = (int) (x_ / CHUNK_SIZE);
         int y = (int) (y_ / CHUNK_SIZE);
+        x = max(min(x, MAP_WIDTH/CHUNK_SIZE - 1), 0);
+        y = max(min(y, MAP_HEIGHT/CHUNK_SIZE - 1), 0);
         if(entity.getMap() == this) {
             map.get(x).get(y).add(entity);
             entity.setMap(this);
@@ -59,6 +68,8 @@ public class GameMap implements Serializable {
     public void removeContent(double x_, double y_, Entity entity){
         int x = (int) (x_ / CHUNK_SIZE);
         int y = (int) (y_ / CHUNK_SIZE);
+        x = max(min(x, MAP_WIDTH/CHUNK_SIZE - 1), 0);
+        y = max(min(y, MAP_HEIGHT/CHUNK_SIZE - 1), 0);
         map.get(x).get(y).remove(entity);
     }
     public void updateContent(){

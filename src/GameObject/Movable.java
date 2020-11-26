@@ -1,9 +1,10 @@
 package GameObject;
 
-import SpriteManager.SpriteSheet;
 import javafx.geometry.Point2D;
 
-import static GameObject.GameMap.CHUNK_SIZE;
+import static GameObject.GameMap.*;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 public abstract class Movable extends Entity {
     protected double speed;
@@ -13,35 +14,42 @@ public abstract class Movable extends Entity {
 
     public Movable(double x, double y, double maxHp, GameMap map) {
         super(x, y, maxHp, map);
-        lastPos = new Point2D(x/ CHUNK_SIZE, y/ GameMap.CHUNK_SIZE);
+        lastPos = new Point2D(x / CHUNK_SIZE, y / CHUNK_SIZE);
     }
     public void move(){
         boolean canMoveX = true;
         boolean canMoveY = true;
-        for(Entity entity : map.getContent(x,y,1)){
-            //Check and solve collision
-            if (collide(entity)) {
-                solveCollision(entity);
-            }
-            //Calculate 
-            if (getModifiedHitBox(dx, 0).intersects(entity.getHitBox()) && canMoveX){
-                if(!entity.isPassable()){
-                    dx = 0;
-                    canMoveX = false;
+        for(Entity entity : map.getContent(x,y,2000)) {
+            if(entity != this){
+                //Check and solve collision
+                if (collide(entity)) {
+                    solveCollision(entity);
                 }
-            }
-            if (getModifiedHitBox(0, dy).intersects(entity.getHitBox()) && canMoveY){
-                if(!entity.isPassable()){
-                    dy = 0;
-                    canMoveY = false;
+                //Calculate
+                if (getModifiedHitBox(dx, 0).intersects(entity.getHitBox()) && canMoveX) {
+                    if (!entity.isPassable()) {
+                        dx = 0;
+                        canMoveX = false;
+                    }
+                }
+                if (getModifiedHitBox(0, dy).intersects(entity.getHitBox()) && canMoveY) {
+                    if (!entity.isPassable()) {
+                        dy = 0;
+                        canMoveY = false;
+                    }
                 }
             }
         }
         x += dx * speed;
         y += dy * speed;
-        if(!(new Point2D(x/ CHUNK_SIZE, y/ GameMap.CHUNK_SIZE).equals(lastPos))){
+        x = max(min(x,MAP_WIDTH - 32),0);
+        y = max(min(y,MAP_HEIGHT - 32),0);
+        dx = 0;
+        dy = 0;
+        if(!(new Point2D(x/ CHUNK_SIZE, y/ CHUNK_SIZE).equals(lastPos))){
             map.addContent(x ,y ,this);
-            map.removeContent(lastPos.getX(), lastPos.getY(), this);
+            map.removeContent(lastPos.getX() * CHUNK_SIZE,lastPos.getY() * CHUNK_SIZE, this);
+            lastPos = new Point2D(x / CHUNK_SIZE, y / CHUNK_SIZE);
         }
     }
     /**

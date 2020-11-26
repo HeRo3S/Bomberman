@@ -2,6 +2,7 @@ package GameObject;
 
 import SpriteManager.SpriteSheet;
 import javafx.scene.canvas.GraphicsContext;
+import view.GameViewManager;
 
 
 import java.io.IOException;
@@ -28,18 +29,21 @@ public class Green extends Player {
 
     @Override
     public void update() {
-        /**if (input.isEmpty())
-        {
-            return;
-        } else {
-            if (input.contains("S")) {
+        ArrayList<String> input = GameViewManager.getInput();
+        if (input.contains("W")) {
+            setDy(-10);
+        }
+        if(input.contains("A")){
+            setDx(-10);
+        }
+        if (input.contains("S")) {
                 setDy(10);
-            } else {
-                setDy(0);
             }
+        if(input.contains("D")){
+            setDx(10);
+        }
             move();
-        }**/
-    }
+        }
 
     @Override
     protected void solveCollision(Entity entity) {

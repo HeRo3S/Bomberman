@@ -55,6 +55,8 @@ public class GameViewManager {
             @Override
             public void handle(long now) {
                 gameMap.updateContent();
+                gameMap.getCanvas().getGraphicsContext2D().clearRect(
+                        0,0,gameMap.getCanvas().getWidth(),gameMap.getCanvas().getHeight());
                 gameMap.render();
             }
         };

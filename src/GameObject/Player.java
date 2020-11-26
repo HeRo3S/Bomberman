@@ -10,8 +10,6 @@ public abstract class Player extends Movable {
     protected double maxEnergy = 200;
     protected double energyRegen = 10;
     protected double heathRegen = 0;
-    protected ArrayList<String> input;
-
     public Player(double x, double y, double maxHp, GameMap map) {
         super(x, y, maxHp, map);
         energy = maxEnergy;
@@ -25,9 +23,6 @@ public abstract class Player extends Movable {
     /**
      * Getter/Setter
      */
-    private void processInput(){
-        input = GameViewManager.getInput();
-    }
     public double getEnergy() {
         return energy;
     }
