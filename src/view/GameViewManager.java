@@ -6,6 +6,8 @@ import GameObject.Wisp;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -22,6 +24,9 @@ public class GameViewManager {
 
     private AnimationTimer gameTimer;
     private long startTime = System.nanoTime();
+
+    private Canvas canvas;
+    private GraphicsContext gc;
 
     private static final int GAME_WIDTH = 1280;
     private static final int GAME_HEIGHT = 720;
@@ -42,6 +47,9 @@ public class GameViewManager {
         gameScene = new Scene(gamePane, GAME_WIDTH, GAME_HEIGHT);
         gameStage = new Stage();
         gameStage.setScene(gameScene);
+        canvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
+        gc = canvas.getGraphicsContext2D();
+        gamePane.getChildren().add(canvas);
     }
 
     public void createNewLevel(Stage menuStage) {
@@ -59,9 +67,8 @@ public class GameViewManager {
             public void handle(long now) {
                 double t = (now - startTime) / 1000000000.0;
                 gameMap.updateContent();
-                gameMap.getCanvas().getGraphicsContext2D().clearRect(
-                        0,0,gameMap.getCanvas().getWidth(),gameMap.getCanvas().getHeight());
-                gameMap.render(t);
+                canvas.getGraphicsContext2D().clearRect(0,0,GAME_WIDTH, GAME_HEIGHT);
+                gameMap.render(gc, t);
             }
         };
         gameTimer.start();
@@ -71,7 +78,6 @@ public class GameViewManager {
         gameMap = new GameMap();
         green = new Green(10, 10, 100, gameMap);
         wisp = new Wisp(400, 300, 100, gameMap);
-        gamePane.getChildren().add(gameMap.getCanvas());
     }
 
     public void keyboardCheck() {

@@ -17,9 +17,6 @@ public class GameMap implements Serializable {
     public static final int CHUNK_SIZE = 40;
     public ArrayList<ArrayList<ArrayList<Entity>>> map = new ArrayList<>();
 
-    private Canvas canvas;
-    private GraphicsContext gc;
-
     public GameMap(){
             for(int i = 0; i < MAP_WIDTH/ CHUNK_SIZE; i++){
                 map.add(new ArrayList<>());
@@ -27,8 +24,6 @@ public class GameMap implements Serializable {
                     map.get(i).add(new ArrayList<>());
                 }
             }
-            canvas = new Canvas(MAP_WIDTH, MAP_HEIGHT);
-            gc = canvas.getGraphicsContext2D();
         }
     public ArrayList<Entity> getContent(double x_, double y_, double range_){
         int range = (int) ceil(range_/CHUNK_SIZE);
@@ -80,11 +75,7 @@ public class GameMap implements Serializable {
         }
     }
 
-    public Canvas getCanvas() {
-        return this.canvas;
-    }
-
-    public void render(double time) {
+    public void render(GraphicsContext gc, double time) {
         gc.clearRect(0 ,0, MAP_WIDTH, MAP_HEIGHT);
         for(int i = 0; i < map.size(); i++){
             for (int j = 0; j < map.get(i).size(); j++){
