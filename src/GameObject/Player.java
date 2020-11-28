@@ -1,13 +1,15 @@
 package GameObject;
 
 import SpriteManager.SpriteSheet;
+import view.GameViewManager;
+
+import java.util.ArrayList;
 
 public abstract class Player extends Movable {
     protected double energy;
     protected double maxEnergy = 200;
     protected double energyRegen = 10;
     protected double heathRegen = 0;
-
     public Player(double x, double y, double maxHp, GameMap map) {
         super(x, y, maxHp, map);
         energy = maxEnergy;
@@ -21,7 +23,6 @@ public abstract class Player extends Movable {
     /**
      * Getter/Setter
      */
-
     public double getEnergy() {
         return energy;
     }
