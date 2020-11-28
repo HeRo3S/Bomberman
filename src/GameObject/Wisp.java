@@ -25,6 +25,9 @@ public class Wisp extends Hostile {
         attackSpeed = 1;
         status = new Status();
         createSprite();
+        setHitBox(10,5,12,18);
+        setSpeed(1);
+        attackRange = 28;
     }
 
     @Override
@@ -49,22 +52,27 @@ public class Wisp extends Hostile {
         //Choose moving course
         if(target != null){
             moveToTarget();
+            if(getDistance(target) < attackRange){
+                solveCollision(target);
+            }
         }
         else {
             idle();
         }
         //Finish and move to designated coordinate
-        if(!status.isChannelling() && !status.isStunning())
-        move();
+        if(!status.isChannelling() && !status.isStunning()) {
+            move();
+        }
         status.update();
     }
 
     @Override
     protected void solveCollision(Entity entity) {
-        if(entity instanceof Player){
+        if(entity instanceof Player && status.canAttack()){
             Player player = (Player) entity;
             player.health -= damage;
-            status.add("channel",1 / attackSpeed);
+            status.add(Status.currentStatus.ATTACK_CD,20);
+            System.out.println(entity.health);
         }
     }
 

@@ -19,6 +19,8 @@ public class Green extends Player {
         super(x, y, maxHp, map);
         setSpeed(1);
         createSprite();
+        setHitBox(2,0,20,32);
+        setSpeed(5);
     }
 
     private void createSprite() {
@@ -32,13 +34,6 @@ public class Green extends Player {
 
     @Override
     public void update() {
-        if (input.isEmpty())
-        {
-            setDx(0);
-            setDy(0);
-            setSpeed(0);
-        }
-        else {
             if (input.contains("W")) {
                 setDy(-1);
                 direction = 0;
@@ -58,9 +53,7 @@ public class Green extends Player {
                 setDx(1);
                 direction = 2;
             }
-            setSpeed(5);
             move();
-        }
     }
 
     @Override

@@ -3,23 +3,32 @@ package GameObject;
 import static jdk.nashorn.internal.objects.NativeMath.max;
 
 public class Status {
+    enum currentStatus{
+        CHANNEL,
+        STUN,
+        BURNING,
+        ATTACK_CD,
+    };
     private int channelTimer;
     private int stunTimer;
     private int burningTimer;
+    private int attackTimer;
     public Status(){
 
     }
-    public void add(String effect, double sec){
+    public void add(currentStatus effect, double sec){
         switch (effect){
-            case "channel":
+            case CHANNEL:
                 channelTimer += sec * 60;
                 break;
-            case "stun":
+            case STUN:
                 stunTimer += sec * 60;
                 break;
-            case "burning":
+            case BURNING:
                 burningTimer += sec * 60;
                 break;
+            case ATTACK_CD:
+                attackTimer += sec * 60;
         }
     }
     public boolean isChannelling(){
@@ -31,10 +40,13 @@ public class Status {
     public boolean isBurning(){
         return burningTimer > 0;
     }
+    public boolean canAttack(){
+        return attackTimer < 0;
+    }
     public void update(){
         max(--burningTimer,0);
         max(--stunTimer, 0);
         max(--channelTimer, 0);
-
+        max(--attackTimer, 0);
     }
 }

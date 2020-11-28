@@ -14,7 +14,7 @@ public class GameMap implements Serializable {
      */
     public static final int MAP_WIDTH = 1280;
     public static final int MAP_HEIGHT = 720;
-    public static final int CHUNK_SIZE = 80;
+    public static final int CHUNK_SIZE = 40;
     public ArrayList<ArrayList<ArrayList<Entity>>> map = new ArrayList<>();
 
     private Canvas canvas;
@@ -34,21 +34,19 @@ public class GameMap implements Serializable {
         int range = (int) ceil(range_/CHUNK_SIZE);
         int x = (int) (x_ / CHUNK_SIZE);
         int y = (int) (y_ / CHUNK_SIZE);
-        //Bound x and y
-        range = max(min(range,MAP_WIDTH/CHUNK_SIZE/2),0);
-        x = max(min(x, MAP_WIDTH/CHUNK_SIZE - range - 1), range);
-        y = max(min(y, MAP_HEIGHT/CHUNK_SIZE - range - 1), range);
+        int leftBound = max(min(x - range, MAP_WIDTH/CHUNK_SIZE - 1), 0);
+        int rightBound = max(min(x + range, MAP_WIDTH/CHUNK_SIZE - 1), 0);
+        int upperBound = max(min(y - range, MAP_HEIGHT/CHUNK_SIZE - 1), 0);
+        int lowerBound = max(min(y + range, MAP_HEIGHT/CHUNK_SIZE - 1), 0);
         ArrayList<Entity> result = new ArrayList<>();
-        for(int i = x - range; i < x + range; i++){
-            if(i < 0){
-                break;
-            }
-            for(int j = y - range; j < y + range; j++){
-                if(j < 0 || j >= MAP_HEIGHT/CHUNK_SIZE){
-                    break;
-                }
+        for(int i = leftBound; i < (leftBound+rightBound)/2; i++){
+            for(int j = upperBound; j <= lowerBound; j++){
                 result.addAll(map.get(i).get(j));
+                result.addAll(map.get(rightBound+leftBound-i).get(j));
             }
+        }
+        for(int i = upperBound; i <= lowerBound; i++){
+            result.addAll(map.get((leftBound+rightBound)/2).get(i));
         }
         return result;
     }

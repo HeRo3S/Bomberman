@@ -19,20 +19,16 @@ public abstract class Movable extends Entity {
     public void move(){
         boolean canMoveX = true;
         boolean canMoveY = true;
-        for(Entity entity : map.getContent(x,y,2000)) {
+        for(Entity entity : map.getContent(x,y,1)) {
             if(entity != this){
-                //Check and solve collision
-                if (collide(entity)) {
-                    solveCollision(entity);
-                }
                 //Calculate
-                if (getModifiedHitBox(dx, 0).intersects(entity.getHitBox()) && canMoveX) {
+                if (getModifiedHitBox(dx*speed, 0).intersects(entity.getHitBox()) && canMoveX) {
                     if (!entity.isPassable()) {
                         dx = 0;
                         canMoveX = false;
                     }
                 }
-                if (getModifiedHitBox(0, dy).intersects(entity.getHitBox()) && canMoveY) {
+                if (getModifiedHitBox(0, dy*speed).intersects(entity.getHitBox()) && canMoveY) {
                     if (!entity.isPassable()) {
                         dy = 0;
                         canMoveY = false;
@@ -47,8 +43,8 @@ public abstract class Movable extends Entity {
         dx = 0;
         dy = 0;
         if(!(new Point2D(x/ CHUNK_SIZE, y/ CHUNK_SIZE).equals(lastPos))){
-            map.addContent(x ,y ,this);
             map.removeContent(lastPos.getX() * CHUNK_SIZE,lastPos.getY() * CHUNK_SIZE, this);
+            map.addContent(x ,y ,this);
             lastPos = new Point2D(x / CHUNK_SIZE, y / CHUNK_SIZE);
         }
     }

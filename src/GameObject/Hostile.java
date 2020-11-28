@@ -1,20 +1,28 @@
 package GameObject;
-
-import SpriteManager.SpriteSheet;
+import static java.lang.Math.abs;
+import static java.lang.Math.max;
 
 public abstract class Hostile extends Movable {
     protected double damage;
     protected double detectionRange;
     protected double attackSpeed;
-    protected int attackTimer;
+    protected double attackRange;
     protected Entity target;
     public Hostile(double x, double y, double maxHp, GameMap map) {
         super(x, y, maxHp , map);
     }
 
     public void moveToTarget(){
-        dx = (target.x - x) / ((target.x - x) + (target.y-y));
-        dy = 1 - dx;
+        double steps = max(abs(target.x - x), abs(target.y - y));
+        if (steps == 0)
+        {
+            dx = dy = 0;
+        }
+        else
+        {
+            dx = (target.x - x) / steps;
+            dy = (target.y - y) /steps;
+        }
     }
     public abstract void idle();
 
