@@ -76,7 +76,6 @@ public class GameMap implements Serializable {
     }
 
     public void render(GraphicsContext gc, double time) {
-        gc.clearRect(0 ,0, MAP_WIDTH, MAP_HEIGHT);
         for(int i = 0; i < map.size(); i++){
             for (int j = 0; j < map.get(i).size(); j++){
                 for(int k = 0; k < map.get(i).get(j).size(); k++){

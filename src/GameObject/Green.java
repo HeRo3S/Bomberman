@@ -20,6 +20,7 @@ public class Green extends Player {
         createSprite();
         setHitBox(2, 0, 20, 32);
         setSpeed(5);
+        direction = 1;
     }
 
     private void createSprite() {
