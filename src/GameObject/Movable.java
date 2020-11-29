@@ -40,8 +40,6 @@ public abstract class Movable extends Entity {
         y += dy * speed;
         x = max(min(x,MAP_WIDTH - 32),0);
         y = max(min(y,MAP_HEIGHT - 32),0);
-        dx = 0;
-        dy = 0;
         if(!(new Point2D(x/ CHUNK_SIZE, y/ CHUNK_SIZE).equals(lastPos))){
             map.removeContent(lastPos.getX() * CHUNK_SIZE,lastPos.getY() * CHUNK_SIZE, this);
             map.addContent(x ,y ,this);

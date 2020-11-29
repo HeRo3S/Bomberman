@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import static java.lang.Math.*;
 
@@ -25,7 +26,7 @@ public class GameMap implements Serializable {
                 }
             }
         }
-    public ArrayList<Entity> getContent(double x_, double y_, double range_){
+    public HashSet<Entity> getContent(double x_, double y_, double range_){
         int range = (int) ceil(range_/CHUNK_SIZE);
         int x = (int) (x_ / CHUNK_SIZE);
         int y = (int) (y_ / CHUNK_SIZE);
@@ -33,15 +34,12 @@ public class GameMap implements Serializable {
         int rightBound = max(min(x + range, MAP_WIDTH/CHUNK_SIZE - 1), 0);
         int upperBound = max(min(y - range, MAP_HEIGHT/CHUNK_SIZE - 1), 0);
         int lowerBound = max(min(y + range, MAP_HEIGHT/CHUNK_SIZE - 1), 0);
-        ArrayList<Entity> result = new ArrayList<>();
-        for(int i = leftBound; i < (leftBound+rightBound)/2; i++){
+        HashSet<Entity> result = new HashSet<>();
+        for(int i = leftBound; i <= (leftBound+rightBound)/2; i++){
             for(int j = upperBound; j <= lowerBound; j++){
                 result.addAll(map.get(i).get(j));
                 result.addAll(map.get(rightBound+leftBound-i).get(j));
             }
-        }
-        for(int i = upperBound; i <= lowerBound; i++){
-            result.addAll(map.get((leftBound+rightBound)/2).get(i));
         }
         return result;
     }

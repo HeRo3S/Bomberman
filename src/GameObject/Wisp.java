@@ -72,6 +72,7 @@ public class Wisp extends Hostile {
         if (!status.isChannelling() && !status.isStunning()) {
             move();
         }
+        basicLogic();
         status.update();
     }
 

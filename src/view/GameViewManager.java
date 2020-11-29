@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class GameViewManager {
     public AnchorPane gamePane;
@@ -37,9 +38,11 @@ public class GameViewManager {
 
     private static final int GAME_WIDTH = 1280;
     private static final int GAME_HEIGHT = 720;
-    private static ArrayList<String> input = new ArrayList<>();
-
-    public static ArrayList<String> getInput() {
+    private static HashSet<String> input = new HashSet<>();
+    public static void removeInput(String string){
+        input.remove(string);
+    }
+    public static HashSet<String> getInput() {
         return input;
     }
 
@@ -126,7 +129,6 @@ public class GameViewManager {
             @Override
             public void handle(KeyEvent event) {
                 String code = event.getCode().toString();
-                if (!input.contains(code))
                     input.add(code);
 
             }

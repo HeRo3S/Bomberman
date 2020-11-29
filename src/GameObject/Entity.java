@@ -1,12 +1,7 @@
 package GameObject;
-
-import SpriteManager.SpriteSheet;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-
-import java.awt.*;
 
 public abstract class Entity {
     protected GameMap map;
@@ -19,7 +14,6 @@ public abstract class Entity {
     protected double width = 32;
     protected double height = 32;
     protected boolean passable = false;
-    protected Image display;
     protected Status status;
     public Entity(double x, double y, double maxHp, GameMap map) {
         this.map = map;
@@ -27,7 +21,7 @@ public abstract class Entity {
         this.y = y;
         this.maxHp = maxHp;
         health = maxHp;
-        map.addContent(x/GameMap.CHUNK_SIZE, y / GameMap.CHUNK_SIZE, this);
+        map.addContent(x, y, this);
     }
 
     /**
@@ -58,7 +52,11 @@ public abstract class Entity {
         return (new Point2D(x,y).distance(entity.x, entity.y));
     }
     protected abstract void animate(GraphicsContext gc, double time);
-
+    protected void basicLogic(){
+        if(health <= 0){
+            map.removeContent(x,y,this);
+        }
+    }
     /**
      * Setter/Getter
      */

@@ -7,11 +7,12 @@ import view.GameViewManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Green extends Player {
 
     private SpriteSheet mainSprite;
-    private ArrayList<String> input = GameViewManager.getInput();
+    private HashSet<String> input = GameViewManager.getInput();
     private final double frameTime = 0.100;
     private int direction;
 
@@ -34,6 +35,8 @@ public class Green extends Player {
 
     @Override
     public void update() {
+        dx = 0;
+        dy = 0;
         if (input.contains("W")) {
             setDy(-1);
             direction = 0;
@@ -52,6 +55,10 @@ public class Green extends Player {
         if (input.contains("D")) {
             setDx(1);
             direction = 2;
+        }
+        if(input.contains("K")){
+            new BasicRune(x,y,100,map);
+            input.remove("K");
         }
         move();
     }
