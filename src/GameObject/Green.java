@@ -26,7 +26,7 @@ public class Green extends Player {
 
     private void createSprite() {
         try {
-            mainSprite = new SpriteSheet("GameObject/assets/mcSpriteSheet.png", 4, 8);
+            mainSprite = new SpriteSheet("GameObject/assets/mcSheet.png", 5, 8);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -53,8 +53,8 @@ public abstract class Entity {
     }
     protected abstract void animate(GraphicsContext gc, double time);
     protected void basicLogic(){
-        if(health <= 0){
-            map.removeContent(x,y,this);
+        if (health <= 0) {
+            map.removeContent(x, y, this);
         }
     }
     /**

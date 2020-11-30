@@ -9,12 +9,13 @@ public class Wisp extends Hostile {
 
     private static SpriteSheet spriteSheet;
     private final double frameTime = 0.100;
-    private int direction;
-    private int posTemp;
+    private int directionSprite;
+    private int statusSprite;
+    private int attackFrameCount;
 
     private void createSprite() {
         try {
-            spriteSheet = new SpriteSheet("GameObject/assets/wisp.png", 2, 8);
+            spriteSheet = new SpriteSheet("GameObject/assets/wispSheet.png", 3, 8);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,18 +55,22 @@ public class Wisp extends Hostile {
         //Choose moving course
         if (target != null) {
             moveToTarget();
+            //render components
+            if (getDx() < 0) {
+                directionSprite = 0;
+            } else {
+                directionSprite = 1;
+            }
+            //end of render components
             if (getDistance(target) < attackRange) {
-                solveCollision(target);
                 //render components
-                direction = 0;
-                if (getDx() < 0) {
-                    posTemp = 0;
-                } else {
-                    posTemp = 4;
+                if (status.canAttack()) {
+                    attackFrameCount = 60;
                 }
+                //end of render components
+                solveCollision(target);
             }
         } else {
-            direction = 1;
             idle();
         }
         //Finish and move to designated coordinate
@@ -81,14 +86,20 @@ public class Wisp extends Hostile {
         if (entity instanceof Player && status.canAttack()) {
             Player player = (Player) entity;
             player.health -= damage;
-            status.add(Status.currentStatus.ATTACK_CD, 20);
+            status.add(Status.currentStatus.ATTACK_CD, 5);
             System.out.println(entity.health);
         }
     }
 
     @Override
     protected void animate(GraphicsContext gc, double time) {
-        int frame = (int) ((time % (4 * frameTime)) / frameTime) + posTemp;
-        gc.drawImage(spriteSheet.getSprite(frame, direction), getX(), getY());
+        if (attackFrameCount != 0) {
+            statusSprite = 4;
+            attackFrameCount--;
+        } else {
+            statusSprite = 0;
+        }
+        int frame = (int) ((time % (4 * frameTime)) / frameTime) + statusSprite;
+        gc.drawImage(spriteSheet.getSprite(frame, directionSprite), getX(), getY());
     }
 }
