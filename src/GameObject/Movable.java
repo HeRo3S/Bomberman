@@ -1,6 +1,7 @@
 package GameObject;
 
-import javafx.geometry.Point2D;
+
+import java.awt.geom.Point2D;
 
 import static GameObject.GameMap.*;
 import static java.lang.Math.max;
@@ -24,6 +25,8 @@ public abstract class Movable extends Entity {
                 return;
             } else {
                 isAnimateDying = true;
+                dx = 0;
+                dy = 0;
                 dyingFrameCount--;
                 return;
             }
@@ -32,7 +35,7 @@ public abstract class Movable extends Entity {
 
     public Movable(double x, double y, double maxHp, GameMap map) {
         super(x, y, maxHp, map);
-        lastPos = new Point2D((int) (x / CHUNK_SIZE), (int) (y / CHUNK_SIZE));
+        lastPos = new Point2D.Double((int) (x / CHUNK_SIZE), (int) (y / CHUNK_SIZE));
     }
     public void move(){
         boolean canMoveX = true;
@@ -60,10 +63,10 @@ public abstract class Movable extends Entity {
         y += dy * speed;
         x = max(min(x,MAP_WIDTH - 32),0);
         y = max(min(y,MAP_HEIGHT - 32),0);
-        if(!(new Point2D(x/ CHUNK_SIZE, y/ CHUNK_SIZE).equals(lastPos))){
+        if(!(new Point2D.Double(x/ CHUNK_SIZE, y/ CHUNK_SIZE).equals(lastPos))){
             map.removeContent(lastPos.getX() * CHUNK_SIZE,lastPos.getY() * CHUNK_SIZE, this);
             map.addContent(x ,y ,this);
-            lastPos = new Point2D(x / CHUNK_SIZE, y / CHUNK_SIZE);
+            lastPos = new Point2D.Double(x / CHUNK_SIZE, y / CHUNK_SIZE);
         }
     }
     abstract boolean noPass(Entity entity);

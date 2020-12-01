@@ -11,9 +11,9 @@ public class BasicRune extends Rune {
     private static SpriteSheet spriteSheet;
     public BasicRune(double x, double y, double maxHp, GameMap map) {
         super(x, y, maxHp, map);
-        damage = 0;
+        damage = 100;
         range = 150;
-        primeTime = 5000;
+        primeTime = 150;
         explodeTimer = primeTime;
         passable = true;
         setHitBox(4,14,24,12);

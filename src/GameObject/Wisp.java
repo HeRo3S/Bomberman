@@ -5,6 +5,8 @@ import javafx.scene.canvas.GraphicsContext;
 
 import java.io.IOException;
 
+import static java.lang.Math.random;
+
 public class Wisp extends Hostile {
 
     private static SpriteSheet spriteSheet;
@@ -23,7 +25,7 @@ public class Wisp extends Hostile {
 
     public Wisp(double x, double y, double maxHp, GameMap map) {
         super(x, y, maxHp, map);
-        detectionRange = 300;
+        detectionRange = 100;
         damage = 20;
         attackSpeed = 1;
         status = new Status();
@@ -31,6 +33,7 @@ public class Wisp extends Hostile {
         setHitBox(10, 5, 12, 18);
         setSpeed(1);
         attackRange = 28;
+        idleTime = 60;
     }
 
     @Override
@@ -43,14 +46,40 @@ public class Wisp extends Hostile {
 
     @Override
     public void idle() {
-
+        if(--idleTimer <= 0) {
+            int rand = (int) (random() * 10);
+            switch (rand) {
+                case 0:
+                    dx = 0;
+                    dy = 1;
+                    idleTimer = idleTime;
+                    break;
+                case 1:
+                    dx = 0;
+                    dy = -1;
+                    idleTimer = idleTime;
+                    break;
+                case 2:
+                    dx = 1;
+                    dy = 0;
+                    idleTimer = idleTime;
+                    break;
+                case 3:
+                    dx = -1;
+                    dy = 0;
+                    idleTimer = idleTime;
+                    break;
+                default:
+                    dx = 0;
+                    dy = 0;
+                    idleTimer = idleTime;
+            }
+        }
     }
 
     @Override
     public void update() {
         //Reset
-        dx = 0;
-        dy = 0;
         target = null;
         if (!status.isStunning() && !status.isChannelling()) {
             findTarget();
@@ -114,7 +143,6 @@ public class Wisp extends Hostile {
             }
             frame = (int) ((time % (4 * frameTime)) / frameTime) + statusSprite;
         }
-        System.out.println(frame);
         gc.drawImage(spriteSheet.getSprite(frame, directionSprite), getX(), getY());
         if(testing != null) {
             gc.strokeLine(testing.getCenterX(), testing.getCenterY(), getCenterX(), getCenterY());
