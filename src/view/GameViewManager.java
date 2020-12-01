@@ -39,9 +39,6 @@ public class GameViewManager {
     private static final int GAME_WIDTH = 1280;
     private static final int GAME_HEIGHT = 720;
     private static HashSet<String> input = new HashSet<>();
-    public static void removeInput(String string){
-        input.remove(string);
-    }
     public static HashSet<String> getInput() {
         return input;
     }
@@ -120,7 +117,7 @@ public class GameViewManager {
 
     private void createGameMap() {
         gameMap = new GameMap();
-        green = new Green(10, 10, 100, gameMap);
+        green = new Green(10, 10, 200, gameMap);
         wisp = new Wisp(400, 300, 100, gameMap);
     }
 

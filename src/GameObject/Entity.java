@@ -1,7 +1,8 @@
 package GameObject;
-import javafx.geometry.Point2D;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
+
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 public abstract class Entity {
     protected GameMap map;
@@ -36,26 +37,36 @@ public abstract class Entity {
         this.height = height;
     }
     protected Rectangle2D getHitBox(){
-        return new Rectangle2D(x+offsetX,y+offsetY,width,height);
+        return new Rectangle2D.Double(x+offsetX,y+offsetY,width,height);
     }
 
     protected Rectangle2D getModifiedHitBox(double dx, double dy){
-        return new Rectangle2D(x + offsetX + dx, y+ offsetY + dy, width, height);
-    }
-    protected boolean collide(Entity entity){
-        return getHitBox().intersects(entity.getHitBox());
+        return new Rectangle2D.Double(x + offsetX + dx, y+ offsetY + dy, width, height);
     }
 
     public abstract void update();
     protected abstract void solveCollision(Entity entity);
     protected double getDistance(Entity entity){
-        return (new Point2D(x,y).distance(entity.x, entity.y));
+        return (new Point2D.Double(getCenterX(),getCenterY()).distance(entity.getCenterX(), entity.getCenterY()));
     }
     protected abstract void animate(GraphicsContext gc, double time);
     protected void basicLogic(){
         if (health <= 0) {
             map.removeContent(x, y, this);
         }
+    }
+
+    protected double getCenterX(){
+        return (x + offsetX + width/2);
+    }
+    protected double getCenterY(){
+        return (y + offsetY + height/2);
+    }
+    protected Point2D getCenter(){
+        return new Point2D.Double(x + offsetX + width/2,y + offsetY + height/2);
+    }
+    protected void drawHitBox(GraphicsContext gc){
+        gc.strokeRect(x+offsetX,y+offsetY,width,height);
     }
     /**
      * Setter/Getter

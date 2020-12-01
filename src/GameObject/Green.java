@@ -19,9 +19,17 @@ public class Green extends Player {
     public Green(double x, double y, double maxHp, GameMap map) {
         super(x, y, maxHp, map);
         createSprite();
-        setHitBox(2, 0, 20, 32);
+        setHitBox(6, 0, 20, 32);
         setSpeed(5);
         direction = 1;
+    }
+
+    @Override
+    boolean noPass(Entity entity) {
+        if(!entity.isPassable()){
+            return true;
+        }
+        return false;
     }
 
     private void createSprite() {
@@ -57,7 +65,7 @@ public class Green extends Player {
             direction = 2;
         }
         if(input.contains("K")){
-            new BasicRune(x,y,100,map);
+            new BasicRune(x,y,2,map);
             input.remove("K");
         }
         move();
@@ -75,5 +83,6 @@ public class Green extends Player {
             frame += 4;
         }
         gc.drawImage(mainSprite.getSprite(frame, direction), getX(), getY());
+        drawHitBox(gc);
     }
 }

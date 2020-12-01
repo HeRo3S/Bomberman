@@ -12,7 +12,7 @@ public class Wisp extends Hostile {
     private int directionSprite;
     private int statusSprite;
     private int attackFrameCount;
-
+    private Entity testing;
     private void createSprite() {
         try {
             spriteSheet = new SpriteSheet("GameObject/assets/wispSheet.png", 3, 8);
@@ -23,7 +23,7 @@ public class Wisp extends Hostile {
 
     public Wisp(double x, double y, double maxHp, GameMap map) {
         super(x, y, maxHp, map);
-        detectionRange = 120;
+        detectionRange = 300;
         damage = 20;
         attackSpeed = 1;
         status = new Status();
@@ -31,6 +31,14 @@ public class Wisp extends Hostile {
         setHitBox(10, 5, 12, 18);
         setSpeed(1);
         attackRange = 28;
+    }
+
+    @Override
+    boolean noPass(Entity entity) {
+        if(!entity.isPassable()){
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -45,11 +53,9 @@ public class Wisp extends Hostile {
         dy = 0;
         target = null;
         if (!status.isStunning() && !status.isChannelling()) {
-            for (Entity entity : map.getContent(x, y, detectionRange)) {
-                //Find target
-                if (entity instanceof Player) {
-                    target = entity;
-                }
+            findTarget();
+            if(testing == null){
+                testing = target;
             }
         }
         //Choose moving course
@@ -66,9 +72,9 @@ public class Wisp extends Hostile {
                 //render components
                 if (status.canAttack()) {
                     attackFrameCount = 60;
+                    attack();
                 }
                 //end of render components
-                solveCollision(target);
             }
         } else {
             idle();
@@ -83,11 +89,13 @@ public class Wisp extends Hostile {
 
     @Override
     protected void solveCollision(Entity entity) {
-        if (entity instanceof Player && status.canAttack()) {
-            Player player = (Player) entity;
+    }
+    protected void attack(){
+        if (target instanceof Player && status.canAttack()) {
+            Player player = (Player) target;
             player.health -= damage;
             status.add(Status.currentStatus.ATTACK_CD, 5);
-            System.out.println(entity.health);
+            System.out.println(target.health);
         }
     }
 
@@ -101,5 +109,9 @@ public class Wisp extends Hostile {
         }
         int frame = (int) ((time % (4 * frameTime)) / frameTime) + statusSprite;
         gc.drawImage(spriteSheet.getSprite(frame, directionSprite), getX(), getY());
+        if(testing != null) {
+            gc.strokeLine(testing.getCenterX(), testing.getCenterY(), getCenterX(), getCenterY());
+        }
+        drawHitBox(gc);
     }
 }

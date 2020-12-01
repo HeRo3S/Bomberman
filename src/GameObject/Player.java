@@ -1,10 +1,5 @@
 package GameObject;
 
-import SpriteManager.SpriteSheet;
-import view.GameViewManager;
-
-import java.util.ArrayList;
-
 public abstract class Player extends Movable {
     protected double energy;
     protected double maxEnergy = 200;
@@ -13,6 +8,7 @@ public abstract class Player extends Movable {
     public Player(double x, double y, double maxHp, GameMap map) {
         super(x, y, maxHp, map);
         energy = maxEnergy;
+        setHitBox(0,0,32,32);
     }
 
     public void regen(){

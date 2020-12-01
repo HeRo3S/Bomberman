@@ -11,10 +11,12 @@ public class BasicRune extends Rune {
     private static SpriteSheet spriteSheet;
     public BasicRune(double x, double y, double maxHp, GameMap map) {
         super(x, y, maxHp, map);
-        damage = 200;
+        damage = 0;
         range = 150;
-        explodeTimer = 200;
+        primeTime = 5000;
+        explodeTimer = primeTime;
         passable = true;
+        setHitBox(4,14,24,12);
         try {
             spriteSheet = new SpriteSheet("GameObject/assets/basic_rune_sheet.png",1,4);
         } catch (IOException e) {
@@ -27,7 +29,6 @@ public class BasicRune extends Rune {
         for(Entity entity : map.getContent(x,y,range)){
             if(getDistance(entity) <= range){
                 entity.health -= damage;
-                System.out.println(entity.health);
             }
         }
         health = 0;
@@ -50,6 +51,7 @@ public class BasicRune extends Rune {
     @Override
     protected void animate(GraphicsContext gc, double time) {
         gc.strokeOval(x+16-range,y+16-range,range*2,range*2);
-        gc.drawImage(spriteSheet.getSprite(max(0,3-(explodeTimer/50)),0), getX(), getY());
+        gc.drawImage(spriteSheet.getSprite(max(0,3-(explodeTimer/(primeTime/4))),0), getX(), getY());
+        drawHitBox(gc);
     }
 }

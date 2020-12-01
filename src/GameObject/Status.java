@@ -8,7 +8,7 @@ public class Status {
         STUN,
         BURNING,
         ATTACK_CD,
-    };
+    }
     private int channelTimer;
     private int stunTimer;
     private int burningTimer;

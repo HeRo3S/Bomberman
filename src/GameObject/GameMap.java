@@ -36,9 +36,11 @@ public class GameMap implements Serializable {
         int lowerBound = max(min(y + range, MAP_HEIGHT/CHUNK_SIZE - 1), 0);
         HashSet<Entity> result = new HashSet<>();
         for(int i = leftBound; i <= (leftBound+rightBound)/2; i++){
-            for(int j = upperBound; j <= lowerBound; j++){
+            for(int j = upperBound; j <= (lowerBound+ upperBound)/2; j++){
                 result.addAll(map.get(i).get(j));
                 result.addAll(map.get(rightBound+leftBound-i).get(j));
+                result.addAll(map.get(i).get(lowerBound+upperBound-j));
+                result.addAll(map.get(rightBound+leftBound-i).get(lowerBound+upperBound-j));
             }
         }
         return result;
