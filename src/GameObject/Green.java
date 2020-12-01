@@ -2,6 +2,7 @@ package GameObject;
 
 import SpriteManager.SpriteSheet;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import view.GameViewManager;
 
 
@@ -91,5 +92,9 @@ public class Green extends Player {
             new BasicRune(x,y,2,map);
             input.remove("K");
         }
+    }
+
+    public Image getSpritteSheet(int x, int y) {
+        return mainSprite.getSprite(x,y);
     }
 }
