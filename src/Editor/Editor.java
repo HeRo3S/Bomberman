@@ -158,5 +158,9 @@ public class Editor extends Application implements Initializable {
         }
 
     };
+
+    public GameMap getGameMap() {
+        return gameMap;
+    }
 }
 
