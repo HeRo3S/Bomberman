@@ -13,7 +13,6 @@ public class Green extends Player {
 
     private SpriteSheet mainSprite;
     private HashSet<String> input = GameViewManager.getInput();
-    private final double frameTime = 0.100;
     private int direction;
 
     public Green(double x, double y, double maxHp, GameMap map) {
@@ -35,6 +34,30 @@ public class Green extends Player {
 
     @Override
     public void update() {
+        inputHandle();
+        basicLogic();
+        move();
+    }
+
+    @Override
+    protected void solveCollision(Entity entity) {
+
+    }
+
+    @Override
+    protected void animate(GraphicsContext gc, double time) {
+        frame = (int) ((time % (4 * frameTime)) / frameTime);
+        if (isAnimateDying) {
+            direction = 4;
+            frame = (24 - dyingFrameCount ) / 6;
+        }
+        if (!input.isEmpty()) {
+            frame += 4;
+        }
+        gc.drawImage(mainSprite.getSprite(frame, direction), getX(), getY());
+    }
+
+    private void inputHandle() {
         dx = 0;
         dy = 0;
         if (input.contains("W")) {
@@ -60,20 +83,5 @@ public class Green extends Player {
             new BasicRune(x,y,100,map);
             input.remove("K");
         }
-        move();
-    }
-
-    @Override
-    protected void solveCollision(Entity entity) {
-
-    }
-
-    @Override
-    protected void animate(GraphicsContext gc, double time) {
-        int frame = (int) ((time % (4 * frameTime)) / frameTime);
-        if (!input.isEmpty()) {
-            frame += 4;
-        }
-        gc.drawImage(mainSprite.getSprite(frame, direction), getX(), getY());
     }
 }

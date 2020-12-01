@@ -93,13 +93,20 @@ public class Wisp extends Hostile {
 
     @Override
     protected void animate(GraphicsContext gc, double time) {
-        if (attackFrameCount != 0) {
-            statusSprite = 4;
-            attackFrameCount--;
-        } else {
+        if (isAnimateDying) {
+            directionSprite= 2;
             statusSprite = 0;
+            frame =  (24 - dyingFrameCount ) / 6;
+        } else {
+            if (attackFrameCount != 0) {
+                statusSprite = 4;
+                attackFrameCount--;
+            } else {
+                statusSprite = 0;
+            }
+            frame = (int) ((time % (4 * frameTime)) / frameTime) + statusSprite;
         }
-        int frame = (int) ((time % (4 * frameTime)) / frameTime) + statusSprite;
+        System.out.println(frame);
         gc.drawImage(spriteSheet.getSprite(frame, directionSprite), getX(), getY());
     }
 }

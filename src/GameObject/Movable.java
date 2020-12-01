@@ -11,6 +11,24 @@ public abstract class Movable extends Entity {
     protected double dx;
     protected double dy;
     protected Point2D lastPos;
+    //render components
+    protected int dyingFrameCount = 28;
+    protected boolean isAnimateDying = false;
+    protected int frame;
+    protected final double frameTime = 0.100;
+    @Override
+    protected void basicLogic() {
+        if (getHealth() <= 0) {
+            if (dyingFrameCount == 0) {
+                map.removeContent(x, y, this);
+                return;
+            } else {
+                isAnimateDying = true;
+                dyingFrameCount--;
+                return;
+            }
+        }
+    }
 
     public Movable(double x, double y, double maxHp, GameMap map) {
         super(x, y, maxHp, map);
