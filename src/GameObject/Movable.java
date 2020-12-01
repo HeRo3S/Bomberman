@@ -2,8 +2,6 @@ package GameObject;
 
 import javafx.geometry.Point2D;
 
-import java.lang.reflect.Type;
-
 import static GameObject.GameMap.*;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -13,6 +11,25 @@ public abstract class Movable extends Entity {
     protected double dx;
     protected double dy;
     protected Point2D lastPos;
+    //render components
+    protected int dyingFrameCount = 28;
+    protected boolean isAnimateDying = false;
+    protected int frame;
+    protected final double frameTime = 0.100;
+    @Override
+    protected void basicLogic() {
+        if (getHealth() <= 0) {
+            if (dyingFrameCount == 0) {
+                map.removeContent(x, y, this);
+                return;
+            } else {
+                isAnimateDying = true;
+                dyingFrameCount--;
+                return;
+            }
+        }
+    }
+
     public Movable(double x, double y, double maxHp, GameMap map) {
         super(x, y, maxHp, map);
         lastPos = new Point2D((int) (x / CHUNK_SIZE), (int) (y / CHUNK_SIZE));
@@ -46,7 +63,7 @@ public abstract class Movable extends Entity {
         if(!(new Point2D(x/ CHUNK_SIZE, y/ CHUNK_SIZE).equals(lastPos))){
             map.removeContent(lastPos.getX() * CHUNK_SIZE,lastPos.getY() * CHUNK_SIZE, this);
             map.addContent(x ,y ,this);
-            lastPos = new Point2D((int) (x / CHUNK_SIZE), (int) (y / CHUNK_SIZE));
+            lastPos = new Point2D(x / CHUNK_SIZE, y / CHUNK_SIZE);
         }
     }
     abstract boolean noPass(Entity entity);

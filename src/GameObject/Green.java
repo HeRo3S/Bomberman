@@ -43,6 +43,13 @@ public class Green extends Player {
 
     @Override
     public void update() {
+        inputHandle();
+        basicLogic();
+        move();
+    }
+
+
+    private void inputHandle() {
         dx = 0;
         dy = 0;
         if (input.contains("W")) {
@@ -83,6 +90,5 @@ public class Green extends Player {
             frame += 4;
         }
         gc.drawImage(mainSprite.getSprite(frame, direction), getX(), getY());
-        drawHitBox(gc);
     }
 }
