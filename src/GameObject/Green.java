@@ -2,6 +2,7 @@ package GameObject;
 
 import SpriteManager.SpriteSheet;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import view.GameViewManager;
 
 
@@ -67,5 +68,9 @@ public class Green extends Player {
             frame += 4;
         }
         gc.drawImage(mainSprite.getSprite(frame, direction), getX(), getY());
+    }
+
+    public Image getSpritteSheet(int x, int y) {
+        return mainSprite.getSprite(x,y);
     }
 }
