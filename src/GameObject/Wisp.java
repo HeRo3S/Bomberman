@@ -2,6 +2,7 @@ package GameObject;
 
 import SpriteManager.SpriteSheet;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 import java.io.IOException;
 
@@ -9,6 +10,10 @@ public class Wisp extends Hostile {
 
     private static SpriteSheet spriteSheet;
     private final double frameTime = 0.100;
+
+    public static SpriteSheet getSpriteSheet() {
+        return spriteSheet;
+    }
 
     private void createSprite() {
         try {
@@ -80,5 +85,9 @@ public class Wisp extends Hostile {
     protected void animate(GraphicsContext gc, double time) {
         int frame = (int)((time % (4 * frameTime)) / frameTime);
         gc.drawImage(spriteSheet.getSprite(frame, 0), getX(), getY());
+    }
+
+    public Image getSpritteSheet(int x, int y) {
+        return spriteSheet.getSprite(x,y);
     }
 }
