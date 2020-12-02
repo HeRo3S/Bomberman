@@ -24,20 +24,19 @@ import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
-public class Editor extends Application {
-    @FXML
-    public HBox hbox;
+public class Editor<status> extends Application {
 
     @FXML
     private AnchorPane anchorPane;
 
 
-    public int status = 0;
+    public static int status = 0;
     public Node selected_photo;
     Group group = new Group();
     HBox hBox = new HBox();
@@ -49,25 +48,6 @@ public class Editor extends Application {
     private int col = HEIGHT / 32;
 
     public static GameMap gameMap = new GameMap();
-
-//    @Override
-//    public void initialize(URL location, ResourceBundle resources) {
-//        Tiles tiles = new Tiles(0, 0, 50, gameMap);
-//        Wisp wisp = new Wisp(0, 32, 50, gameMap);
-//        Green green = new Green(0, 64, 50, gameMap);
-//
-//        Select select = Select.WISP;
-//        Button button1 = CreatButton(select, wisp.getSpritteSheet(0, 0));
-//        hBox.getChildren().add(button1);
-//
-//        Select select1 = Select.GREEN;
-//        Button button2 = CreatButton(select1, green.getSpritteSheet(0, 0));
-//        hBox.getChildren().add(button2);
-//        hBox.setLayoutX(0);
-//        hBox.setLayoutY(734);
-//
-//        group.getChildren().add(hBox);
-//    }
 
     enum Select {PLAYER, GREEN, WISP}
 
@@ -81,9 +61,19 @@ public class Editor extends Application {
         Scene scene = new Scene(group,1024,900);
 
         scene.setOnMouseClicked(mouseHandler);
-        Tiles tiles = new Tiles(0, 0, 50, gameMap);
-        Wisp wisp = new Wisp(0, 32, 50, gameMap);
-        Green green = new Green(0, 64, 50, gameMap);
+        Tiles tiles = new Tiles(0, 0, 100, gameMap);
+        Wisp wisp = new Wisp(0, 0, 100, gameMap);
+        Green green = new Green(0, 0, 100, gameMap);
+        Image imageGreen = green.getSpritteSheet(0,0);
+        Rectangle rectangle1 = new Rectangle();
+        rectangle1.setX(0);
+        rectangle1.setY(0);
+        rectangle1.setWidth(32);
+        rectangle1.setHeight(32);
+        rectangle1.setFill(new ImagePattern(imageGreen, 0, 0, 1, 1, true));
+        group.getChildren().add(rectangle1);
+        status = 1;
+
         Select select = Select.WISP;
         Button button1 = CreatButton(select, wisp.getSpritteSheet(0, 0));
         hBox.getChildren().add(button1);
@@ -93,6 +83,21 @@ public class Editor extends Application {
         hBox.getChildren().add(button2);
         hBox.setLayoutX(0);
         hBox.setLayoutY(734);
+
+        Button save = new Button("Save");
+        save.setOnAction(event -> {
+            try {
+                FileOutputStream file = new FileOutputStream("GameMap.dat");
+                ObjectOutputStream os = new ObjectOutputStream(file);
+                os.writeObject(gameMap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
+        hBox.getChildren().add(save);
 
         group.getChildren().add(hBox);
 
@@ -141,37 +146,23 @@ public class Editor extends Application {
                         group.getChildren().add(rectangle);
                         break;
                     case GREEN:
-                        Green green = new Green(X, Y, 50, gameMap);
-                        System.out.println("Da tao mot Green");
-                        Green green1 = new Green(X,Y,50,gameMap);
-                        Image imageGreen = green1.getSpritteSheet(0,0);
-                        Rectangle rectangle1 = new Rectangle();
-                        rectangle1.setX(clickX * 32);
-                        rectangle1.setY(clickY * 32);
-                        rectangle1.setWidth(32);
-                        rectangle1.setHeight(32);
-                        rectangle1.setFill(new ImagePattern(imageGreen, 0, 0, 1, 1, true));
-                        group.getChildren().add(rectangle1);
-                        break;
-                    case PLAYER:
-                        Player player = new Player(X, Y, 50, gameMap) {
-                            @Override
-                            public void update() {
-
-                            }
-
-                            @Override
-                            protected void solveCollision(Entity entity) {
-
-                            }
-
-                            @Override
-                            protected void animate(GraphicsContext gc, double time) {
-
-                            }
-                        };
-                        System.out.println("Da tao mot Player");
-                        break;
+                        if (status == 0){
+                            System.out.println("Da tao mot Green");
+                            Green green1 = new Green(X,Y,50,gameMap);
+                            Image imageGreen = green1.getSpritteSheet(0,0);
+                            Rectangle rectangle1 = new Rectangle();
+                            rectangle1.setX(clickX * 32);
+                            rectangle1.setY(clickY * 32);
+                            rectangle1.setWidth(32);
+                            rectangle1.setHeight(32);
+                            rectangle1.setFill(new ImagePattern(imageGreen, 0, 0, 1, 1, true));
+                            group.getChildren().add(rectangle1);
+                            status = 1;
+                            break;
+                        }else{
+                            System.out.println("Chi duoc tao 1 nhan vat!");
+                            break;
+                        }
                     default:
                         Tiles tiles = new Tiles(X, Y, 50, gameMap);
                         System.out.println("Da tao mot Tiles");
@@ -181,8 +172,5 @@ public class Editor extends Application {
 
     };
 
-    public GameMap getGameMap() {
-        return gameMap;
-    }
 }
 
