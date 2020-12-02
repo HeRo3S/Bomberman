@@ -20,6 +20,7 @@ public class Green extends Player {
         direction = 1;
         code = SpriteSheetCode.GREEN;
         maxHp = 200;
+        health = maxHp;
     }
 
     @Override

@@ -14,7 +14,6 @@ public class HealthOrb extends Particle {
     @Override
     protected void effect(Entity entity) {
         entity.health += amount;
-        System.out.println(entity.health);
         health = 0;
     }
 }

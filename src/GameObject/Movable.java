@@ -41,6 +41,18 @@ public abstract class Movable extends Entity {
             dy = (y - getCenterY()) /steps;
         }
     }
+    public void moveTo(Point2D point){
+        double steps = max(abs(point.getX() - getCenterX()), abs(point.getY() - getCenterY()));
+        if (steps == 0)
+        {
+            dx = dy = 0;
+        }
+        else
+        {
+            dx = (point.getX() - getCenterX()) / steps;
+            dy = (point.getY() - getCenterY()) /steps;
+        }
+    }
     public Movable(double x, double y, GameMap map) {
         super(x, y, map);
         lastPos = new Point2D.Double((int) (x / CHUNK_SIZE), (int) (y / CHUNK_SIZE));

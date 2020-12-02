@@ -9,7 +9,7 @@ public abstract class Particle extends Drop {
         super(x, y, map);
         passable = true;
         range = 50;
-        speed = 1;
+        speed = 2;
         setHitBox(2,2,4,4);
     }
 

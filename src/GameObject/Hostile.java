@@ -14,8 +14,11 @@ public abstract class Hostile extends Movable {
     protected Line2D lineOfSight = new Line2D.Double();
     protected int idleTimer;
     protected int idleTime;
+    protected int attackFrameCount;
+    protected Status status;
     public Hostile(double x, double y, GameMap map) {
         super(x, y , map);
+        status = new Status();
     }
     public void findTarget(){
         for (Entity entity : map.getContent(x, y, detectionRange)) {
@@ -45,7 +48,33 @@ public abstract class Hostile extends Movable {
     public abstract void idle();
     protected abstract void attack();
     protected abstract void drop();
-
+    protected void hostileLogic() {
+        target = null;
+        if (!status.isStunning() && !status.isChannelling()) {
+            findTarget();
+        }
+        //Choose moving course
+        if (target != null) {
+            moveToTarget();
+            if (getDistance(target) < attackRange) {
+                //render components
+                if (status.canAttack()) {
+                    attackFrameCount = 60;
+                    attack();
+                }
+            }
+        } else {
+            idle();
+        }
+        if (!status.isChannelling() && !status.isStunning()) {
+            move();
+        }
+        if(dyingFrameCount <= 1){
+            if(health <= 0){
+                drop();
+            }
+        }
+    }
     /**
      * Getter/Setter
      */

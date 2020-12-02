@@ -12,20 +12,18 @@ public class Wisp extends Hostile {
     private final double frameTime = 0.100;
     private int directionSprite;
     private int statusSprite;
-    private int attackFrameCount;
-    private Entity testing;
     public Wisp(double x, double y, GameMap map) {
         super(x, y, map);
-        detectionRange = 100;
+        detectionRange = 50;
         maxHp = 100;
         damage = 20;
         attackSpeed = 1;
-        status = new Status();
         setHitBox(10, 5, 12, 18);
         setSpeed(1);
         attackRange = 28;
         idleTime = 60;
         code = SpriteSheetCode.WISP;
+        health = maxHp;
     }
 
     @Override
@@ -71,46 +69,13 @@ public class Wisp extends Hostile {
 
     @Override
     public void update() {
-        //Reset
-        target = null;
-        if (!status.isStunning() && !status.isChannelling()) {
-            findTarget();
-            if(testing == null){
-                testing = target;
-            }
-        }
-        //Choose moving course
-        if (target != null) {
-            moveToTarget();
-            //render components
-            if (getDx() < 0) {
-                directionSprite = 0;
-            } else {
-                directionSprite = 1;
-            }
-            //end of render components
-            if (getDistance(target) < attackRange) {
-                //render components
-                if (status.canAttack()) {
-                    attackFrameCount = 60;
-                    attack();
-                }
-                //end of render components
-            }
+        if (getDx() < 0) {
+            directionSprite = 0;
         } else {
-            idle();
+            directionSprite = 1;
         }
-        //Finish and move to designated coordinate
-        if (!status.isChannelling() && !status.isStunning()) {
-            move();
-        }
-        if(dyingFrameCount <= 1){
-            if(health <= 0){
-                drop();
-            }
-        }
+        hostileLogic();
         basicLogic();
-        status.update();
     }
 
     @Override
@@ -121,7 +86,6 @@ public class Wisp extends Hostile {
             Player player = (Player) target;
             player.health -= damage;
             status.add(Status.currentStatus.ATTACK_CD, 5);
-            System.out.println(target.health);
         }
     }
 
@@ -146,9 +110,5 @@ public class Wisp extends Hostile {
             frame = (int) ((time % (4 * frameTime)) / frameTime) + statusSprite;
         }
         gc.drawImage(getSpriteSheet().getSprite(frame, directionSprite), getX(), getY());
-        if(testing != null) {
-            gc.strokeLine(testing.getCenterX(), testing.getCenterY(), getCenterX(), getCenterY());
-        }
-        drawHitBox(gc);
     }
 }

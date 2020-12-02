@@ -18,7 +18,10 @@ public class SpriteSheetManager {
         storage.put(HEALTH_ORB,new SpriteSheet("GameObject/assets/healthOrb.png",1,1));
         storage.put(ENERGY_ORB,new SpriteSheet("GameObject/assets/energyOrb.png",1,1));
         storage.put(BASIC_RUNE, new SpriteSheet("GameObject/assets/basic_rune_sheet.png",1,4));
+        storage.put(PHANTOM, new SpriteSheet("GameObject/assets/phantomSheet.png",2,8));
+        storage.put(THROWER, new SpriteSheet("GameObject/assets/orcSheet.png",2,8));
         storage.put(FLOOR, new SpriteSheet("GameObject/assets/floor.png", 2, 4));
         storage.put(WALL, new SpriteSheet("GameObject/assets/wall.png", 13, 4));
+        storage.put(BRUTE, new SpriteSheet("GameObject/assets/bruteSheet.png",2,8));
     }
 }

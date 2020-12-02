@@ -8,6 +8,7 @@ public abstract class Rune extends Entity {
     public Rune(double x, double y, GameMap map) {
         super(x, y, map);
         maxHp = 2;
+        health = maxHp;
     }
     protected abstract void explode();
 }

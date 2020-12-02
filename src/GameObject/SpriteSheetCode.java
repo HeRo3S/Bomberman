@@ -9,4 +9,7 @@ public enum SpriteSheetCode {
     FLOOR,
     CRATE,
     BASIC_RUNE,
+    PHANTOM,
+    THROWER,
+    BRUTE,
 }
