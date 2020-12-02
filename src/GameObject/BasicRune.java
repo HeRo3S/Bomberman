@@ -14,7 +14,6 @@ public class BasicRune extends Rune {
         range = 80;
         primeTime = 150;
         explodeTimer = primeTime;
-        passable = true;
         setHitBox(4,14,24,12);
         code = SpriteSheetCode.BASIC_RUNE;
     }
@@ -22,7 +21,7 @@ public class BasicRune extends Rune {
     @Override
     protected void explode() {
         for(Entity entity : map.getContent(x,y,range)){
-            if(getDistance(entity) <= range && !(entity instanceof Rune)){
+            if(getDistance(entity) <= range && (entity instanceof Destructible)){
                 entity.health -= damage;
             }
         }

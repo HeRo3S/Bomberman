@@ -6,7 +6,7 @@ import java.awt.geom.Point2D;
 
 import static GameObject.SpriteSheetCode.PHANTOM;
 
-public class Phantom extends Hostile {
+public class Phantom extends Hostile implements Destructible, Impassable {
     private Point2D lastPos;
     private int directionSprite;
     private int statusSprite;
@@ -40,7 +40,7 @@ public class Phantom extends Hostile {
     }
 
     @Override
-    boolean noPass(Entity entity) {
+    protected boolean noPass(Entity entity) {
         if(entity instanceof UnFlyable){
             return true;
         }

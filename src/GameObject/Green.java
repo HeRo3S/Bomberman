@@ -9,7 +9,7 @@ import view.GameViewManager;
 import java.io.IOException;
 import java.util.HashSet;
 
-public class Green extends Player {
+public class Green extends Player implements Destructible, Impassable {
     private HashSet<String> input = GameViewManager.getInput();
     private int direction;
 
@@ -23,13 +23,7 @@ public class Green extends Player {
         health = maxHp;
     }
 
-    @Override
-    boolean noPass(Entity entity) {
-        if(!entity.isPassable()){
-            return true;
-        }
-        return false;
-    }
+
 
     @Override
     public void update() {

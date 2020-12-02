@@ -11,7 +11,7 @@ import static GameObject.GameMap.*;
 import static GameObject.GameMap.CHUNK_SIZE;
 import static java.lang.Math.*;
 
-public class Wisp extends Hostile {
+public class Wisp extends Hostile implements Impassable, Destructible {
     private final double frameTime = 0.100;
     private int directionSprite;
     private int statusSprite;
@@ -29,13 +29,7 @@ public class Wisp extends Hostile {
         health = maxHp;
     }
 
-    @Override
-    boolean noPass(Entity entity) {
-        if(!entity.isPassable()){
-            return true;
-        }
-        return false;
-    }
+
 
     @Override
     public void idle() {

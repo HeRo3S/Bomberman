@@ -89,7 +89,12 @@ public abstract class Movable extends Entity {
             lastPos = new Point2D.Double(x / CHUNK_SIZE, y / CHUNK_SIZE);
         }
     }
-    abstract boolean noPass(Entity entity);
+    protected boolean noPass(Entity entity) {
+        if(entity instanceof Impassable){
+            return true;
+        }
+        return false;
+    }
     /**
      * Setter/Getter
      */

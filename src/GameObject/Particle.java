@@ -7,14 +7,13 @@ public abstract class Particle extends Drop {
     double amount;
     public Particle(double x, double y, GameMap map) {
         super(x, y, map);
-        passable = true;
         range = 50;
         speed = 2;
         setHitBox(2,2,4,4);
     }
 
     @Override
-    boolean noPass(Entity entity) {
+    protected boolean noPass(Entity entity) {
         return false;
     }
 

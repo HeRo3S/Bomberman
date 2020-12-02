@@ -1,48 +1,21 @@
 package GameObject;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
-public class Wall extends Tiles{
-    private Position position;
+public class Wall extends Tiles implements UnFlyable{
+    private Image image;
 
-    public Wall(double x, double y, double maxHp, GameMap map) {
-        super(x, y, map);
-        setDestructible(false);
-    }
-
-    public Wall(double x, double y, double maxHp, GameMap map, Position pos)
+    public Wall(double x, double y, GameMap map, int row, int column)
     {
         super(x, y, map);
-        setPassable(false);
-        setDestructible(false);
-        position = pos;
+        code = SpriteSheetCode.WALL;
+        image = getSpriteSheet().getSprite(row,column);
+
     }
 
     @Override
     protected void animate(GraphicsContext gc, double time) {
-        switch (position)
-        {
-            case HORIZONTAL:
-                //gc.drawImage(spriteSheet.getSprite(?,?), x, y);
-            case VERTICAL:
-                //gc.drawImage(spriteSheet.getSprite(?,?), x, y);
-            case LEFT_UP_CORNER:
-                //gc.drawImage(spriteSheet.getSprite(?,?), x, y);
-            case RIGHT_UP_CORNER:
-                //gc.drawImage(spriteSheet.getSprite(?,?), x, y);
-            case LEFT_DOWN_CORNER:
-                //gc.drawImage(spriteSheet.getSprite(?,?), x, y);
-            case RIGHT_DOWN_CORNER:
-                //gc.drawImage(spriteSheet.getSprite(?,?), x, y);
-            default:
-        }
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
+        gc.drawImage(image, x, y);
     }
 }

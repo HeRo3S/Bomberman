@@ -2,6 +2,7 @@ package view;
 
 import GameObject.GameMap;
 import GameObject.Green;
+import GameObject.Wall;
 import GameObject.Wisp;
 import SpriteManager.SpriteSheet;
 import SpriteManager.SpriteSheetManager;
@@ -11,15 +12,11 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class GameViewManager {
@@ -77,11 +74,11 @@ public class GameViewManager {
         menuStage.hide();
         createGameMap();
         keyboardCheck();
-        createGameloop();
+        createGameLoop();
         gameStage.show();
     }
 
-    private void createGameloop() {
+    private void createGameLoop() {
         gameTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -121,6 +118,7 @@ public class GameViewManager {
         gameMap = new GameMap();
         green = new Green(10, 10, gameMap);
         wisp = new Wisp(400, 300, gameMap);
+        new Wall(200,100,gameMap,0,0);
     }
 
     public void keyboardCheck() {
