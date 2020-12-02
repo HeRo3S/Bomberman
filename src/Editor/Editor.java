@@ -25,9 +25,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
+
 
 
 public class Editor<status> extends Application {
@@ -61,6 +59,8 @@ public class Editor<status> extends Application {
         Scene scene = new Scene(group,1024,900);
 
         scene.setOnMouseClicked(mouseHandler);
+        scene.setOnMouseDragged(mouseHandler);
+
         Tiles tiles = new Tiles(0, 0, 100, gameMap);
         Wisp wisp = new Wisp(0, 0, 100, gameMap);
         Green green = new Green(0, 0, 100, gameMap);
