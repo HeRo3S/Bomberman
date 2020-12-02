@@ -1,8 +1,10 @@
 package GameObject;
 
+import java.io.Serializable;
+
 import static jdk.nashorn.internal.objects.NativeMath.max;
 
-public class Status {
+public class Status implements Serializable {
     enum currentStatus{
         CHANNEL,
         STUN,

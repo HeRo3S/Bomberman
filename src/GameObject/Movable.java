@@ -13,7 +13,7 @@ public abstract class Movable extends Entity {
     protected double dy;
     protected Point2D lastPos;
     //render components
-    protected int dyingFrameCount = 28;
+    protected int dyingFrameCount = 24;
     protected boolean isAnimateDying = false;
     protected int frame;
     protected final double frameTime = 0.100;
@@ -41,8 +41,8 @@ public abstract class Movable extends Entity {
             dy = (y - getCenterY()) /steps;
         }
     }
-    public Movable(double x, double y, double maxHp, GameMap map) {
-        super(x, y, maxHp, map);
+    public Movable(double x, double y, GameMap map) {
+        super(x, y, map);
         lastPos = new Point2D.Double((int) (x / CHUNK_SIZE), (int) (y / CHUNK_SIZE));
     }
     public void move(){

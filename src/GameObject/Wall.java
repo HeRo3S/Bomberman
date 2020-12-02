@@ -1,27 +1,21 @@
 package GameObject;
 
-import SpriteManager.SpriteSheet;
 import javafx.scene.canvas.GraphicsContext;
-
-import java.io.IOException;
 
 public class Wall extends Tiles{
     private Position position;
-    private static SpriteSheet spriteSheet;
 
     public Wall(double x, double y, double maxHp, GameMap map) {
-        super(x, y, maxHp, map);
+        super(x, y, map);
         setDestructible(false);
-        createSpriteSheet();
     }
 
     public Wall(double x, double y, double maxHp, GameMap map, Position pos)
     {
-        super(x, y, maxHp, map);
+        super(x, y, map);
         setPassable(false);
         setDestructible(false);
         position = pos;
-        createSpriteSheet();
     }
 
     @Override
@@ -50,13 +44,5 @@ public class Wall extends Tiles{
 
     public void setPosition(Position position) {
         this.position = position;
-    }
-
-    private void createSpriteSheet() {
-        try {
-            spriteSheet = new SpriteSheet("GameObject/assets/wall.png", 13, 4);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

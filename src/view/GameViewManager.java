@@ -4,6 +4,7 @@ import GameObject.GameMap;
 import GameObject.Green;
 import GameObject.Wisp;
 import SpriteManager.SpriteSheet;
+import SpriteManager.SpriteSheetManager;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -57,8 +58,8 @@ public class GameViewManager {
         gameScene = new Scene(gamePane, GAME_WIDTH, GAME_HEIGHT);
         gameStage = new Stage();
         gameStackPane = new StackPane();
-        gameStage.setScene(gameScene);
 
+        gameStage.setScene(gameScene);
         gameStage.getIcons().add(new Image("view/resources/icon.jpg"));
         gameStage.setTitle("Bomberman - RE:write Edition");
 
@@ -68,6 +69,7 @@ public class GameViewManager {
         gameStackPane.setStyle("-fx-background-color: #DEB887");
         gamePane.getChildren().add(gameStackPane);
         gameStackPane.getChildren().add(canvas);
+        SpriteSheetManager.initialize();
     }
 
     public void createNewLevel(Stage menuStage) {
@@ -94,12 +96,8 @@ public class GameViewManager {
     }
 
     private void createGameBackground() {
-        try {
-            background = new
-                    SpriteSheet("view/resources/gameBackground.png", 1, 9);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            background = new SpriteSheet("view/resources/gameBackground.png", 1, 9);
+
         for (int i = 1; i < gameMap.getMapHeight() / 64; i++) {
             for (int k = 1; k < gameMap.getMapWidth() / 64 - 1; k++) {
                 gc.drawImage(background.getSprite(4, 0), k * 64, i * 64);
@@ -121,8 +119,8 @@ public class GameViewManager {
 
     private void createGameMap() {
         gameMap = new GameMap();
-        green = new Green(10, 10, 200, gameMap);
-        wisp = new Wisp(400, 300, 100, gameMap);
+        green = new Green(10, 10, gameMap);
+        wisp = new Wisp(400, 300, gameMap);
     }
 
     public void keyboardCheck() {

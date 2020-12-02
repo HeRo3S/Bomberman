@@ -5,8 +5,8 @@ import javafx.scene.canvas.GraphicsContext;
 public abstract class Particle extends Drop {
     double range;
     double amount;
-    public Particle(double x, double y, double maxHp, GameMap map) {
-        super(x, y, maxHp, map);
+    public Particle(double x, double y, GameMap map) {
+        super(x, y, map);
         passable = true;
         range = 50;
         speed = 1;
@@ -41,6 +41,6 @@ public abstract class Particle extends Drop {
 
     @Override
     protected void animate(GraphicsContext gc, double time) {
-        gc.drawImage(spriteSheet.getSprite(0,0),x,y);
+        gc.drawImage(getSpriteSheet().getSprite(0,0),x,y);
     }
 }

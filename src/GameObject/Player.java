@@ -5,8 +5,8 @@ public abstract class Player extends Movable {
     protected double maxEnergy = 200;
     protected double energyRegen = 10;
     protected double heathRegen = 0;
-    public Player(double x, double y, double maxHp, GameMap map) {
-        super(x, y, maxHp, map);
+    public Player(double x, double y, GameMap map) {
+        super(x, y, map);
         energy = maxEnergy;
         setHitBox(0,0,32,32);
     }

@@ -1,12 +1,14 @@
 package GameObject;
 import SpriteManager.SpriteSheet;
+import SpriteManager.SpriteSheetManager;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.io.Serializable;
 
-public abstract class Entity {
-    protected SpriteSheet spriteSheet;
+public abstract class Entity implements Serializable {
+    protected SpriteSheetCode code;
     protected GameMap map;
     protected double x;
     protected double y;
@@ -18,11 +20,10 @@ public abstract class Entity {
     protected double height = 32;
     protected boolean passable = false;
     protected Status status;
-    public Entity(double x, double y, double maxHp, GameMap map) {
+    public Entity(double x, double y, GameMap map) {
         this.map = map;
         this.x = x;
         this.y = y;
-        this.maxHp = maxHp;
         health = maxHp;
         map.addContent(x, y, this);
     }
@@ -122,6 +123,6 @@ public abstract class Entity {
     }
 
     public SpriteSheet getSpriteSheet() {
-        return spriteSheet;
+        return SpriteSheetManager.getSheet(code);
     }
 }
