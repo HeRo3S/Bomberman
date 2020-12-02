@@ -3,20 +3,11 @@ package Editor;
 import GameObject.*;
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Group;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.ImagePattern;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -25,14 +16,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.util.ArrayList;
 
 
-
-public class Editor<status> extends Application {
-
-    @FXML
-    private AnchorPane anchorPane;
-
+public class Editor extends Application {
 
     public static int status = 0;
     public Node selected_photo;
@@ -40,14 +27,15 @@ public class Editor<status> extends Application {
     HBox hBox = new HBox();
 
 
-    private final int WEIGHT = 1024;
-    private final int HEIGHT = 734;
-    private int row = WEIGHT / 32;
-    private int col = HEIGHT / 32;
+    private static final int WEIGHT = 1024;
+    private static final int HEIGHT = 734;
+    private static final int row = WEIGHT / 32;
+    private static final int col = HEIGHT / 32;
 
+    public static int[][] location = new int[row][col];
     public static GameMap gameMap = new GameMap();
 
-    enum Select {PLAYER, GREEN, WISP}
+    enum Select {GREEN, WISP}
 
     static Select entitySelect = Select.WISP;
 
@@ -56,7 +44,7 @@ public class Editor<status> extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         primaryStage.setTitle("Map Editor");
-        Scene scene = new Scene(group,1024,900);
+        Scene scene = new Scene(group, 1024, 900);
 
         scene.setOnMouseClicked(mouseHandler);
         scene.setOnMouseDragged(mouseHandler);
@@ -64,7 +52,7 @@ public class Editor<status> extends Application {
         Tiles tiles = new Tiles(0, 0, 100, gameMap);
         Wisp wisp = new Wisp(0, 0, 100, gameMap);
         Green green = new Green(0, 0, 100, gameMap);
-        Image imageGreen = green.getSpritteSheet(0,0);
+        Image imageGreen = green.getSpritteSheet(0, 0);
         Rectangle rectangle1 = new Rectangle();
         rectangle1.setX(0);
         rectangle1.setY(0);
@@ -72,6 +60,7 @@ public class Editor<status> extends Application {
         rectangle1.setHeight(32);
         rectangle1.setFill(new ImagePattern(imageGreen, 0, 0, 1, 1, true));
         group.getChildren().add(rectangle1);
+        location[0][0] = 1;
         status = 1;
 
         Select select = Select.WISP;
@@ -132,40 +121,46 @@ public class Editor<status> extends Application {
             int clickY = (int) (Y / 32);
 
             if (clickX <= row && clickY <= col) {
-                switch (entitySelect) {
-                    case WISP:
-                        Wisp wisp = new Wisp(X, Y, 50, gameMap);
-                        System.out.println("Da tao mot Wisp");
-                        Image imageWisp = wisp.getSpritteSheet(0,0);
-                        Rectangle rectangle = new Rectangle();
-                        rectangle.setX(clickX * 32);
-                        rectangle.setY(clickY * 32);
-                        rectangle.setWidth(32);
-                        rectangle.setHeight(32);
-                        rectangle.setFill(new ImagePattern(imageWisp, 0, 0, 1, 1, true));
-                        group.getChildren().add(rectangle);
-                        break;
-                    case GREEN:
-                        if (status == 0){
-                            System.out.println("Da tao mot Green");
-                            Green green1 = new Green(X,Y,50,gameMap);
-                            Image imageGreen = green1.getSpritteSheet(0,0);
-                            Rectangle rectangle1 = new Rectangle();
-                            rectangle1.setX(clickX * 32);
-                            rectangle1.setY(clickY * 32);
-                            rectangle1.setWidth(32);
-                            rectangle1.setHeight(32);
-                            rectangle1.setFill(new ImagePattern(imageGreen, 0, 0, 1, 1, true));
-                            group.getChildren().add(rectangle1);
-                            status = 1;
+                if (location[clickX][clickY] == 0){
+                    switch (entitySelect) {
+                        case WISP:
+                            Wisp wisp = new Wisp(X, Y, 50, gameMap);
+                            System.out.println("Da tao mot Wisp");
+                            Image imageWisp = wisp.getSpritteSheet(0, 0);
+                            Rectangle rectangle = new Rectangle();
+                            rectangle.setX(clickX * 32);
+                            rectangle.setY(clickY * 32);
+                            rectangle.setWidth(32);
+                            rectangle.setHeight(32);
+                            rectangle.setFill(new ImagePattern(imageWisp, 0, 0, 1, 1, true));
+                            group.getChildren().add(rectangle);
+                            location[clickX][clickY] = 2;
                             break;
-                        }else{
-                            System.out.println("Chi duoc tao 1 nhan vat!");
-                            break;
-                        }
-                    default:
-                        Tiles tiles = new Tiles(X, Y, 50, gameMap);
-                        System.out.println("Da tao mot Tiles");
+                        case GREEN:
+                            if (status == 0) {
+                                System.out.println("Da tao mot Green");
+                                Green green1 = new Green(X, Y, 50, gameMap);
+                                Image imageGreen = green1.getSpritteSheet(0, 0);
+                                Rectangle rectangle1 = new Rectangle();
+                                rectangle1.setX(clickX * 32);
+                                rectangle1.setY(clickY * 32);
+                                rectangle1.setWidth(32);
+                                rectangle1.setHeight(32);
+                                rectangle1.setFill(new ImagePattern(imageGreen, 0, 0, 1, 1, true));
+                                group.getChildren().add(rectangle1);
+                                status = 1;
+                                break;
+                            } else {
+                                System.out.println("Chi duoc tao 1 nhan vat!");
+                                break;
+                            }
+                        default:
+                            Tiles tiles = new Tiles(X, Y, 50, gameMap);
+                            location[clickX][clickY] = 3;
+                            System.out.println("Da tao mot Tiles");
+                    }
+                }else{
+                    System.out.println("Vị trí này đã có Entity! Không tạo ");
                 }
             }
         }
