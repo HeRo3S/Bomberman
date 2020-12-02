@@ -14,9 +14,10 @@ public class Wisp extends Hostile {
     private int statusSprite;
     private int attackFrameCount;
     private Entity testing;
-    public Wisp(double x, double y, double maxHp, GameMap map) {
-        super(x, y, maxHp, map);
+    public Wisp(double x, double y, GameMap map) {
+        super(x, y, map);
         detectionRange = 100;
+        maxHp = 100;
         damage = 20;
         attackSpeed = 1;
         status = new Status();
@@ -126,7 +127,7 @@ public class Wisp extends Hostile {
 
     @Override
     protected void drop() {
-        new HealthOrb(getCenterX(),getCenterY(),2,map);
+        new HealthOrb(getCenterX(),getCenterY(),map);
     }
 
     @Override

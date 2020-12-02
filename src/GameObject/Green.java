@@ -14,12 +14,13 @@ public class Green extends Player {
     private HashSet<String> input = GameViewManager.getInput();
     private int direction;
 
-    public Green(double x, double y, double maxHp, GameMap map) {
-        super(x, y, maxHp, map);
+    public Green(double x, double y, GameMap map) {
+        super(x, y, map);
         setHitBox(6, 0, 20, 32);
         setSpeed(3);
         direction = 1;
         code = SpriteSheetCode.GREEN;
+        maxHp = 200;
     }
 
     @Override
@@ -78,7 +79,7 @@ public class Green extends Player {
             direction = 2;
         }
         if(input.contains("K")){
-            new BasicRune(x,y,2,map);
+            new BasicRune(x,y,map);
             input.remove("K");
         }
     }

@@ -115,8 +115,8 @@ public class GameViewManager {
 
     private void createGameMap() {
         gameMap = new GameMap();
-        green = new Green(10, 10, 200, gameMap);
-        wisp = new Wisp(400, 300, 100, gameMap);
+        green = new Green(10, 10, gameMap);
+        wisp = new Wisp(400, 300, gameMap);
     }
 
     public void keyboardCheck() {

@@ -6,8 +6,8 @@ import javafx.scene.canvas.GraphicsContext;
 public class Tiles extends Entity {
     private boolean destructible;
 
-    public Tiles(double x, double y, double maxHp, GameMap map) {
-        super(x, y, maxHp, map);
+    public Tiles(double x, double y, GameMap map) {
+        super(x, y, map);
     }
 
     @Override

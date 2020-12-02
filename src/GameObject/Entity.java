@@ -20,11 +20,10 @@ public abstract class Entity implements Serializable {
     protected double height = 32;
     protected boolean passable = false;
     protected Status status;
-    public Entity(double x, double y, double maxHp, GameMap map) {
+    public Entity(double x, double y, GameMap map) {
         this.map = map;
         this.x = x;
         this.y = y;
-        this.maxHp = maxHp;
         health = maxHp;
         map.addContent(x, y, this);
     }

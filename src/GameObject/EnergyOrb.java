@@ -7,8 +7,8 @@ import java.io.IOException;
 
 public class EnergyOrb extends Particle {
 
-    public EnergyOrb(double x, double y, double maxHp, GameMap map) {
-        super(x, y, maxHp, map);
+    public EnergyOrb(double x, double y, GameMap map) {
+        super(x, y, map);
         amount = 20;
         code = SpriteSheetCode.ENERGY_ORB;
     }

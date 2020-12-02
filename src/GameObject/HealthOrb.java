@@ -5,8 +5,8 @@ import SpriteManager.SpriteSheet;
 import java.io.IOException;
 
 public class HealthOrb extends Particle {
-    public HealthOrb(double x, double y, double maxHp, GameMap map) {
-        super(x, y, maxHp, map);
+    public HealthOrb(double x, double y, GameMap map) {
+        super(x, y, map);
         amount = 20;
         code = SpriteSheetCode.HEALTH_ORB;
     }

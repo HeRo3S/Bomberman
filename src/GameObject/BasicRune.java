@@ -8,8 +8,8 @@ import java.io.IOException;
 import static java.lang.Math.*;
 
 public class BasicRune extends Rune {
-    public BasicRune(double x, double y, double maxHp, GameMap map) {
-        super(x, y, maxHp, map);
+    public BasicRune(double x, double y, GameMap map) {
+        super(x, y, map);
         damage = 100;
         range = 150;
         primeTime = 150;

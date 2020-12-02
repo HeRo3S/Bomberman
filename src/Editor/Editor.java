@@ -50,26 +50,13 @@ public class Editor extends Application {
         scene.setOnMouseClicked(mouseHandler);
         scene.setOnMouseDragged(mouseHandler);
         SpriteSheetManager.initialize();
-        Tiles tiles = new Tiles(0, 0, 100, gameMap);
-        Wisp wisp = new Wisp(0, 0, 100, gameMap);
-        Green green = new Green(0, 0, 100, gameMap);
-        Image imageGreen = green.getSpriteSheet(0, 0);
-        Rectangle rectangle1 = new Rectangle();
-        rectangle1.setX(0);
-        rectangle1.setY(0);
-        rectangle1.setWidth(32);
-        rectangle1.setHeight(32);
-        rectangle1.setFill(new ImagePattern(imageGreen, 0, 0, 1, 1, true));
-        group.getChildren().add(rectangle1);
-        location[0][0] = 1;
-        status = 1;
 
         Select select = Select.WISP;
-        Button button1 = CreatButton(select, wisp.getSpriteSheet().getSprite(0,0));
+        Button button1 = CreatButton(select, SpriteSheetManager.getSheet(SpriteSheetCode.WISP).getSprite(0,0));
         hBox.getChildren().add(button1);
 
         Select select1 = Select.GREEN;
-        Button button2 = CreatButton(select1, green.getSpriteSheet(0, 0));
+        Button button2 = CreatButton(select1, SpriteSheetManager.getSheet(SpriteSheetCode.GREEN).getSprite(0,0));
         hBox.getChildren().add(button2);
         hBox.setLayoutX(0);
         hBox.setLayoutY(734);
@@ -80,6 +67,7 @@ public class Editor extends Application {
                 FileOutputStream file = new FileOutputStream("GameMap.dat");
                 ObjectOutputStream os = new ObjectOutputStream(file);
                 os.writeObject(gameMap);
+                System.out.println("Đã lưu Map thành công ");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -125,7 +113,7 @@ public class Editor extends Application {
                 if (location[clickX][clickY] == 0){
                     switch (entitySelect) {
                         case WISP:
-                            Wisp wisp = new Wisp(X, Y, 50, gameMap);
+                            Wisp wisp = new Wisp(X, Y, gameMap);
                             System.out.println("Da tao mot Wisp");
                             Image imageWisp = wisp.getSpriteSheet().getSprite(0,0);
                             Rectangle rectangle = new Rectangle();
@@ -140,7 +128,7 @@ public class Editor extends Application {
                         case GREEN:
                             if (status == 0) {
                                 System.out.println("Da tao mot Green");
-                                Green green1 = new Green(X, Y, 50, gameMap);
+                                Green green1 = new Green(X, Y, gameMap);
                                 Image imageGreen = green1.getSpriteSheet(0, 0);
                                 Rectangle rectangle1 = new Rectangle();
                                 rectangle1.setX(clickX * 32);
@@ -156,7 +144,7 @@ public class Editor extends Application {
                                 break;
                             }
                         default:
-                            Tiles tiles = new Tiles(X, Y, 50, gameMap);
+                            Tiles tiles = new Tiles(X, Y, gameMap);
                             location[clickX][clickY] = 3;
                             System.out.println("Da tao mot Tiles");
                     }

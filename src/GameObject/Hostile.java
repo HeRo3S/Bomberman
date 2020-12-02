@@ -14,8 +14,8 @@ public abstract class Hostile extends Movable {
     protected Line2D lineOfSight = new Line2D.Double();
     protected int idleTimer;
     protected int idleTime;
-    public Hostile(double x, double y, double maxHp, GameMap map) {
-        super(x, y, maxHp , map);
+    public Hostile(double x, double y, GameMap map) {
+        super(x, y , map);
     }
     public void findTarget(){
         for (Entity entity : map.getContent(x, y, detectionRange)) {
