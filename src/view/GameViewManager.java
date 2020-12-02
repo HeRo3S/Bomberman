@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -56,11 +57,14 @@ public class GameViewManager {
         gameScene = new Scene(gamePane, GAME_WIDTH, GAME_HEIGHT);
         gameStage = new Stage();
         gameStackPane = new StackPane();
-
         gameStage.setScene(gameScene);
+
+        gameStage.getIcons().add(new Image("view/resources/icon.jpg"));
+        gameStage.setTitle("Bomberman - RE:write Edition");
 
         canvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
         gc = canvas.getGraphicsContext2D();
+        gc.scale(2, 2);
         gameStackPane.setStyle("-fx-background-color: #DEB887");
         gamePane.getChildren().add(gameStackPane);
         gameStackPane.getChildren().add(canvas);
@@ -96,23 +100,23 @@ public class GameViewManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (int i = 1; i < GAME_HEIGHT / 64; i++) {
-            for (int k = 1; k < GAME_WIDTH / 64 - 1; k++) {
+        for (int i = 1; i < gameMap.getMapHeight() / 64; i++) {
+            for (int k = 1; k < gameMap.getMapWidth() / 64 - 1; k++) {
                 gc.drawImage(background.getSprite(4, 0), k * 64, i * 64);
             }
         }
-        for (int i = 1; i < GAME_HEIGHT / 64; i++) {
+        for (int i = 1; i < gameMap.getMapHeight() / 64; i++) {
             gc.drawImage(background.getSprite(3, 0), 0, i * 64);
-            gc.drawImage(background.getSprite(5, 0), GAME_WIDTH - 64, i * 64);
+            gc.drawImage(background.getSprite(5, 0), gameMap.getMapWidth() - 64, i * 64);
         }
-        for (int k = 1; k < GAME_WIDTH / 64 - 1; k++) {
+        for (int k = 1; k < gameMap.getMapWidth() / 64 - 1; k++) {
             gc.drawImage(background.getSprite(1, 0), k * 64, 0);
-            gc.drawImage(background.getSprite(7, 0), k * 64, GAME_HEIGHT - 64);
+            gc.drawImage(background.getSprite(7, 0), k * 64, gameMap.getMapHeight() - 64);
         }
         gc.drawImage(background.getSprite(0, 0), 0, 0);
-        gc.drawImage(background.getSprite(2, 0), GAME_WIDTH - 64, 0);
-        gc.drawImage(background.getSprite(6, 0), 0, GAME_HEIGHT - 64);
-        gc.drawImage(background.getSprite(8, 0), GAME_WIDTH - 64, GAME_HEIGHT - 64);
+        gc.drawImage(background.getSprite(2, 0), gameMap.getMapWidth() - 64, 0);
+        gc.drawImage(background.getSprite(6, 0), 0, gameMap.getMapHeight() - 64);
+        gc.drawImage(background.getSprite(8, 0), gameMap.getMapWidth() - 64, gameMap.getMapHeight() - 64);
     }
 
     private void createGameMap() {
