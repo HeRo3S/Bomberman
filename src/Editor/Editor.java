@@ -6,6 +6,9 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -26,68 +29,72 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
-public class Editor extends Application implements Initializable {
+public class Editor extends Application {
     @FXML
     public HBox hbox;
 
+    @FXML
+    private AnchorPane anchorPane;
+
+
     public int status = 0;
     public Node selected_photo;
+    Group group = new Group();
+    HBox hBox = new HBox();
+
 
     private final int WEIGHT = 1024;
     private final int HEIGHT = 734;
     private int row = WEIGHT / 32;
     private int col = HEIGHT / 32;
 
-    GameMap gameMap = new GameMap();
+    public static GameMap gameMap = new GameMap();
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        Tiles tiles = new Tiles(0, 0, 50, gameMap);
-        Wisp wisp = new Wisp(0, 32, 50, gameMap);
-        Green green = new Green(0, 64, 50, gameMap);
-
-        Select select = Select.WISP;
-        Button button1 = CreatButton(select, wisp.getSpritteSheet(0, 0));
-        hbox.getChildren().add(button1);
-
-        Select select1 = Select.GREEN;
-        Button button2 = CreatButton(select1, green.getSpritteSheet(0, 0));
-        hbox.getChildren().add(button2);
-
-    }
+//    @Override
+//    public void initialize(URL location, ResourceBundle resources) {
+//        Tiles tiles = new Tiles(0, 0, 50, gameMap);
+//        Wisp wisp = new Wisp(0, 32, 50, gameMap);
+//        Green green = new Green(0, 64, 50, gameMap);
+//
+//        Select select = Select.WISP;
+//        Button button1 = CreatButton(select, wisp.getSpritteSheet(0, 0));
+//        hBox.getChildren().add(button1);
+//
+//        Select select1 = Select.GREEN;
+//        Button button2 = CreatButton(select1, green.getSpritteSheet(0, 0));
+//        hBox.getChildren().add(button2);
+//        hBox.setLayoutX(0);
+//        hBox.setLayoutY(734);
+//
+//        group.getChildren().add(hBox);
+//    }
 
     enum Select {PLAYER, GREEN, WISP}
 
-    static Select entitySelect = Select.GREEN;
+    static Select entitySelect = Select.WISP;
 
-    public static ArrayList<ArrayList<Rectangle>> rectangles = new ArrayList<ArrayList<Rectangle>>();
-
-    public void DrawRectangle(int widthMap, int heightMap) {
-        for (int i = 0; i < widthMap; i += 32) {
-            ArrayList<Rectangle> rectangleArrayList = new ArrayList<>();
-            for (int j = 0; j < heightMap; j += 32) {
-                Rectangle rectangle = new Rectangle();
-                rectangle.setX(j * 32);
-                rectangle.setY(i * 32);
-                rectangle.setWidth(32);
-                rectangle.setHeight(32);
-                rectangleArrayList.add(rectangle);
-            }
-            rectangles.add(rectangleArrayList);
-        }
-    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Editor/MapEditor.fxml"));
-        Parent root = loader.load();
         primaryStage.setTitle("Map Editor");
-        Scene scene = new Scene(root, 1024, 900);
-        DrawRectangle(WEIGHT, HEIGHT);
-
+        Scene scene = new Scene(group,1024,900);
 
         scene.setOnMouseClicked(mouseHandler);
+        Tiles tiles = new Tiles(0, 0, 50, gameMap);
+        Wisp wisp = new Wisp(0, 32, 50, gameMap);
+        Green green = new Green(0, 64, 50, gameMap);
+        Select select = Select.WISP;
+        Button button1 = CreatButton(select, wisp.getSpritteSheet(0, 0));
+        hBox.getChildren().add(button1);
+
+        Select select1 = Select.GREEN;
+        Button button2 = CreatButton(select1, green.getSpritteSheet(0, 0));
+        hBox.getChildren().add(button2);
+        hBox.setLayoutX(0);
+        hBox.setLayoutY(734);
+
+        group.getChildren().add(hBox);
 
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -125,11 +132,26 @@ public class Editor extends Application implements Initializable {
                         Wisp wisp = new Wisp(X, Y, 50, gameMap);
                         System.out.println("Da tao mot Wisp");
                         Image imageWisp = wisp.getSpritteSheet(0,0);
-                        rectangles.get(clickX).get(clickY).setFill(new ImagePattern(imageWisp, 0, 0, 1, 1, true));
+                        Rectangle rectangle = new Rectangle();
+                        rectangle.setX(clickX * 32);
+                        rectangle.setY(clickY * 32);
+                        rectangle.setWidth(32);
+                        rectangle.setHeight(32);
+                        rectangle.setFill(new ImagePattern(imageWisp, 0, 0, 1, 1, true));
+                        group.getChildren().add(rectangle);
                         break;
                     case GREEN:
                         Green green = new Green(X, Y, 50, gameMap);
                         System.out.println("Da tao mot Green");
+                        Green green1 = new Green(X,Y,50,gameMap);
+                        Image imageGreen = green1.getSpritteSheet(0,0);
+                        Rectangle rectangle1 = new Rectangle();
+                        rectangle1.setX(clickX * 32);
+                        rectangle1.setY(clickY * 32);
+                        rectangle1.setWidth(32);
+                        rectangle1.setHeight(32);
+                        rectangle1.setFill(new ImagePattern(imageGreen, 0, 0, 1, 1, true));
+                        group.getChildren().add(rectangle1);
                         break;
                     case PLAYER:
                         Player player = new Player(X, Y, 50, gameMap) {
