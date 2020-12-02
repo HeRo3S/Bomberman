@@ -65,7 +65,7 @@ public class GameViewManager {
 
         canvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
         gc = canvas.getGraphicsContext2D();
-        gc.scale(2, 2);
+        gc.scale(1.25, 1.25);
         gameStackPane.setStyle("-fx-background-color: #DEB887");
         gamePane.getChildren().add(gameStackPane);
         gameStackPane.getChildren().add(canvas);

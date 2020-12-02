@@ -13,7 +13,7 @@ public abstract class Movable extends Entity {
     protected double dy;
     protected Point2D lastPos;
     //render components
-    protected int dyingFrameCount = 24;
+    protected int dyingFrameCount = 48;
     protected boolean isAnimateDying = false;
     protected int frame;
     protected final double frameTime = 0.100;

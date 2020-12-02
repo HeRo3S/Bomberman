@@ -7,6 +7,9 @@ import static GameObject.SpriteSheetCode.THROWER;
 import static java.lang.Math.random;
 
 public class Brute extends Hostile {
+    private int directionSprite;
+    private int statusSprite;
+
     public Brute(double x, double y, GameMap map) {
         super(x, y, map);
         attackRange = 30;
@@ -19,6 +22,13 @@ public class Brute extends Hostile {
         detectionRange = 150;
         attackRange = 30;
         idleTime = 60;
+    }
+
+    @Override
+    protected void basicLogic() {
+        if (getHealth() <= 0) {
+            map.removeContent(x, y, this);
+        }
     }
 
     @Override
@@ -71,6 +81,16 @@ public class Brute extends Hostile {
 
     @Override
     public void update() {
+        if (getDx() == 0) {
+            statusSprite = 0;
+        } else {
+            statusSprite = 4;
+            if (getDx() < 0) {
+                directionSprite = 0;
+            } else if (getDx() > 0) {
+                directionSprite = 1;
+            }
+        }
         hostileLogic();
         basicLogic();
     }
@@ -82,6 +102,7 @@ public class Brute extends Hostile {
 
     @Override
     protected void animate(GraphicsContext gc, double time) {
-
+        frame = (int) ((time % (4 * frameTime)) / frameTime) + statusSprite;
+        gc.drawImage(getSpriteSheet().getSprite(frame, directionSprite), getX(), getY());
     }
 }

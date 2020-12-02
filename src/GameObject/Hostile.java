@@ -59,7 +59,6 @@ public abstract class Hostile extends Movable {
             if (getDistance(target) < attackRange) {
                 //render components
                 if (status.canAttack()) {
-                    attackFrameCount = 60;
                     attack();
                 }
             }

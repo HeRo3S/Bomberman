@@ -4,9 +4,12 @@ import SpriteManager.SpriteSheet;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import java.awt.geom.Point2D;
 import java.io.IOException;
 
-import static java.lang.Math.random;
+import static GameObject.GameMap.*;
+import static GameObject.GameMap.CHUNK_SIZE;
+import static java.lang.Math.*;
 
 public class Wisp extends Hostile {
     private final double frameTime = 0.100;
@@ -68,6 +71,40 @@ public class Wisp extends Hostile {
     }
 
     @Override
+    protected void hostileLogic() {
+        boolean canMoveX = true;
+        boolean canMoveY = true;
+        for(Entity entity : map.getContent(x,y,1)) {
+            if(entity != this){
+                //Calculate
+                if (getModifiedHitBox(dx*speed, 0).intersects(entity.getHitBox()) && canMoveX) {
+                    solveCollision(entity);
+                    if (noPass(entity)) {
+                        dx = 0;
+                        canMoveX = false;
+                    }
+                }
+                if (getModifiedHitBox(0, dy*speed).intersects(entity.getHitBox()) && canMoveY) {
+                    solveCollision(entity);
+                    if (noPass(entity)) {
+                        dy = 0;
+                        canMoveY = false;
+                    }
+                }
+            }
+        }
+        x += dx * speed;
+        y += dy * speed;
+        x = max(min(x,MAP_WIDTH - 32),0);
+        y = max(min(y,MAP_HEIGHT - 32),0);
+        if(!(new Point2D.Double(x/ CHUNK_SIZE, y/ CHUNK_SIZE).equals(lastPos))){
+            map.removeContent(lastPos.getX() * CHUNK_SIZE,lastPos.getY() * CHUNK_SIZE, this);
+            map.addContent(x ,y ,this);
+            lastPos = new Point2D.Double(x / CHUNK_SIZE, y / CHUNK_SIZE);
+        }
+    }
+
+    @Override
     public void update() {
         if (getDx() < 0) {
             directionSprite = 0;
@@ -99,7 +136,7 @@ public class Wisp extends Hostile {
         if (isAnimateDying) {
             directionSprite= 2;
             statusSprite = 0;
-            frame =  (24 - dyingFrameCount ) / 6;
+            frame =  (48 - dyingFrameCount ) / 12;
         } else {
             if (attackFrameCount != 0) {
                 statusSprite = 4;
