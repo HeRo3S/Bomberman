@@ -7,13 +7,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.paint.ImagePattern;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -47,11 +44,11 @@ public class Editor extends Application implements Initializable {
         Green green = new Green(0, 64, 50, gameMap);
 
         Select select = Select.WISP;
-        Button button1 = CreatButton(select, wisp.getSpritteSheet(0, 0));
+        Button button1 = CreatButton(select, wisp.getSpriteSheet(0, 0));
         hbox.getChildren().add(button1);
 
         Select select1 = Select.GREEN;
-        Button button2 = CreatButton(select1, green.getSpritteSheet(0, 0));
+        Button button2 = CreatButton(select1, green.getSpriteSheet(0, 0));
         hbox.getChildren().add(button2);
 
     }
@@ -124,31 +121,12 @@ public class Editor extends Application implements Initializable {
                     case WISP:
                         Wisp wisp = new Wisp(X, Y, 50, gameMap);
                         System.out.println("Da tao mot Wisp");
-                        Image imageWisp = wisp.getSpritteSheet(0,0);
+                        Image imageWisp = wisp.getSpriteSheet(0,0);
                         rectangles.get(clickX).get(clickY).setFill(new ImagePattern(imageWisp, 0, 0, 1, 1, true));
                         break;
                     case GREEN:
                         Green green = new Green(X, Y, 50, gameMap);
                         System.out.println("Da tao mot Green");
-                        break;
-                    case PLAYER:
-                        Player player = new Player(X, Y, 50, gameMap) {
-                            @Override
-                            public void update() {
-
-                            }
-
-                            @Override
-                            protected void solveCollision(Entity entity) {
-
-                            }
-
-                            @Override
-                            protected void animate(GraphicsContext gc, double time) {
-
-                            }
-                        };
-                        System.out.println("Da tao mot Player");
                         break;
                     default:
                         Tiles tiles = new Tiles(X, Y, 50, gameMap);

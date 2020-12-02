@@ -8,7 +8,6 @@ import java.io.IOException;
 import static java.lang.Math.*;
 
 public class BasicRune extends Rune {
-    private static SpriteSheet spriteSheet;
     public BasicRune(double x, double y, double maxHp, GameMap map) {
         super(x, y, maxHp, map);
         damage = 100;
@@ -27,8 +26,9 @@ public class BasicRune extends Rune {
     @Override
     protected void explode() {
         for(Entity entity : map.getContent(x,y,range)){
-            if(getDistance(entity) <= range){
+            if(getDistance(entity) <= range && !(entity instanceof Rune)){
                 entity.health -= damage;
+                System.out.println(entity.health);
             }
         }
         health = 0;

@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Green extends Player {
-
-    private SpriteSheet mainSprite;
     private HashSet<String> input = GameViewManager.getInput();
     private int direction;
 
@@ -34,7 +32,7 @@ public class Green extends Player {
 
     private void createSprite() {
         try {
-            mainSprite = new SpriteSheet("GameObject/assets/mcSheet.png", 5, 8);
+            spriteSheet = new SpriteSheet("GameObject/assets/mcSheet.png", 5, 8);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -63,7 +61,7 @@ public class Green extends Player {
         if (!input.isEmpty()) {
             frame += 4;
         }
-        gc.drawImage(mainSprite.getSprite(frame, direction), getX(), getY());
+        gc.drawImage(spriteSheet.getSprite(frame, direction), getX(), getY());
     }
 
     private void inputHandle() {
@@ -94,7 +92,7 @@ public class Green extends Player {
         }
     }
 
-    public Image getSpritteSheet(int x, int y) {
-        return mainSprite.getSprite(x,y);
+    public Image getSpriteSheet(int x, int y) {
+        return spriteSheet.getSprite(x,y);
     }
 }

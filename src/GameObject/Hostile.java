@@ -40,19 +40,11 @@ public abstract class Hostile extends Movable {
         }
     }
     public void moveToTarget(){
-        double steps = max(abs(target.x - x), abs(target.y - y));
-        if (steps == 0)
-        {
-            dx = dy = 0;
-        }
-        else
-        {
-            dx = (target.x - x) / steps;
-            dy = (target.y - y) /steps;
-        }
+        moveTo(target.x,target.y);
     }
     public abstract void idle();
     protected abstract void attack();
+    protected abstract void drop();
 
     /**
      * Getter/Setter

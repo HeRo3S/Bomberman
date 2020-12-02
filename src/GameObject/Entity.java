@@ -1,10 +1,12 @@
 package GameObject;
+import SpriteManager.SpriteSheet;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 public abstract class Entity {
+    protected SpriteSheet spriteSheet;
     protected GameMap map;
     protected double x;
     protected double y;
@@ -117,5 +119,9 @@ public abstract class Entity {
 
     public void setMap(GameMap map) {
         this.map = map;
+    }
+
+    public SpriteSheet getSpriteSheet() {
+        return spriteSheet;
     }
 }

@@ -4,8 +4,8 @@ package GameObject;
 import java.awt.geom.Point2D;
 
 import static GameObject.GameMap.*;
-import static java.lang.Math.max;
-import static java.lang.Math.min;
+import static java.lang.Math.*;
+import static java.lang.Math.abs;
 
 public abstract class Movable extends Entity {
     protected double speed;
@@ -20,19 +20,27 @@ public abstract class Movable extends Entity {
     @Override
     protected void basicLogic() {
         if (getHealth() <= 0) {
-            if (dyingFrameCount == 0) {
+            if (--dyingFrameCount <= 0) {
                 map.removeContent(x, y, this);
-                return;
             } else {
                 isAnimateDying = true;
                 dx = 0;
                 dy = 0;
-                dyingFrameCount--;
-                return;
             }
         }
     }
-
+    public void moveTo(double x, double y){
+        double steps = max(abs(x - getCenterX()), abs(y - getCenterY()));
+        if (steps == 0)
+        {
+            dx = dy = 0;
+        }
+        else
+        {
+            dx = (x - getCenterX()) / steps;
+            dy = (y - getCenterY()) /steps;
+        }
+    }
     public Movable(double x, double y, double maxHp, GameMap map) {
         super(x, y, maxHp, map);
         lastPos = new Point2D.Double((int) (x / CHUNK_SIZE), (int) (y / CHUNK_SIZE));

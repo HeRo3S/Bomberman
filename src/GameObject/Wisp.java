@@ -2,14 +2,13 @@ package GameObject;
 
 import SpriteManager.SpriteSheet;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 import java.io.IOException;
 
 import static java.lang.Math.random;
 
 public class Wisp extends Hostile {
-
-    private static SpriteSheet spriteSheet;
     private final double frameTime = 0.100;
     private int directionSprite;
     private int statusSprite;
@@ -112,6 +111,11 @@ public class Wisp extends Hostile {
         if (!status.isChannelling() && !status.isStunning()) {
             move();
         }
+        if(dyingFrameCount <= 1){
+            if(health <= 0){
+                drop();
+            }
+        }
         basicLogic();
         status.update();
     }
@@ -120,12 +124,17 @@ public class Wisp extends Hostile {
     protected void solveCollision(Entity entity) {
     }
     protected void attack(){
-        if (target instanceof Player && status.canAttack()) {
+        if (target instanceof Player) {
             Player player = (Player) target;
             player.health -= damage;
             status.add(Status.currentStatus.ATTACK_CD, 5);
             System.out.println(target.health);
         }
+    }
+
+    @Override
+    protected void drop() {
+        new HealthOrb(getCenterX(),getCenterY(),2,map);
     }
 
     @Override
@@ -148,5 +157,8 @@ public class Wisp extends Hostile {
             gc.strokeLine(testing.getCenterX(), testing.getCenterY(), getCenterX(), getCenterY());
         }
         drawHitBox(gc);
+    }
+    public Image getSpriteSheet(int x, int y) {
+        return spriteSheet.getSprite(x,y);
     }
 }
