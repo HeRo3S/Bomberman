@@ -7,7 +7,6 @@ import view.GameViewManager;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Green extends Player {
