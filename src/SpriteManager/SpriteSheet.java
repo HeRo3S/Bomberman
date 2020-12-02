@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class SpriteSheet {
     private ArrayList<ArrayList<Image>> sprites = new ArrayList<>();
 
-    public SpriteSheet(String filepath, int spriteRows, int spriteCols) throws IOException {
+    public SpriteSheet(String filepath, int spriteRows, int spriteCols){
         Image spriteSheet = new Image(filepath);
         int spriteW = (int) (spriteSheet.getWidth()/spriteCols);
         int spriteH = (int) (spriteSheet.getHeight()/spriteRows);

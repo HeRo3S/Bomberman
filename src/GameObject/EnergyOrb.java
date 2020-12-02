@@ -10,11 +10,7 @@ public class EnergyOrb extends Particle {
     public EnergyOrb(double x, double y, double maxHp, GameMap map) {
         super(x, y, maxHp, map);
         amount = 20;
-        try {
-            spriteSheet = new SpriteSheet("GameObject/assets/energyOrb.png",1,1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        code = SpriteSheetCode.ENERGY_ORB;
     }
 
     @Override

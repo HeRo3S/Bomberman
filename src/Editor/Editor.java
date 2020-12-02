@@ -1,6 +1,7 @@
 package Editor;
 
 import GameObject.*;
+import SpriteManager.SpriteSheetManager;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -48,11 +49,11 @@ public class Editor extends Application {
 
         scene.setOnMouseClicked(mouseHandler);
         scene.setOnMouseDragged(mouseHandler);
-
+        SpriteSheetManager.initialize();
         Tiles tiles = new Tiles(0, 0, 100, gameMap);
         Wisp wisp = new Wisp(0, 0, 100, gameMap);
         Green green = new Green(0, 0, 100, gameMap);
-        Image imageGreen = green.getSpritteSheet(0, 0);
+        Image imageGreen = green.getSpriteSheet(0, 0);
         Rectangle rectangle1 = new Rectangle();
         rectangle1.setX(0);
         rectangle1.setY(0);
@@ -64,11 +65,11 @@ public class Editor extends Application {
         status = 1;
 
         Select select = Select.WISP;
-        Button button1 = CreatButton(select, wisp.getSpritteSheet(0, 0));
+        Button button1 = CreatButton(select, wisp.getSpriteSheet().getSprite(0,0));
         hBox.getChildren().add(button1);
 
         Select select1 = Select.GREEN;
-        Button button2 = CreatButton(select1, green.getSpritteSheet(0, 0));
+        Button button2 = CreatButton(select1, green.getSpriteSheet(0, 0));
         hBox.getChildren().add(button2);
         hBox.setLayoutX(0);
         hBox.setLayoutY(734);
@@ -126,7 +127,7 @@ public class Editor extends Application {
                         case WISP:
                             Wisp wisp = new Wisp(X, Y, 50, gameMap);
                             System.out.println("Da tao mot Wisp");
-                            Image imageWisp = wisp.getSpritteSheet(0, 0);
+                            Image imageWisp = wisp.getSpriteSheet().getSprite(0,0);
                             Rectangle rectangle = new Rectangle();
                             rectangle.setX(clickX * 32);
                             rectangle.setY(clickY * 32);
@@ -140,7 +141,7 @@ public class Editor extends Application {
                             if (status == 0) {
                                 System.out.println("Da tao mot Green");
                                 Green green1 = new Green(X, Y, 50, gameMap);
-                                Image imageGreen = green1.getSpritteSheet(0, 0);
+                                Image imageGreen = green1.getSpriteSheet(0, 0);
                                 Rectangle rectangle1 = new Rectangle();
                                 rectangle1.setX(clickX * 32);
                                 rectangle1.setY(clickY * 32);

@@ -14,25 +14,17 @@ public class Wisp extends Hostile {
     private int statusSprite;
     private int attackFrameCount;
     private Entity testing;
-    private void createSprite() {
-        try {
-            spriteSheet = new SpriteSheet("GameObject/assets/wispSheet.png", 3, 8);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public Wisp(double x, double y, double maxHp, GameMap map) {
         super(x, y, maxHp, map);
         detectionRange = 100;
         damage = 20;
         attackSpeed = 1;
         status = new Status();
-        createSprite();
         setHitBox(10, 5, 12, 18);
         setSpeed(1);
         attackRange = 28;
         idleTime = 60;
+        code = SpriteSheetCode.WISP;
     }
 
     @Override
@@ -152,13 +144,10 @@ public class Wisp extends Hostile {
             }
             frame = (int) ((time % (4 * frameTime)) / frameTime) + statusSprite;
         }
-        gc.drawImage(spriteSheet.getSprite(frame, directionSprite), getX(), getY());
+        gc.drawImage(getSpriteSheet().getSprite(frame, directionSprite), getX(), getY());
         if(testing != null) {
             gc.strokeLine(testing.getCenterX(), testing.getCenterY(), getCenterX(), getCenterY());
         }
         drawHitBox(gc);
-    }
-    public Image getSpriteSheet(int x, int y) {
-        return spriteSheet.getSprite(x,y);
     }
 }

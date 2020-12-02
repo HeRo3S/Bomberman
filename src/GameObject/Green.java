@@ -16,10 +16,10 @@ public class Green extends Player {
 
     public Green(double x, double y, double maxHp, GameMap map) {
         super(x, y, maxHp, map);
-        createSprite();
         setHitBox(6, 0, 20, 32);
         setSpeed(3);
         direction = 1;
+        code = SpriteSheetCode.GREEN;
     }
 
     @Override
@@ -29,15 +29,6 @@ public class Green extends Player {
         }
         return false;
     }
-
-    private void createSprite() {
-        try {
-            spriteSheet = new SpriteSheet("GameObject/assets/mcSheet.png", 5, 8);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     @Override
     public void update() {
@@ -61,7 +52,7 @@ public class Green extends Player {
         if (!input.isEmpty()) {
             frame += 4;
         }
-        gc.drawImage(spriteSheet.getSprite(frame, direction), getX(), getY());
+        gc.drawImage(getSpriteSheet().getSprite(frame, direction), getX(), getY());
     }
 
     private void inputHandle() {
@@ -93,6 +84,6 @@ public class Green extends Player {
     }
 
     public Image getSpriteSheet(int x, int y) {
-        return spriteSheet.getSprite(x,y);
+        return getSpriteSheet().getSprite(x,y);
     }
 }

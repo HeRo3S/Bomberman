@@ -4,6 +4,7 @@ import GameObject.GameMap;
 import GameObject.Green;
 import GameObject.Wisp;
 import SpriteManager.SpriteSheet;
+import SpriteManager.SpriteSheetManager;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -64,6 +65,7 @@ public class GameViewManager {
         gameStackPane.setStyle("-fx-background-color: #DEB887");
         gamePane.getChildren().add(gameStackPane);
         gameStackPane.getChildren().add(canvas);
+        SpriteSheetManager.initialize();
     }
 
     public void createNewLevel(Stage menuStage) {
@@ -90,12 +92,8 @@ public class GameViewManager {
     }
 
     private void createGameBackground() {
-        try {
-            background = new
-                    SpriteSheet("view/resources/gameBackground.png", 1, 9);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            background = new SpriteSheet("view/resources/gameBackground.png", 1, 9);
+
         for (int i = 1; i < GAME_HEIGHT / 64; i++) {
             for (int k = 1; k < GAME_WIDTH / 64 - 1; k++) {
                 gc.drawImage(background.getSprite(4, 0), k * 64, i * 64);

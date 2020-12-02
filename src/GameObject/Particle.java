@@ -41,6 +41,6 @@ public abstract class Particle extends Drop {
 
     @Override
     protected void animate(GraphicsContext gc, double time) {
-        gc.drawImage(spriteSheet.getSprite(0,0),x,y);
+        gc.drawImage(getSpriteSheet().getSprite(0,0),x,y);
     }
 }
