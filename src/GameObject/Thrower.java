@@ -5,7 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import static GameObject.SpriteSheetCode.THROWER;
 import static java.lang.Math.random;
 
-public class Thrower extends Hostile {
+public class Thrower extends Hostile implements Destructible, Impassable {
     public Thrower(double x, double y, GameMap map) {
         super(x, y, map);
         attackRange = 30;
@@ -63,10 +63,6 @@ public class Thrower extends Hostile {
 
     }
 
-    @Override
-    boolean noPass(Entity entity) {
-        return false;
-    }
 
     @Override
     public void update() {

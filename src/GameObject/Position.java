@@ -1,6 +1,0 @@
-package GameObject;
-
-public enum Position {
-    HORIZONTAL, VERTICAL, LEFT_UP_CORNER, LEFT_DOWN_CORNER,
-    RIGHT_UP_CORNER, RIGHT_DOWN_CORNER
-}

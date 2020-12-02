@@ -3,10 +3,9 @@ package GameObject;
 import javafx.scene.canvas.GraphicsContext;
 
 import static GameObject.SpriteSheetCode.BRUTE;
-import static GameObject.SpriteSheetCode.THROWER;
 import static java.lang.Math.random;
 
-public class Brute extends Hostile {
+public class Brute extends Hostile implements Impassable, Destructible {
     public Brute(double x, double y, GameMap map) {
         super(x, y, map);
         attackRange = 30;
@@ -64,10 +63,7 @@ public class Brute extends Hostile {
 
     }
 
-    @Override
-    boolean noPass(Entity entity) {
-        return false;
-    }
+
 
     @Override
     public void update() {

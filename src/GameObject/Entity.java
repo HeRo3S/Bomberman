@@ -18,7 +18,6 @@ public abstract class Entity implements Serializable {
     protected double health;
     protected double width = 32;
     protected double height = 32;
-    protected boolean passable = false;
     protected Status status;
     public Entity(double x, double y, GameMap map) {
         this.map = map;
@@ -74,14 +73,6 @@ public abstract class Entity implements Serializable {
     /**
      * Setter/Getter
      */
-
-    public boolean isPassable() {
-        return passable;
-    }
-
-    public void setPassable(boolean passable) {
-        this.passable = passable;
-    }
     public double getX() {
         return x;
     }

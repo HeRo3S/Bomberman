@@ -1,27 +1,21 @@
 package GameObject;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 
-public class Floor extends Tiles implements Passable{
-    private int spritePosX;
-    private int spritePosY;
+public class Floor extends Tiles{
+    Image image;
 
-    public void setPassable(){
-        setPassable(true);
-    }
-
-    public Floor(double x, double y, double maxHp, GameMap map) {
+    public Floor(double x, double y, double maxHp, GameMap map, int row, int column) {
         super(x, y, map);
-        setDestructible(false);
-        setPassable();
-        spritePosX = (int) (x / 32 % 4);
-        spritePosY = (int) (y / 32 % 4);
+        code = SpriteSheetCode.FLOOR;
+        image = getSpriteSheet().getSprite(row,column);
     }
 
     @Override
     protected void animate(GraphicsContext gc, double time) {
-        gc.drawImage(getSpriteSheet().getSprite(spritePosX, spritePosY), x, y);
+        gc.drawImage(image, x, y);
     }
 
 }

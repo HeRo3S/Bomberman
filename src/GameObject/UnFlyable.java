@@ -1,4 +1,4 @@
 package GameObject;
 
-public interface UnFlyable {
+public interface UnFlyable extends Impassable {
 }
