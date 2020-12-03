@@ -14,6 +14,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.HashSet;
 
 public class GameViewManager {
@@ -70,7 +74,8 @@ public class GameViewManager {
     public void createNewLevel(Stage menuStage) {
         this.menuStage = menuStage;
         menuStage.hide();
-        createGameMap();
+        gameMap = new GameMap();
+        gameMap = Restore("GameMap.dat");
         keyboardCheck();
         createGameLoop();
         gameStage.show();
@@ -88,6 +93,24 @@ public class GameViewManager {
             }
         };
         gameTimer.start();
+    }
+
+    private GameMap Restore (String nameFile) {
+        try {
+            FileInputStream fileInputStream = new FileInputStream(nameFile);
+            ObjectInputStream os = new ObjectInputStream(fileInputStream);
+            Object o1 = os.readObject();
+            GameMap gameMap = (GameMap) o1;
+            os.close();
+            return gameMap;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return gameMap;
     }
 
     private void createGameBackground() {
