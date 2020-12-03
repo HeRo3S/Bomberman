@@ -24,17 +24,16 @@ public abstract class Hostile extends Movable {
             if (entity instanceof Player) {
                 target = entity;
                 for (Entity entity1 : map.getContent(target.x, target.y, 0)) {
-
                     lineOfSight.setLine(target.getCenter(), getCenter());
-                    if (collide(lineOfSight,entity1.getHitBox()) && entity1 != target) {
+                    if (entity1 instanceof NoSeeThrough && lineOfSight.intersects(entity1.getHitBox())) {
                         target = null;
                         break;
                     }
                 }
             }
-            if(target != null && entity != this && entity != target) {
-                lineOfSight.setLine((float)target.getCenterX(),(float)target.getCenterY(), (float)getCenterX(), (float)getCenterY());
-                if (collide(lineOfSight,entity.getHitBox())) {
+            if(entity instanceof NoSeeThrough && target != null) {
+                lineOfSight.setLine(target.getCenter(),getCenter());
+                if (lineOfSight.intersects(entity.getHitBox())) {
                     target = null;
                 }
             }

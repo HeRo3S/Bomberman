@@ -22,7 +22,9 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.util.ArrayList;
 
+import static GameObject.SpriteSheetCode.FLOOR;
 import static GameObject.SpriteSheetCode.WALL;
+import static SpriteManager.SpriteSheetManager.getSheet;
 
 
 public class Editor extends Application {
@@ -60,17 +62,17 @@ public class Editor extends Application {
         SpriteSheetManager.initialize();
 
         Select select = Select.WISP;
-        Button button1 = CreatButton(select, SpriteSheetManager.getSheet(SpriteSheetCode.WISP).getSprite(0,0));
+        Button button1 = CreatButton(select, getSheet(SpriteSheetCode.WISP).getSprite(0,0));
         hBox.getChildren().add(button1);
 
         Select select1 = Select.GREEN;
-        Button button2 = CreatButton(select1, SpriteSheetManager.getSheet(SpriteSheetCode.GREEN).getSprite(0,0));
+        Button button2 = CreatButton(select1, getSheet(SpriteSheetCode.GREEN).getSprite(0,0));
 
         Select select2 = Select.FLOOR;
-        Button button3 = CreatButton(select2, SpriteSheetManager.getSheet(SpriteSheetCode.FLOOR).getSprite(0,0));
+        Button button3 = CreatButton(select2, getSheet(SpriteSheetCode.FLOOR).getSprite(0,0));
 
         Select select3 = Select.WALL;
-        Button button4 = CreatButton(select3, SpriteSheetManager.getSheet(SpriteSheetCode.WALL).getSprite(0,0));
+        Button button4 = CreatButton(select3, getSheet(SpriteSheetCode.WALL).getSprite(0,0));
 
         hBox.getChildren().add(button2);
         hBox.getChildren().add(button3);
@@ -201,7 +203,7 @@ public class Editor extends Application {
                             rectangle3.setY(clickY * 32);
                             rectangle3.setWidth(32);
                             rectangle3.setHeight(32);
-                            rectangle3.setFill(new ImagePattern(floor.getImage(), 0, 0, 1, 1, true));
+                            rectangle3.setFill(new ImagePattern(getSheet(FLOOR).getSprite(rowSprite,colSprite), 0, 0, 1, 1, true));
                             group.getChildren().add(rectangle3);
                             location[clickX][clickY] = 3;
                             System.out.println("Đã tạo một floor hình:" + rowSprite + "-" + colSprite);
@@ -214,7 +216,7 @@ public class Editor extends Application {
                             rectangle4.setY(clickY * 32);
                             rectangle4.setWidth(32);
                             rectangle4.setHeight(32);
-                            rectangle4.setFill(new ImagePattern(wall.getImage(), 0, 0, 1, 1, true));
+                            rectangle4.setFill(new ImagePattern(getSheet(WALL).getSprite(rowSprite,colSprite), 0, 0, 1, 1, true));
                             group.getChildren().add(rectangle4);
                             location[clickX][clickY] = 4;
                             System.out.println("Đã tạo một wall hình:" + rowSprite + "-" + colSprite);

@@ -65,47 +65,13 @@ public class Wisp extends Hostile implements Impassable, Destructible {
     }
 
     @Override
-    protected void hostileLogic() {
-        boolean canMoveX = true;
-        boolean canMoveY = true;
-        for(Entity entity : map.getContent(x,y,1)) {
-            if(entity != this){
-                //Calculate
-                if (getModifiedHitBox(dx*speed, 0).intersects(entity.getHitBox()) && canMoveX) {
-                    solveCollision(entity);
-                    if (noPass(entity)) {
-                        dx = 0;
-                        canMoveX = false;
-                    }
-                }
-                if (getModifiedHitBox(0, dy*speed).intersects(entity.getHitBox()) && canMoveY) {
-                    solveCollision(entity);
-                    if (noPass(entity)) {
-                        dy = 0;
-                        canMoveY = false;
-                    }
-                }
-            }
-        }
-        x += dx * speed;
-        y += dy * speed;
-        x = max(min(x,MAP_WIDTH - 32),0);
-        y = max(min(y,MAP_HEIGHT - 32),0);
-        if(!(new Point2D.Double(x/ CHUNK_SIZE, y/ CHUNK_SIZE).equals(lastPos))){
-            map.removeContent(lastPos.getX() * CHUNK_SIZE,lastPos.getY() * CHUNK_SIZE, this);
-            map.addContent(x ,y ,this);
-            lastPos = new Point2D.Double(x / CHUNK_SIZE, y / CHUNK_SIZE);
-        }
-    }
-
-    @Override
     public void update() {
+        hostileLogic();
         if (getDx() < 0) {
             directionSprite = 0;
         } else {
             directionSprite = 1;
         }
-        hostileLogic();
         basicLogic();
     }
 

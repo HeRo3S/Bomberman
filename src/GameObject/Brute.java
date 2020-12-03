@@ -24,6 +24,7 @@ public class Brute extends Hostile implements Impassable, Destructible {
         detectionRange = 150;
         attackRange = 30;
         idleTime = 60;
+        dyingFrameCount = 0;
         setHitBox(9,9,29,39);
     }
 
@@ -84,6 +85,7 @@ public class Brute extends Hostile implements Impassable, Destructible {
             health = min(++healthRegen,maxHp);
             regenTimer = 20;
         }
+        hostileLogic();
         if (getDx() == 0) {
             statusSprite = 0;
         } else {
@@ -94,7 +96,6 @@ public class Brute extends Hostile implements Impassable, Destructible {
                 directionSprite = 1;
             }
         }
-        hostileLogic();
         basicLogic();
     }
 

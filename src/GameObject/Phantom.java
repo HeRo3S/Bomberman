@@ -6,6 +6,7 @@ import java.awt.geom.Point2D;
 
 import static GameObject.SpriteSheetCode.PHANTOM;
 import static GameObject.Status.currentStatus.ATTACK_CD;
+import static GameObject.Status.currentStatus.STUN;
 
 public class Phantom extends Hostile implements Destructible, Impassable {
     private Point2D lastPos;
@@ -13,7 +14,7 @@ public class Phantom extends Hostile implements Destructible, Impassable {
     private int statusSprite;
     public Phantom(double x, double y, GameMap map) {
         super(x, y, map);
-        lastPos = new Point2D.Double(x,y);
+        lastPos = new Point2D.Double(getCenterX(),getCenterY());
         attackRange = 30;
         attackSpeed = 1;
         damage = 50;
@@ -22,7 +23,8 @@ public class Phantom extends Hostile implements Destructible, Impassable {
         speed = 4;
         code = PHANTOM;
         detectionRange = 200;
-        attackRange = 20;
+        attackRange = 30;
+        setHitBox(8, 4, 16, 24);
     }
 
     @Override
@@ -34,7 +36,8 @@ public class Phantom extends Hostile implements Destructible, Impassable {
     protected void attack() {
         if(status.canAttack()){
             target.health -= damage;
-            status.add(ATTACK_CD,3);
+            status.add(ATTACK_CD,5);
+            status.add(STUN,3);
         }
     }
 
@@ -48,6 +51,7 @@ public class Phantom extends Hostile implements Destructible, Impassable {
 
     @Override
     public void update() {
+        hostileLogic();
         if (getDx() == 0) {
           directionSprite = 0;
           statusSprite = 0;
@@ -58,7 +62,6 @@ public class Phantom extends Hostile implements Destructible, Impassable {
             directionSprite = 1;
             statusSprite = 4;
         }
-        hostileLogic();
         basicLogic();
     }
 

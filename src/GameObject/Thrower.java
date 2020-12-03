@@ -5,7 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import static GameObject.SpriteSheetCode.THROWER;
 import static java.lang.Math.random;
 
-public class Thrower extends Hostile {
+public class Thrower extends Hostile implements Destructible,Impassable {
     private int directionSprite;
     private int statusSprite;
 
@@ -20,6 +20,8 @@ public class Thrower extends Hostile {
         detectionRange = 200;
         attackRange = 120;
         idleTime = 60;
+        dyingFrameCount = 0;
+        setHitBox(8,8,16,22);
     }
 
     @Override
@@ -72,6 +74,7 @@ public class Thrower extends Hostile {
 
     @Override
     public void update() {
+        hostileLogic();
         if (getDx() == 0) {
             statusSprite = 0;
         } else {
@@ -82,7 +85,6 @@ public class Thrower extends Hostile {
                 directionSprite = 1;
             }
         }
-        hostileLogic();
         basicLogic();
     }
 
@@ -96,4 +98,5 @@ public class Thrower extends Hostile {
         frame = (int) ((time % (4 * frameTime)) / frameTime) + statusSprite;
         gc.drawImage(getSpriteSheet().getSprite(frame, directionSprite), getX(), getY());
     }
+
 }

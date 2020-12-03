@@ -64,14 +64,14 @@ public abstract class Movable extends Entity {
         for(Entity entity : map.getContent(x,y,1)) {
             if(entity != this){
                 //Calculate
-                if (collide(getModifiedHitBox(dx*speed, 0), entity.getHitBox()) && canMoveX) {
+                if (getModifiedHitBox(dx*speed, 0).intersects(entity.getHitBox()) && canMoveX) {
                     solveCollision(entity);
                     if (noPass(entity)) {
                         dx = 0;
                         canMoveX = false;
                     }
                 }
-                if (collide(getModifiedHitBox(0, dy*speed), entity.getHitBox()) && canMoveY) {
+                if (getModifiedHitBox(0, dy*speed).intersects(entity.getHitBox()) && canMoveY) {
                     solveCollision(entity);
                     if (noPass(entity)) {
                         dy = 0;

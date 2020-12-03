@@ -40,12 +40,6 @@ public class SpearProjectile extends Projectile implements Rotatable {
         }
 
     }
-    protected Shape getHitBox(){
-        AffineTransform transform = AffineTransform.getTranslateInstance(x,y);
-        transform.rotate(Math.toRadians(getAngle(target)), getCenterX(), getCenterY());
-        return transform.createTransformedShape(new Rectangle2D.Double(x,y,width,height));
-    }
-
     @Override
     protected void animate(GraphicsContext gc, double time) {
         Utility.drawRotated(gc,getSpriteSheet().getSprite(0,0),x,y,getAngle(getCenterX() + dx, getCenterY() + dy));
