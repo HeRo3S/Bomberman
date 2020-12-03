@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.Node;
@@ -41,6 +42,9 @@ public class Editor extends Application {
     enum Select {GREEN, WISP,FLOOR, WALL}
 
     static Select entitySelect = Select.WISP;
+
+    int rowSprite = 0;
+    int colSprite = 0;
 
 
     @Override
@@ -90,6 +94,21 @@ public class Editor extends Application {
 
         hBox.setLayoutX(0);
         hBox.setLayoutY(734);
+        hBox.setMaxWidth(1024);
+        TextField textRow = new TextField("Row");
+        textRow.setMaxSize(50,50);
+        hBox.getChildren().add(textRow);
+
+        TextField textCol = new TextField("Col");
+        textCol.setMaxSize(50,50);
+        hBox.getChildren().add(textCol);
+
+        Button okButton = new Button("OK");
+        okButton.setOnAction(event -> {
+            rowSprite = Integer.parseInt(textRow.getText());
+            colSprite = Integer.parseInt(textCol.getText());
+        });
+        hBox.getChildren().add(okButton);
 
         Button save = new Button("Save");
         save.setOnAction(event -> {
@@ -139,12 +158,6 @@ public class Editor extends Application {
             int clickX = (int) (X / 32);
             int clickY = (int) (Y / 32);
 
-            int rowfloor = 0;
-            int colfloor = 0;
-            if (X > 216 && Y > 736){
-                rowfloor = clickX - 6;
-                colfloor = clickY - 23;
-            }
             if (clickX < row+1 && clickY < col+1) {
                 if (location[clickX][clickY] == 0){
                     switch (entitySelect) {
@@ -180,7 +193,7 @@ public class Editor extends Application {
                                 break;
                             }
                         case FLOOR:
-                            Floor floor = new Floor(X,Y,gameMap,rowfloor,colfloor);
+                            Floor floor = new Floor(X,Y,gameMap,rowSprite,colSprite);
                             Rectangle rectangle3 = new Rectangle();
                             rectangle3.setX(clickX * 32);
                             rectangle3.setY(clickY * 32);
@@ -189,11 +202,11 @@ public class Editor extends Application {
                             rectangle3.setFill(new ImagePattern(floor.getImage(), 0, 0, 1, 1, true));
                             group.getChildren().add(rectangle3);
                             location[clickX][clickY] = 3;
-                            System.out.println("Đã tạo một floor hình:" + rowfloor + "-" + colfloor);
+                            System.out.println("Đã tạo một floor hình:" + rowSprite + "-" + colSprite);
                             break;
 
                         case WALL:
-                            Wall wall = new Wall(X,Y,gameMap,rowfloor,colfloor);
+                            Wall wall = new Wall(X,Y,gameMap,rowSprite,colSprite);
                             Rectangle rectangle4 = new Rectangle();
                             rectangle4.setX(clickX * 32);
                             rectangle4.setY(clickY * 32);
@@ -202,7 +215,7 @@ public class Editor extends Application {
                             rectangle4.setFill(new ImagePattern(wall.getImage(), 0, 0, 1, 1, true));
                             group.getChildren().add(rectangle4);
                             location[clickX][clickY] = 4;
-                            System.out.println("Đã tạo một wall hình:" + rowfloor + "-" + colfloor);
+                            System.out.println("Đã tạo một wall hình:" + rowSprite + "-" + colSprite);
                             break;
 
                         default:
