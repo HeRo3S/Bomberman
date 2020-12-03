@@ -5,6 +5,8 @@ import SpriteManager.SpriteSheetManager;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -33,10 +35,10 @@ public class Editor extends Application {
     private static final int row = WEIGHT / 32;
     private static final int col = HEIGHT / 32;
 
-    public static int[][] location = new int[row][col];
+    public static int[][] location = new int[row+1][col+1];
     public static GameMap gameMap = new GameMap();
 
-    enum Select {GREEN, WISP}
+    enum Select {GREEN, WISP,FLOOR, WALL}
 
     static Select entitySelect = Select.WISP;
 
@@ -57,7 +59,35 @@ public class Editor extends Application {
 
         Select select1 = Select.GREEN;
         Button button2 = CreatButton(select1, SpriteSheetManager.getSheet(SpriteSheetCode.GREEN).getSprite(0,0));
+
+        Select select2 = Select.FLOOR;
+        Button button3 = CreatButton(select2, SpriteSheetManager.getSheet(SpriteSheetCode.FLOOR).getSprite(0,0));
+
+        Select select3 = Select.WALL;
+        Button button4 = CreatButton(select3, SpriteSheetManager.getSheet(SpriteSheetCode.WALL).getSprite(0,0));
+
         hBox.getChildren().add(button2);
+        hBox.getChildren().add(button3);
+        hBox.getChildren().add(button4);
+
+        Image imageFloor = new Image("GameObject/assets/floor.png");
+        Rectangle rectangle = new Rectangle();
+        rectangle.setX(0);
+        rectangle.setY(836);
+        rectangle.setWidth(128);
+        rectangle.setHeight(64);
+        rectangle.setFill(new ImagePattern(imageFloor, 0, 0, 1, 1, true));
+        hBox.getChildren().add(rectangle);
+
+        Image image = new Image("GameObject/assets/wall.png");
+        Rectangle rectangle3 = new Rectangle();
+        rectangle3.setX(0);
+        rectangle3.setY(836);
+        rectangle3.setWidth(416);
+        rectangle3.setHeight(128);
+        rectangle3.setFill(new ImagePattern(image, 0, 0, 1, 1, true));
+        hBox.getChildren().add(rectangle3);
+
         hBox.setLayoutX(0);
         hBox.setLayoutY(734);
 
@@ -109,7 +139,13 @@ public class Editor extends Application {
             int clickX = (int) (X / 32);
             int clickY = (int) (Y / 32);
 
-            if (clickX <= row && clickY <= col) {
+            int rowfloor = 0;
+            int colfloor = 0;
+            if (X > 216 && Y > 736){
+                rowfloor = clickX - 6;
+                colfloor = clickY - 23;
+            }
+            if (clickX < row+1 && clickY < col+1) {
                 if (location[clickX][clickY] == 0){
                     switch (entitySelect) {
                         case WISP:
@@ -143,14 +179,43 @@ public class Editor extends Application {
                                 System.out.println("Chi duoc tao 1 nhan vat!");
                                 break;
                             }
-                        default:
-                            Tiles tiles = new Tiles(X, Y, gameMap);
+                        case FLOOR:
+                            Floor floor = new Floor(X,Y,gameMap,rowfloor,colfloor);
+                            Rectangle rectangle3 = new Rectangle();
+                            rectangle3.setX(clickX * 32);
+                            rectangle3.setY(clickY * 32);
+                            rectangle3.setWidth(32);
+                            rectangle3.setHeight(32);
+                            rectangle3.setFill(new ImagePattern(floor.getImage(), 0, 0, 1, 1, true));
+                            group.getChildren().add(rectangle3);
                             location[clickX][clickY] = 3;
-                            System.out.println("Da tao mot Tiles");
+                            System.out.println("Đã tạo một floor hình:" + rowfloor + "-" + colfloor);
+                            break;
+
+                        case WALL:
+                            Wall wall = new Wall(X,Y,gameMap,rowfloor,colfloor);
+                            Rectangle rectangle4 = new Rectangle();
+                            rectangle4.setX(clickX * 32);
+                            rectangle4.setY(clickY * 32);
+                            rectangle4.setWidth(32);
+                            rectangle4.setHeight(32);
+                            rectangle4.setFill(new ImagePattern(wall.getImage(), 0, 0, 1, 1, true));
+                            group.getChildren().add(rectangle4);
+                            location[clickX][clickY] = 4;
+                            System.out.println("Đã tạo một wall hình:" + rowfloor + "-" + colfloor);
+                            break;
+
+                        default:
+//                            Tiles tiles = new Tiles(X, Y, gameMap);
+//                            location[clickX][clickY] = 3;
+//                            System.out.println("Da tao mot Tiles");
+                            break;
                     }
                 }else{
                     System.out.println("Vị trí này đã có Entity! Không tạo ");
                 }
+            }else{
+
             }
         }
 
