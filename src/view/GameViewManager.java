@@ -42,6 +42,7 @@ public class GameViewManager {
     private GameMap gameMap;
     private Green green;
     private Wisp wisp;
+    private Phantom phantom;
 
     public GameViewManager() {
         initializeScene();
@@ -59,7 +60,7 @@ public class GameViewManager {
 
         canvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
         gc = canvas.getGraphicsContext2D();
-        gc.scale(2, 2);
+        gc.scale(1.25, 1.25);
         gameStackPane.setStyle("-fx-background-color: #DEB887");
         gamePane.getChildren().add(gameStackPane);
         gameStackPane.getChildren().add(canvas);
@@ -115,6 +116,7 @@ public class GameViewManager {
         gameMap = new GameMap();
         green = new Green(10, 10, gameMap);
         wisp = new Wisp(400, 300, gameMap);
+        phantom = new Phantom(350, 200, gameMap);
         new Thrower(300,150,gameMap);
         new Wall(200,100,gameMap,0,0);
     }

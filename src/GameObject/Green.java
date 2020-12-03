@@ -49,7 +49,7 @@ public class Green extends Player implements Destructible, Impassable {
         frame = (int) ((time % (4 * frameTime)) / frameTime);
         if (isAnimateDying) {
             direction = 4;
-            frame = (24 - dyingFrameCount ) / 6;
+            frame = (48 - dyingFrameCount ) / 12;
         }
         if (!input.isEmpty()) {
             frame += 4;

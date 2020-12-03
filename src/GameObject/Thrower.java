@@ -5,7 +5,10 @@ import javafx.scene.canvas.GraphicsContext;
 import static GameObject.SpriteSheetCode.THROWER;
 import static java.lang.Math.random;
 
-public class Thrower extends Hostile implements Destructible, Impassable {
+public class Thrower extends Hostile {
+    private int directionSprite;
+    private int statusSprite;
+
     public Thrower(double x, double y, GameMap map) {
         super(x, y, map);
         attackRange = 30;
@@ -15,8 +18,16 @@ public class Thrower extends Hostile implements Destructible, Impassable {
         speed = 3;
         code = THROWER;
         detectionRange = 200;
-        attackRange = 150;
+        attackRange = 120;
         idleTime = 60;
+    }
+
+    @Override
+    protected void basicLogic() {
+        if (getHealth() <= 0)
+        {
+            map.removeContent(x, y, this);
+        }
     }
 
     @Override
@@ -61,6 +72,16 @@ public class Thrower extends Hostile implements Destructible, Impassable {
 
     @Override
     public void update() {
+        if (getDx() == 0) {
+            statusSprite = 0;
+        } else {
+            statusSprite = 4;
+            if (getDx() < 0) {
+                directionSprite = 0;
+            } else if (getDx() > 0) {
+                directionSprite = 1;
+            }
+        }
         hostileLogic();
         basicLogic();
     }
@@ -72,6 +93,7 @@ public class Thrower extends Hostile implements Destructible, Impassable {
 
     @Override
     protected void animate(GraphicsContext gc, double time) {
-        gc.drawImage(getSpriteSheet().getSprite(0,0),x,y);
+        frame = (int) ((time % (4 * frameTime)) / frameTime) + statusSprite;
+        gc.drawImage(getSpriteSheet().getSprite(frame, directionSprite), getX(), getY());
     }
 }

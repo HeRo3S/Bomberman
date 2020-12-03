@@ -13,9 +13,9 @@ public class GameMap implements Serializable {
     /**
      * Note: map size must be divisible by chunk.
      */
-    public static final int MAP_WIDTH = 1280 / 2;
-    public static final int MAP_HEIGHT = 720 / 2;
-    public static final int CHUNK_SIZE = 40;
+    public static final int MAP_WIDTH = 1024 ;
+    public static final int MAP_HEIGHT = 576 ;
+    public static final int CHUNK_SIZE = 32;
     public ArrayList<ArrayList<ArrayList<Entity>>> map = new ArrayList<>();
 
     public static int getMapWidth() {
