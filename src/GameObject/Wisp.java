@@ -100,5 +100,6 @@ public class Wisp extends Hostile implements Impassable, Destructible {
             frame = (int) ((time % (4 * frameTime)) / frameTime) + statusSprite;
         }
         gc.drawImage(getSpriteSheet().getSprite(frame, directionSprite), getX(), getY());
+        drawHealthBar(gc);
     }
 }

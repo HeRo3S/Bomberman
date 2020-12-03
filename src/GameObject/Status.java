@@ -51,4 +51,12 @@ public class Status implements Serializable {
         max(--channelTimer, 0);
         max(--attackTimer, 0);
     }
+
+    public int getBurningTimer() {
+        return burningTimer;
+    }
+
+    public void setBurningTimer(int burningTimer) {
+        this.burningTimer = burningTimer;
+    }
 }

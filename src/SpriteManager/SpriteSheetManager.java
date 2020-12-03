@@ -26,5 +26,6 @@ public class SpriteSheetManager {
         storage.put(WALL, new SpriteSheet("GameObject/assets/wall.png", 4, 13));
         storage.put(BRUTE, new SpriteSheet("GameObject/assets/bruteSheet.png",2,8));
         storage.put(SPEAR, new SpriteSheet("GameObject/assets/spear.png",1,1));
+        storage.put(FIRE,new SpriteSheet("GameObject/assets/fire.png",1,4));
     }
 }

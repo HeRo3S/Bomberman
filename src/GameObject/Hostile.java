@@ -3,7 +3,7 @@ package GameObject;
 
 import java.awt.geom.Line2D;
 
-public abstract class Hostile extends Movable {
+public abstract class Hostile extends Movable implements Destructible {
     protected double damage;
     protected double detectionRange;
     protected double attackSpeed;
@@ -13,10 +13,8 @@ public abstract class Hostile extends Movable {
     protected int idleTimer;
     protected int idleTime;
     protected int attackFrameCount;
-    protected Status status;
     public Hostile(double x, double y, GameMap map) {
         super(x, y , map);
-        status = new Status();
     }
     public void findTarget(){
         for (Entity entity : map.getContent(x, y, detectionRange)) {
@@ -51,13 +49,13 @@ public abstract class Hostile extends Movable {
         switch (type){
             case 0:
                 new HealthOrb(x,y,map);
-                if((int) Math.random() * 2 == 1){
+                if(Math.random()*2 <= 1){
                     drop(0,time++);
                 }
                 break;
             case 1:
                 new EnergyOrb(x,y,map);
-                if((int) Math.random() * 2 == 1){
+                if(Math.random() * 2 <= 1){
                     drop(1,time++);
                 }
         }
@@ -84,6 +82,9 @@ public abstract class Hostile extends Movable {
             }
         } else {
             idle();
+        }
+        if(status.isBurning()){
+            health -= 0.5;
         }
         if (!status.isChannelling() && !status.isStunning()) {
             move();

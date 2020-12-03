@@ -35,6 +35,9 @@ public class Green extends Player implements Destructible, Impassable {
         health = min(health,maxHp);
         energy = min(++energy,maxEnergy);
         inputHandle();
+        if(status.isBurning()){
+            health -= 0.5;
+        }
         basicLogic();
         move();
     }
@@ -56,6 +59,7 @@ public class Green extends Player implements Destructible, Impassable {
         }
         gc.drawImage(getSpriteSheet().getSprite(frame, direction), getX(), getY());
         drawHitBox(gc);
+        drawHealthBar(gc);
     }
 
     private void inputHandle() {
@@ -81,7 +85,7 @@ public class Green extends Player implements Destructible, Impassable {
             direction = 2;
         }
         if(input.contains("K")){
-            new BasicRune(x,y,map);
+            new FireRune(x,y,map);
             input.remove("K");
         }
     }

@@ -15,5 +15,6 @@ public abstract class Projectile extends Movable {
         maxHp = 2;
         health = maxHp;
         this.target = target;
+        moveTo(target);
     }
 }

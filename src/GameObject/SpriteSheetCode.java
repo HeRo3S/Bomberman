@@ -14,4 +14,5 @@ public enum SpriteSheetCode {
     THROWER,
     BRUTE,
     SPEAR,
+    FIRE,
 }

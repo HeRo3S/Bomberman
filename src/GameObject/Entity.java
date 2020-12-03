@@ -6,6 +6,9 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
+import static javafx.scene.paint.Color.GREEN;
+import static javafx.scene.paint.Color.RED;
+
 public abstract class Entity implements Serializable {
     protected SpriteSheetCode code;
     protected GameMap map;
@@ -17,7 +20,7 @@ public abstract class Entity implements Serializable {
     protected double health;
     protected double width = 32;
     protected double height = 32;
-    protected Status status;
+    protected Status status = new Status();
     public Entity(double x, double y, GameMap map) {
         this.map = map;
         this.x = x;
@@ -68,6 +71,10 @@ public abstract class Entity implements Serializable {
     }
     protected void drawHitBox(GraphicsContext gc){
         gc.strokeRect(x+offsetX,y+offsetY,width,height);
+    }
+    protected void drawHealthBar(GraphicsContext gc){
+        gc.setFill(GREEN);
+        gc.fillRect(x, y - 10, health/(maxHp/30), 2);
     }
     /**
      * Setter/Getter

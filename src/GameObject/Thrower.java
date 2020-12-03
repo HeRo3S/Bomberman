@@ -97,6 +97,7 @@ public class Thrower extends Hostile implements Destructible,Impassable {
     protected void animate(GraphicsContext gc, double time) {
         frame = (int) ((time % (4 * frameTime)) / frameTime) + statusSprite;
         gc.drawImage(getSpriteSheet().getSprite(frame, directionSprite), getX(), getY());
+        drawHealthBar(gc);
     }
 
 }

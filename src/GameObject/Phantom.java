@@ -8,7 +8,7 @@ import static GameObject.SpriteSheetCode.PHANTOM;
 import static GameObject.Status.currentStatus.ATTACK_CD;
 import static GameObject.Status.currentStatus.STUN;
 
-public class Phantom extends Hostile implements Destructible, Impassable {
+public class Phantom extends Hostile implements Destructible {
     private Point2D lastPos;
     private int directionSprite;
     private int statusSprite;
@@ -82,5 +82,6 @@ public class Phantom extends Hostile implements Destructible, Impassable {
         }
 
         gc.drawImage(getSpriteSheet().getSprite(frame, directionSprite), getX(), getY());
+        drawHealthBar(gc);
     }
 }
