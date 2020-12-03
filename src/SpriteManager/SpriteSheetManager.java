@@ -21,9 +21,9 @@ public class SpriteSheetManager {
         storage.put(PHANTOM, new SpriteSheet("GameObject/assets/phantomSheet.png",2,8));
         storage.put(THROWER, new SpriteSheet("GameObject/assets/orcSheet.png",2,8));
         storage.put(FLOOR, new SpriteSheet("GameObject/assets/floor.png", 2, 4));
-        storage.put(WALL, new SpriteSheet("GameObject/assets/wall.png", 13, 4));
         storage.put(CRATE, new SpriteSheet("GameObject/assets/crate.png", 1, 1));
         storage.put(GATE, new SpriteSheet("GameObject/assets/gate.png", 3, 8));
+        storage.put(WALL, new SpriteSheet("GameObject/assets/wall.png", 4, 13));
         storage.put(BRUTE, new SpriteSheet("GameObject/assets/bruteSheet.png",2,8));
         storage.put(SPEAR, new SpriteSheet("GameObject/assets/spear.png",1,1));
     }

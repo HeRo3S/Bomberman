@@ -6,6 +6,10 @@ import javafx.scene.image.Image;
 public class Wall extends Tiles implements UnFlyable{
     private Image image;
 
+    public Image getImage() {
+        return image;
+    }
+
     public Wall(double x, double y, GameMap map, int row, int column)
     {
         super(x, y, map);
