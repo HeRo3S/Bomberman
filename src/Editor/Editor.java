@@ -221,7 +221,7 @@ public class Editor extends Application {
                             rectangle3.setHeight(32);
                             rectangle3.setFill(new ImagePattern(getSheet(FLOOR).getSprite(rowSprite,colSprite), 0, 0, 1, 1, true));
                             group.getChildren().add(rectangle3);
-                            location[clickX][clickY] = 0;
+                            location[clickX][clickY] = 1;
                             System.out.println("Đã tạo một floor hình:" + rowSprite + "-" + colSprite);
                             break;
 
