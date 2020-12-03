@@ -3,17 +3,17 @@ package GameObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class Crate extends Tiles implements Destructible, Impassable {
+public class Gate extends Tiles implements Portal {
     Image image;
 
-    public Crate(double x, double y, double maxHp, GameMap map) {
+    public Gate(double x, double y, GameMap map) {
         super(x, y, map);
-        code = SpriteSheetCode.CRATE;
+        code = SpriteSheetCode.GATE;
         image = getSpriteSheet().getSprite(0, 0);
     }
 
     @Override
     protected void animate(GraphicsContext gc, double time) {
-
+        gc.drawImage(image, x, y);
     }
 }

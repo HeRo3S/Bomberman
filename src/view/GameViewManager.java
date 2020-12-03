@@ -1,9 +1,6 @@
 package view;
 
-import GameObject.GameMap;
-import GameObject.Green;
-import GameObject.Wall;
-import GameObject.Wisp;
+import GameObject.*;
 import SpriteManager.SpriteSheet;
 import SpriteManager.SpriteSheetManager;
 import javafx.animation.AnimationTimer;
@@ -45,6 +42,7 @@ public class GameViewManager {
     private GameMap gameMap;
     private Green green;
     private Wisp wisp;
+    private Phantom phantom;
 
     public GameViewManager() {
         initializeScene();
@@ -118,6 +116,7 @@ public class GameViewManager {
         gameMap = new GameMap();
         green = new Green(10, 10, gameMap);
         wisp = new Wisp(400, 300, gameMap);
+        phantom = new Phantom(350, 200, gameMap);
         new Wall(200,100,gameMap,0,0);
     }
 

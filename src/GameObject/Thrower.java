@@ -75,11 +75,6 @@ public class Thrower extends Hostile {
     }
 
     @Override
-    boolean noPass(Entity entity) {
-        return false;
-    }
-
-    @Override
     public void update() {
         if (getDx() == 0) {
             statusSprite = 0;
