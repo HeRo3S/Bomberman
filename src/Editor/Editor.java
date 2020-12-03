@@ -43,7 +43,7 @@ public class Editor extends Application {
     public static int[][] location = new int[row+1][col+1];
     public static GameMap gameMap = new GameMap();
 
-    enum Select {GREEN, WISP,FLOOR, WALL}
+    enum Select {GREEN, WISP,FLOOR, WALL, PHANTOM, THROWER, BRUTE}
 
     static Select entitySelect = Select.WISP;
 
@@ -73,17 +73,31 @@ public class Editor extends Application {
 
         Select select3 = Select.WALL;
         Button button4 = CreatButton(select3, getSheet(SpriteSheetCode.WALL).getSprite(0,0));
+        button4.setLayoutX(0);
+        button4.setLayoutY(40);
+
+        Select select4 = Select.PHANTOM;
+        Button button5 = CreatButton(select4, getSheet(SpriteSheetCode.PHANTOM).getSprite(0,0));
+
+        Select select5 = Select.THROWER;
+        Button button6 = CreatButton(select5, getSheet(SpriteSheetCode.THROWER).getSprite(0,0));
+
+        Select select6 = Select.BRUTE;
+        Button button7 = CreatButton(select6, getSheet(SpriteSheetCode.BRUTE).getSprite(0,0));
 
         hBox.getChildren().add(button2);
         hBox.getChildren().add(button3);
         hBox.getChildren().add(button4);
+        hBox.getChildren().add(button5);
+        hBox.getChildren().add(button6);
+        hBox.getChildren().add(button7);
 
         Image imageFloor = new Image("GameObject/assets/floor.png");
         Rectangle rectangle = new Rectangle();
         rectangle.setX(0);
         rectangle.setY(836);
-        rectangle.setWidth(128);
-        rectangle.setHeight(64);
+        rectangle.setWidth(96);
+        rectangle.setHeight(48);
         rectangle.setFill(new ImagePattern(imageFloor, 0, 0, 1, 1, true));
         hBox.getChildren().add(rectangle);
 
@@ -91,8 +105,8 @@ public class Editor extends Application {
         Rectangle rectangle3 = new Rectangle();
         rectangle3.setX(0);
         rectangle3.setY(836);
-        rectangle3.setWidth(416);
-        rectangle3.setHeight(128);
+        rectangle3.setWidth(312);
+        rectangle3.setHeight(96);
         rectangle3.setFill(new ImagePattern(image, 0, 0, 1, 1, true));
         hBox.getChildren().add(rectangle3);
 
@@ -138,6 +152,7 @@ public class Editor extends Application {
 
     public Button CreatButton(Select select, Image image) {
         Button button = new Button();
+        button.setMaxSize(40,40);
         button.setGraphic(new ImageView(image));
         button.setOnAction(event -> {
             selected_photo = button.getGraphic();
@@ -190,6 +205,7 @@ public class Editor extends Application {
                                 rectangle1.setHeight(32);
                                 rectangle1.setFill(new ImagePattern(imageGreen, 0, 0, 1, 1, true));
                                 group.getChildren().add(rectangle1);
+                                location[clickX][clickY] = 1;
                                 status = 1;
                                 break;
                             } else {
@@ -205,7 +221,7 @@ public class Editor extends Application {
                             rectangle3.setHeight(32);
                             rectangle3.setFill(new ImagePattern(getSheet(FLOOR).getSprite(rowSprite,colSprite), 0, 0, 1, 1, true));
                             group.getChildren().add(rectangle3);
-                            location[clickX][clickY] = 3;
+                            location[clickX][clickY] = 0;
                             System.out.println("Đã tạo một floor hình:" + rowSprite + "-" + colSprite);
                             break;
 
@@ -218,8 +234,47 @@ public class Editor extends Application {
                             rectangle4.setHeight(32);
                             rectangle4.setFill(new ImagePattern(getSheet(WALL).getSprite(rowSprite,colSprite), 0, 0, 1, 1, true));
                             group.getChildren().add(rectangle4);
-                            location[clickX][clickY] = 4;
+                            location[clickX][clickY] = 3;
                             System.out.println("Đã tạo một wall hình:" + rowSprite + "-" + colSprite);
+                            break;
+
+                        case PHANTOM:
+                            Phantom phantom = new Phantom(X,Y,gameMap);
+                            Rectangle rectangle5 = new Rectangle();
+                            rectangle5.setX(clickX * 32);
+                            rectangle5.setY(clickY * 32);
+                            rectangle5.setWidth(32);
+                            rectangle5.setHeight(32);
+                            rectangle5.setFill(new ImagePattern(getSheet(SpriteSheetCode.PHANTOM).getSprite(0,0), 0, 0, 1, 1, true));
+                            group.getChildren().add(rectangle5);
+                            location[clickX][clickY] = 4;
+                            System.out.println("Đã tạo một PhanTom");
+                            break;
+
+                        case BRUTE:
+                            Brute brute = new Brute(X,Y,gameMap);
+                            Rectangle rectangle6 = new Rectangle();
+                            rectangle6.setX(clickX * 32);
+                            rectangle6.setY(clickY * 32);
+                            rectangle6.setWidth(32);
+                            rectangle6.setHeight(32);
+                            rectangle6.setFill(new ImagePattern(getSheet(SpriteSheetCode.BRUTE).getSprite(0,0), 0, 0, 1, 1, true));
+                            group.getChildren().add(rectangle6);
+                            location[clickX][clickY] = 4;
+                            System.out.println("Đã tạo một Brute");
+                            break;
+
+                        case THROWER:
+                            Thrower thrower = new Thrower(X,Y,gameMap);
+                            Rectangle rectangle7 = new Rectangle();
+                            rectangle7.setX(clickX * 32);
+                            rectangle7.setY(clickY * 32);
+                            rectangle7.setWidth(32);
+                            rectangle7.setHeight(32);
+                            rectangle7.setFill(new ImagePattern(getSheet(SpriteSheetCode.THROWER).getSprite(0,0), 0, 0, 1, 1, true));
+                            group.getChildren().add(rectangle7);
+                            location[clickX][clickY] = 4;
+                            System.out.println("Đã tạo một Thrower");
                             break;
 
                         default:
@@ -229,14 +284,11 @@ public class Editor extends Application {
                             break;
                     }
                 }else{
-                    System.out.println("Vị trí này đã có Entity! Không tạo ");
+                    System.out.println("Vị trí này đã có entity");
                 }
-            }else{
-
             }
         }
 
     };
-
 }
 
