@@ -177,11 +177,14 @@ public class Editor extends Application {
             int clickX = (int) (X / 32);
             int clickY = (int) (Y / 32);
 
+            int toadoX = clickX * 32;
+            int toadoY = clickY * 32;
+
             if (clickX < row+1 && clickY < col+1) {
                 if (location[clickX][clickY] == 0){
                     switch (entitySelect) {
                         case WISP:
-                            Wisp wisp = new Wisp(X, Y, gameMap);
+                            Wisp wisp = new Wisp(toadoX, toadoY, gameMap);
                             System.out.println("Da tao mot Wisp");
                             Image imageWisp = wisp.getSpriteSheet().getSprite(0,0);
                             Rectangle rectangle = new Rectangle();
@@ -196,7 +199,7 @@ public class Editor extends Application {
                         case GREEN:
                             if (status == 0) {
                                 System.out.println("Da tao mot Green");
-                                Green green1 = new Green(X, Y, gameMap);
+                                Green green1 = new Green(toadoX, toadoY, gameMap);
                                 Image imageGreen = green1.getSpriteSheet(0, 0);
                                 Rectangle rectangle1 = new Rectangle();
                                 rectangle1.setX(clickX * 32);
@@ -213,7 +216,7 @@ public class Editor extends Application {
                                 break;
                             }
                         case FLOOR:
-                            Floor floor = new Floor(X,Y,gameMap,rowSprite,colSprite);
+                            Floor floor = new Floor(toadoX,toadoY,gameMap,rowSprite,colSprite);
                             Rectangle rectangle3 = new Rectangle();
                             rectangle3.setX(clickX * 32);
                             rectangle3.setY(clickY * 32);
@@ -226,7 +229,7 @@ public class Editor extends Application {
                             break;
 
                         case WALL:
-                            Wall wall = new Wall(X,Y,gameMap,rowSprite,colSprite);
+                            Wall wall = new Wall(toadoX,toadoY,gameMap,rowSprite,colSprite);
                             Rectangle rectangle4 = new Rectangle();
                             rectangle4.setX(clickX * 32);
                             rectangle4.setY(clickY * 32);
@@ -239,7 +242,7 @@ public class Editor extends Application {
                             break;
 
                         case PHANTOM:
-                            Phantom phantom = new Phantom(X,Y,gameMap);
+                            Phantom phantom = new Phantom(toadoX,toadoY,gameMap);
                             Rectangle rectangle5 = new Rectangle();
                             rectangle5.setX(clickX * 32);
                             rectangle5.setY(clickY * 32);
@@ -252,7 +255,7 @@ public class Editor extends Application {
                             break;
 
                         case BRUTE:
-                            Brute brute = new Brute(X,Y,gameMap);
+                            Brute brute = new Brute(toadoX,toadoY,gameMap);
                             Rectangle rectangle6 = new Rectangle();
                             rectangle6.setX(clickX * 32);
                             rectangle6.setY(clickY * 32);
@@ -265,7 +268,7 @@ public class Editor extends Application {
                             break;
 
                         case THROWER:
-                            Thrower thrower = new Thrower(X,Y,gameMap);
+                            Thrower thrower = new Thrower(toadoX,toadoY,gameMap);
                             Rectangle rectangle7 = new Rectangle();
                             rectangle7.setX(clickX * 32);
                             rectangle7.setY(clickY * 32);
