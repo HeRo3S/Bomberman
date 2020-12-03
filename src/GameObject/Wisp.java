@@ -76,17 +76,10 @@ public class Wisp extends Hostile implements Impassable, Destructible {
     protected void solveCollision(Entity entity) {
     }
     protected void attack(){
-        if (target instanceof Player) {
-            Player player = (Player) target;
-            player.health -= damage;
+            target.health -= damage;
             status.add(Status.currentStatus.ATTACK_CD, 5);
-        }
     }
 
-    @Override
-    protected void drop() {
-        new HealthOrb(getCenterX(),getCenterY(),map);
-    }
 
     @Override
     protected void animate(GraphicsContext gc, double time) {

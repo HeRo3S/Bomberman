@@ -11,11 +11,13 @@ public class Wall extends Tiles implements UnFlyable{
         super(x, y, map);
         code = SpriteSheetCode.WALL;
         image = getSpriteSheet().getSprite(row,column);
+        setHitBox(0,0,32,32);
 
     }
 
     @Override
     protected void animate(GraphicsContext gc, double time) {
         gc.drawImage(image, x, y);
+        drawHitBox(gc);
     }
 }

@@ -12,4 +12,5 @@ public enum SpriteSheetCode {
     PHANTOM,
     THROWER,
     BRUTE,
+    SPEAR,
 }

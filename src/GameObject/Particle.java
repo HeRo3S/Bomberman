@@ -23,7 +23,7 @@ public abstract class Particle extends Drop {
         for(Entity entity : map.getContent(x,y,range)){
             if(entity instanceof Player){
                 moveTo(entity.getCenterX(),entity.getCenterY());
-                if(getDistance(entity) <= 2){
+                if(getDistance(entity) <= 10){
                     effect(entity);
                 }
             }

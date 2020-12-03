@@ -1,6 +1,7 @@
 package GameObject;
 
 
+import java.awt.*;
 import java.awt.geom.Point2D;
 
 import static GameObject.GameMap.*;
@@ -63,14 +64,14 @@ public abstract class Movable extends Entity {
         for(Entity entity : map.getContent(x,y,1)) {
             if(entity != this){
                 //Calculate
-                if (getModifiedHitBox(dx*speed, 0).intersects(entity.getHitBox()) && canMoveX) {
+                if (collide(getModifiedHitBox(dx*speed, 0), entity.getHitBox()) && canMoveX) {
                     solveCollision(entity);
                     if (noPass(entity)) {
                         dx = 0;
                         canMoveX = false;
                     }
                 }
-                if (getModifiedHitBox(0, dy*speed).intersects(entity.getHitBox()) && canMoveY) {
+                if (collide(getModifiedHitBox(0, dy*speed), entity.getHitBox()) && canMoveY) {
                     solveCollision(entity);
                     if (noPass(entity)) {
                         dy = 0;
@@ -94,6 +95,24 @@ public abstract class Movable extends Entity {
             return true;
         }
         return false;
+    }
+    public double getAngle(Point2D target) {
+        double angle = (double) Math.toDegrees(Math.atan2( target.getY() - getCenterY(), target.getX() - getCenterX()));
+
+        if(angle < 0){
+            angle += 360;
+        }
+
+        return angle;
+    }
+    public double getAngle(double x, double y) {
+        double angle = (double) Math.toDegrees(Math.atan2( y - getCenterY(), x - getCenterX()));
+
+        if(angle < 0){
+            angle += 360;
+        }
+
+        return angle;
     }
     /**
      * Setter/Getter

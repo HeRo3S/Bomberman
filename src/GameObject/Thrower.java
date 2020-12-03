@@ -10,13 +10,12 @@ public class Thrower extends Hostile implements Destructible, Impassable {
         super(x, y, map);
         attackRange = 30;
         attackSpeed = 1;
-        damage = 30;
         maxHp = 200;
         health = maxHp;
         speed = 3;
         code = THROWER;
         detectionRange = 200;
-        attackRange = 120;
+        attackRange = 150;
         idleTime = 60;
     }
 
@@ -55,12 +54,8 @@ public class Thrower extends Hostile implements Destructible, Impassable {
 
     @Override
     protected void attack() {
-
-    }
-
-    @Override
-    protected void drop() {
-
+            new SpearProjectile(getCenterX(),getCenterY(),map,target.getCenter());
+            status.add(Status.currentStatus.ATTACK_CD,5);
     }
 
 
@@ -77,6 +72,6 @@ public class Thrower extends Hostile implements Destructible, Impassable {
 
     @Override
     protected void animate(GraphicsContext gc, double time) {
-
+        gc.drawImage(getSpriteSheet().getSprite(0,0),x,y);
     }
 }

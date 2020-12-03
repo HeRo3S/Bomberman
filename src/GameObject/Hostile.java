@@ -3,8 +3,6 @@ package GameObject;
 
 import java.awt.geom.Line2D;
 
-import static java.lang.Math.*;
-
 public abstract class Hostile extends Movable {
     protected double damage;
     protected double detectionRange;
@@ -28,7 +26,7 @@ public abstract class Hostile extends Movable {
                 for (Entity entity1 : map.getContent(target.x, target.y, 0)) {
 
                     lineOfSight.setLine(target.getCenter(), getCenter());
-                    if (lineOfSight.intersects(entity1.getHitBox()) && entity1 != target) {
+                    if (collide(lineOfSight,entity1.getHitBox()) && entity1 != target) {
                         target = null;
                         break;
                     }
@@ -36,7 +34,7 @@ public abstract class Hostile extends Movable {
             }
             if(target != null && entity != this && entity != target) {
                 lineOfSight.setLine((float)target.getCenterX(),(float)target.getCenterY(), (float)getCenterX(), (float)getCenterY());
-                if (lineOfSight.intersects(entity.getHitBox())) {
+                if (collide(lineOfSight,entity.getHitBox())) {
                     target = null;
                 }
             }
@@ -47,7 +45,25 @@ public abstract class Hostile extends Movable {
     }
     public abstract void idle();
     protected abstract void attack();
-    protected abstract void drop();
+    protected void drop(int type, int time){
+        if (time >= 3){
+            return;
+        }
+        switch (type){
+            case 0:
+                new HealthOrb(x,y,map);
+                if((int) Math.random() * 2 == 1){
+                    drop(0,time++);
+                }
+                break;
+            case 1:
+                new EnergyOrb(x,y,map);
+                if((int) Math.random() * 2 == 1){
+                    drop(1,time++);
+                }
+        }
+
+    }
     protected void hostileLogic() {
         target = null;
         if (!status.isStunning() && !status.isChannelling()) {
@@ -55,8 +71,13 @@ public abstract class Hostile extends Movable {
         }
         //Choose moving course
         if (target != null) {
-            moveToTarget();
-            if (getDistance(target) < attackRange) {
+            if(getDistance(target) > attackRange) {
+                moveToTarget();
+            }
+            else{
+                dx = dy = 0;
+            }
+            if (getDistance(target) <= attackRange) {
                 //render components
                 if (status.canAttack()) {
                     attackFrameCount = 60;
@@ -71,9 +92,11 @@ public abstract class Hostile extends Movable {
         }
         if(dyingFrameCount <= 1){
             if(health <= 0){
-                drop();
+                drop(0,0);
+                drop(1,0);
             }
         }
+        status.update();
     }
     /**
      * Getter/Setter

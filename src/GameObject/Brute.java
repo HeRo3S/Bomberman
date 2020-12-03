@@ -3,21 +3,24 @@ package GameObject;
 import javafx.scene.canvas.GraphicsContext;
 
 import static GameObject.SpriteSheetCode.BRUTE;
-import static java.lang.Math.random;
+import static java.lang.Math.*;
 
 public class Brute extends Hostile implements Impassable, Destructible {
+    double healthRegen = 20;
+    double regenTimer = 20;
     public Brute(double x, double y, GameMap map) {
         super(x, y, map);
         attackRange = 30;
         attackSpeed = 1;
         damage = 100;
-        maxHp = 500;
+        maxHp = 300;
         health = maxHp;
         speed = 2;
         code = BRUTE;
         detectionRange = 150;
         attackRange = 30;
         idleTime = 60;
+        setHitBox(9,9,29,39);
     }
 
     @Override
@@ -55,18 +58,21 @@ public class Brute extends Hostile implements Impassable, Destructible {
 
     @Override
     protected void attack() {
-
-    }
-
-    @Override
-    protected void drop() {
-
+        if(target instanceof Player){
+            target.health -= damage;
+            status.add(Status.currentStatus.ATTACK_CD,10);
+        }
     }
 
 
 
     @Override
     public void update() {
+        regenTimer --;
+        if(!status.isBurning() && regenTimer <= 0){
+            health = min(++healthRegen,maxHp);
+            regenTimer = 20;
+        }
         hostileLogic();
         basicLogic();
     }
@@ -78,6 +84,6 @@ public class Brute extends Hostile implements Impassable, Destructible {
 
     @Override
     protected void animate(GraphicsContext gc, double time) {
-
+        gc.drawImage(getSpriteSheet().getSprite(0,0),x,y);
     }
 }

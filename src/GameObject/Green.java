@@ -9,6 +9,9 @@ import view.GameViewManager;
 import java.io.IOException;
 import java.util.HashSet;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public class Green extends Player implements Destructible, Impassable {
     private HashSet<String> input = GameViewManager.getInput();
     private int direction;
@@ -19,14 +22,18 @@ public class Green extends Player implements Destructible, Impassable {
         setSpeed(3);
         direction = 1;
         code = SpriteSheetCode.GREEN;
-        maxHp = 200;
+        maxHp = 400;
         health = maxHp;
+        maxEnergy = 400;
+        energy = maxEnergy;
     }
 
 
 
     @Override
     public void update() {
+        health = min(health,maxHp);
+        energy = min(++energy,maxEnergy);
         inputHandle();
         basicLogic();
         move();
@@ -48,6 +55,7 @@ public class Green extends Player implements Destructible, Impassable {
             frame += 4;
         }
         gc.drawImage(getSpriteSheet().getSprite(frame, direction), getX(), getY());
+        drawHitBox(gc);
     }
 
     private void inputHandle() {

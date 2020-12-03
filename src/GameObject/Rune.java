@@ -1,6 +1,6 @@
 package GameObject;
 
-public abstract class Rune extends Entity {
+public abstract class Rune extends Movable {
     protected double damage;
     protected int explodeTimer;
     protected int primeTime;
@@ -9,6 +9,7 @@ public abstract class Rune extends Entity {
         super(x, y, map);
         maxHp = 2;
         health = maxHp;
+        dyingFrameCount = 0;
     }
     protected abstract void explode();
 }

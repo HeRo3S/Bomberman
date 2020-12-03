@@ -19,6 +19,8 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.util.ArrayList;
 
+import static GameObject.SpriteSheetCode.WALL;
+
 
 public class Editor extends Application {
 
