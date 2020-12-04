@@ -8,7 +8,7 @@ public class Floor extends Tiles{
     int row;
     int column;
 
-    public Floor(double x, double y, GameMap map, int row, int column) {
+    public Floor(double x, double y, GameMap map, int column, int row) {
         super(x, y, map);
         code = SpriteSheetCode.FLOOR;
         this.row = row;

@@ -20,7 +20,7 @@ public class Phantom extends Hostile implements Destructible {
         damage = 50;
         maxHp = 100;
         health = maxHp;
-        speed = 4;
+        speed = 3.5;
         code = PHANTOM;
         detectionRange = 200;
         attackRange = 30;

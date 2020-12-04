@@ -15,6 +15,7 @@ public class FireRune extends Rune {
         explodeTimer = primeTime;
         setHitBox(4,14,24,12);
         code = SpriteSheetCode.BASIC_RUNE;
+
     }
 
     @Override
@@ -28,7 +29,7 @@ public class FireRune extends Rune {
 
     @Override
     public void update() {
-        if(explodeTimer-- <= 0){
+        if(--explodeTimer <= 0){
             explode();
         }
         basicLogic();

@@ -5,9 +5,7 @@ import SpriteManager.SpriteSheetManager;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.control.TextField;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -20,7 +18,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.util.ArrayList;
 
 import static GameObject.SpriteSheetCode.FLOOR;
 import static GameObject.SpriteSheetCode.WALL;
@@ -35,9 +32,9 @@ public class Editor extends Application {
     HBox hBox = new HBox();
 
 
-    private static final int WEIGHT = 1024;
-    private static final int HEIGHT = 734;
-    private static final int row = WEIGHT / 32;
+    private static final int WIDTH = 1204;
+    private static final int HEIGHT = 576;
+    private static final int row = WIDTH / 32;
     private static final int col = HEIGHT / 32;
 
     public static int[][] location = new int[row+1][col+1];
@@ -224,7 +221,7 @@ public class Editor extends Application {
                             rectangle3.setHeight(32);
                             rectangle3.setFill(new ImagePattern(getSheet(FLOOR).getSprite(rowSprite,colSprite), 0, 0, 1, 1, true));
                             group.getChildren().add(rectangle3);
-                            location[clickX][clickY] = 1;
+                            location[clickX][clickY] = 0;
                             System.out.println("Đã tạo một floor hình:" + rowSprite + "-" + colSprite);
                             break;
 

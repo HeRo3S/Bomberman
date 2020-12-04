@@ -1,15 +1,24 @@
 package GameObject;
 
 public class Fire extends Floor {
+    int frame = 20;
     public Fire(double x, double y, GameMap map, int row, int column) {
         super(x, y, map, row, column);
         health = 200;
         code = SpriteSheetCode.FIRE;
-        setHitBox(0,0,32,32);
+        setHitBox(1,1,30,30);
         row = 0;
         column = 0;
     }
     public void update(){
+        frame --;
+        if(frame <= 0){
+            row++;
+            if(row > 3){
+                row = 0;
+            }
+            frame = 25;
+        }
         if(--health <= 0){
             map.removeContent(x,y,this);
         }

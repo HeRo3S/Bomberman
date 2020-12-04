@@ -2,7 +2,8 @@ package GameObject;
 
 import java.io.Serializable;
 
-import static jdk.nashorn.internal.objects.NativeMath.max;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 public class Status implements Serializable {
     enum currentStatus{
@@ -43,13 +44,13 @@ public class Status implements Serializable {
         return burningTimer > 0;
     }
     public boolean canAttack(){
-        return attackTimer < 0;
+        return attackTimer <= 0;
     }
     public void update(){
-        max(--burningTimer,0);
-        max(--stunTimer, 0);
-        max(--channelTimer, 0);
-        max(--attackTimer, 0);
+        burningTimer = max(--burningTimer,0);
+        stunTimer = max(--stunTimer, 0);
+        channelTimer = max(--channelTimer, 0);
+        attackTimer = max(--attackTimer, 0);
     }
 
     public int getBurningTimer() {

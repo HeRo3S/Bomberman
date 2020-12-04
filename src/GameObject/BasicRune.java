@@ -3,7 +3,6 @@ package GameObject;
 import SpriteManager.SpriteSheet;
 import javafx.scene.canvas.GraphicsContext;
 
-import java.io.IOException;
 
 import static java.lang.Math.*;
 
@@ -14,7 +13,6 @@ public class BasicRune extends Rune {
         range = 80;
         primeTime = 150;
         explodeTimer = primeTime;
-        setHitBox(4,14,24,12);
         code = SpriteSheetCode.BASIC_RUNE;
     }
 

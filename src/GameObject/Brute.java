@@ -17,12 +17,12 @@ public class Brute extends Hostile implements Impassable, Destructible {
         attackRange = 30;
         attackSpeed = 1;
         damage = 100;
-        maxHp = 300;
+        maxHp = 500;
         health = maxHp;
         speed = 2;
         code = BRUTE;
         detectionRange = 150;
-        attackRange = 30;
+        attackRange = 25;
         idleTime = 60;
         dyingFrameCount = 0;
         setHitBox(9,9,29,39);
@@ -34,6 +34,7 @@ public class Brute extends Hostile implements Impassable, Destructible {
             map.removeContent(x, y, this);
         }
     }
+
 
     @Override
     public void idle() {
@@ -82,7 +83,7 @@ public class Brute extends Hostile implements Impassable, Destructible {
     public void update() {
         regenTimer --;
         if(!status.isBurning() && regenTimer <= 0){
-            health = min(++healthRegen,maxHp);
+            health = min(health += healthRegen,maxHp);
             regenTimer = 20;
         }
         hostileLogic();
@@ -108,5 +109,10 @@ public class Brute extends Hostile implements Impassable, Destructible {
     protected void animate(GraphicsContext gc, double time) {
         frame = (int) ((time % (4 * frameTime)) / frameTime) + statusSprite;
         gc.drawImage(getSpriteSheet().getSprite(frame, directionSprite), getX(), getY());
+        drawHealthBar(gc);
+        drawHitBox(gc);
+        if(target != null){
+            gc.strokeLine(getCenterX(),getCenterY(),target.getCenterX(),target.getCenterY());
+        }
     }
 }

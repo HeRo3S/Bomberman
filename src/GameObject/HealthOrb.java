@@ -1,8 +1,5 @@
 package GameObject;
 
-import SpriteManager.SpriteSheet;
-
-import java.io.IOException;
 
 public class HealthOrb extends Particle {
     public HealthOrb(double x, double y, GameMap map) {

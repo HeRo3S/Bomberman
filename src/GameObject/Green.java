@@ -11,6 +11,7 @@ import java.util.HashSet;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+import static javafx.scene.paint.Color.BLUE;
 
 public class Green extends Player implements Destructible, Impassable {
     private HashSet<String> input = GameViewManager.getInput();
@@ -40,6 +41,7 @@ public class Green extends Player implements Destructible, Impassable {
         }
         basicLogic();
         move();
+        status.update();
     }
 
     @Override
@@ -60,9 +62,12 @@ public class Green extends Player implements Destructible, Impassable {
         gc.drawImage(getSpriteSheet().getSprite(frame, direction), getX(), getY());
         drawHitBox(gc);
         drawHealthBar(gc);
+        gc.setFill(BLUE);
+        gc.fillRect(x,y - 7, energy / (maxEnergy/30), 2);
     }
 
     private void inputHandle() {
+        input = GameViewManager.getInput();
         dx = 0;
         dy = 0;
         if (input.contains("W")) {
@@ -85,8 +90,38 @@ public class Green extends Player implements Destructible, Impassable {
             direction = 2;
         }
         if(input.contains("K")){
-            new FireRune(x,y,map);
+            if(energy >= 100) {
+                boolean canPlace = true;
+                for(Entity entity : map.getContent(x,y,1)){
+                    if(entity != this &&!(entity instanceof Floor) && getHitBox().intersects(entity.getHitBox())){
+                        canPlace = false;
+                    }
+                }
+                if(canPlace) {
+                    new FireRune(x, y, map);
+                    energy -= 100;
+                }
+            }
             input.remove("K");
+        }
+        if(input.contains("J")){
+            if(energy >= 50) {
+                boolean canPlace = true;
+                for(Entity entity : map.getContent(x,y,1)){
+                    if(entity != this &&!(entity instanceof Floor) && getHitBox().intersects(entity.getHitBox())){
+                        canPlace = false;
+                    }
+                }
+                if(canPlace) {
+                    new BasicRune(x, y, map);
+                    energy -= 50;
+                }
+            }
+            input.remove("J");
+        }
+        if(input.contains("L")){
+            new Wall(x - 32, y - 32, map,0, 0);
+            input.remove("L");
         }
     }
 

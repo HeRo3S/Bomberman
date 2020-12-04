@@ -13,10 +13,6 @@ public class EnergyOrb extends Particle {
         code = SpriteSheetCode.ENERGY_ORB;
     }
 
-    @Override
-    protected void animate(GraphicsContext gc, double time) {
-
-    }
 
     @Override
     protected void effect(Entity entity) {

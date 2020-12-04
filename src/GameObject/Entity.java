@@ -40,11 +40,11 @@ public abstract class Entity implements Serializable {
         this.width = width;
         this.height = height;
     }
-    protected Rectangle2D.Double getHitBox(){
+    protected Rectangle2D getHitBox(){
         return new Rectangle2D.Double(x+offsetX,y+offsetY,width,height);
     }
 
-    protected Rectangle2D.Double getModifiedHitBox(double dx, double dy){
+    protected Rectangle2D getModifiedHitBox(double dx, double dy){
         return new Rectangle2D.Double(x + offsetX + dx, y+ offsetY + dy, width, height);
     }
 

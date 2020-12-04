@@ -3,6 +3,8 @@ package GameObject;
 
 import java.awt.geom.Line2D;
 
+import static java.lang.Math.random;
+
 public abstract class Hostile extends Movable implements Destructible {
     protected double damage;
     protected double detectionRange;
@@ -21,8 +23,8 @@ public abstract class Hostile extends Movable implements Destructible {
             //Find target
             if (entity instanceof Player) {
                 target = entity;
-                for (Entity entity1 : map.getContent(target.x, target.y, 0)) {
-                    lineOfSight.setLine(target.getCenter(), getCenter());
+                for (Entity entity1 : map.getContent(target.x, target.y, 1)) {
+                    lineOfSight.setLine(target.getCenterX(),target.getCenterY(), getCenterX(),getCenterY());
                     if (entity1 instanceof NoSeeThrough && lineOfSight.intersects(entity1.getHitBox())) {
                         target = null;
                         break;
@@ -30,7 +32,7 @@ public abstract class Hostile extends Movable implements Destructible {
                 }
             }
             if(entity instanceof NoSeeThrough && target != null) {
-                lineOfSight.setLine(target.getCenter(),getCenter());
+                lineOfSight.setLine(target.getCenterX(),target.getCenterY(), getCenterX(),getCenterY());
                 if (lineOfSight.intersects(entity.getHitBox())) {
                     target = null;
                 }
@@ -48,14 +50,14 @@ public abstract class Hostile extends Movable implements Destructible {
         }
         switch (type){
             case 0:
-                new HealthOrb(x,y,map);
-                if(Math.random()*2 <= 1){
+                new HealthOrb(x + random() * width,y + random() * height,map);
+                if(random()*2 <= 1){
                     drop(0,time++);
                 }
                 break;
             case 1:
-                new EnergyOrb(x,y,map);
-                if(Math.random() * 2 <= 1){
+                new EnergyOrb(x + random() * width,y + random() * height,map);
+                if(random() * 2 <= 1){
                     drop(1,time++);
                 }
         }
