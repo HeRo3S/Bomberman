@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 
 import static java.lang.Math.*;
+import static javafx.scene.paint.Color.*;
 
 public class BasicRune extends Rune {
     public BasicRune(double x, double y, GameMap map) {
@@ -42,7 +43,14 @@ public class BasicRune extends Rune {
 
     @Override
     protected void animate(GraphicsContext gc, double time) {
+        gc.setFill(ORANGE);
+        gc.fillOval(x+16-(primeTime - explodeTimer)* range/primeTime,
+                y+16-(primeTime - explodeTimer)* range/primeTime,
+                (primeTime - explodeTimer)* range*2/primeTime,
+                (primeTime - explodeTimer)* range*2/primeTime);
+        gc.setStroke(RED);
         gc.strokeOval(x+16-range,y+16-range,range*2,range*2);
         gc.drawImage(getSpriteSheet().getSprite(max(0,3-(explodeTimer/(primeTime/4))),0), getX(), getY());
+        gc.setStroke(BLACK);
     }
 }

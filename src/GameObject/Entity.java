@@ -2,12 +2,13 @@ package GameObject;
 import SpriteManager.SpriteSheet;
 import SpriteManager.SpriteSheetManager;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.shape.Rectangle;
+
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
-
 import static javafx.scene.paint.Color.GREEN;
-import static javafx.scene.paint.Color.RED;
+
 
 public abstract class Entity implements Serializable {
     protected SpriteSheetCode code;
@@ -40,12 +41,12 @@ public abstract class Entity implements Serializable {
         this.width = width;
         this.height = height;
     }
-    protected Rectangle2D getHitBox(){
-        return new Rectangle2D.Double(x+offsetX,y+offsetY,width,height);
+    protected Rectangle getHitBox(){
+        return new Rectangle(x+offsetX,y+offsetY,width,height);
     }
 
-    protected Rectangle2D getModifiedHitBox(double dx, double dy){
-        return new Rectangle2D.Double(x + offsetX + dx, y+ offsetY + dy, width, height);
+    protected Rectangle getModifiedHitBox(double dx, double dy){
+        return new Rectangle(x + offsetX + dx, y+ offsetY + dy, width, height);
     }
 
     public abstract void update();
@@ -70,7 +71,11 @@ public abstract class Entity implements Serializable {
         return new Point2D.Double(x + offsetX + width/2,y + offsetY + height/2);
     }
     protected void drawHitBox(GraphicsContext gc){
-        gc.strokeRect(x+offsetX,y+offsetY,width,height);
+        gc.strokeRect(getHitBox().getX(),
+                getHitBox().getY(),
+                getHitBox().getWidth(),
+                getHitBox().getHeight()
+        );
     }
     protected void drawHealthBar(GraphicsContext gc){
         gc.setFill(GREEN);

@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -32,7 +33,7 @@ public class GameViewManager {
     private long startTime = System.nanoTime();
 
     private Canvas canvas;
-    private GraphicsContext gc;
+    private static GraphicsContext gc;
 
     private SpriteSheet background;
 
@@ -112,7 +113,9 @@ public class GameViewManager {
         }
         return gameMap;
     }
-
+    public static GraphicsContext getGc(){
+        return gc;
+    }
     private void createGameBackground() {
             background = new SpriteSheet("view/resources/gameBackground.png", 1, 9);
 

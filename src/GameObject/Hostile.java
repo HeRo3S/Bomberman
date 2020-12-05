@@ -1,7 +1,12 @@
 package GameObject;
 
 
-import java.awt.geom.Line2D;
+
+
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Path;
+import javafx.scene.shape.Shape;
+import view.GameViewManager;
 
 import static java.lang.Math.random;
 
@@ -11,7 +16,7 @@ public abstract class Hostile extends Movable implements Destructible {
     protected double attackSpeed;
     protected double attackRange;
     protected Entity target;
-    protected Line2D lineOfSight = new Line2D.Double();
+    protected Line lineOfSight;
     protected int idleTimer;
     protected int idleTime;
     protected int attackFrameCount;
@@ -23,22 +28,23 @@ public abstract class Hostile extends Movable implements Destructible {
             //Find target
             if (entity instanceof Player) {
                 target = entity;
-                for (Entity entity1 : map.getContent(target.x, target.y, 1)) {
-                    lineOfSight.setLine(target.getCenterX(),target.getCenterY(), getCenterX(),getCenterY());
-                    if (entity1 instanceof NoSeeThrough && lineOfSight.intersects(entity1.getHitBox())) {
+                lineOfSight= new Line(target.getCenterX(), target.getCenterY(),getCenterX(),getCenterY());
+                for (Entity entity1 : map.getContent(target.x, target.y, GameMap.CHUNK_SIZE + 1)) {
+                    if (entity1 instanceof NoSeeThrough &&
+                            ((Path)Shape.intersect(lineOfSight, entity1.getHitBox())).getElements().size() > 0) {
                         target = null;
                         break;
                     }
                 }
             }
             if(entity instanceof NoSeeThrough && target != null) {
-                lineOfSight.setLine(target.getCenterX(),target.getCenterY(), getCenterX(),getCenterY());
-                if (lineOfSight.intersects(entity.getHitBox())) {
+                if (((Path)Shape.intersect(lineOfSight, entity.getHitBox())).getElements().size() > 0) {
                     target = null;
                 }
             }
         }
     }
+
     public void moveToTarget(){
         moveTo(target.x,target.y);
     }
@@ -48,17 +54,18 @@ public abstract class Hostile extends Movable implements Destructible {
         if (time >= 3){
             return;
         }
+        time++;
         switch (type){
             case 0:
-                new HealthOrb(x + random() * width,y + random() * height,map);
+                HealthOrb healthOrb = new HealthOrb(x + random() * width,y + random() * height,map);
                 if(random()*2 <= 1){
-                    drop(0,time++);
+                    drop(0,time);
                 }
                 break;
             case 1:
                 new EnergyOrb(x + random() * width,y + random() * height,map);
                 if(random() * 2 <= 1){
-                    drop(1,time++);
+                    drop(1,time);
                 }
         }
 

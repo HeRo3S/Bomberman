@@ -3,6 +3,8 @@ package GameObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import static java.lang.Math.round;
+
 public class Wall extends Tiles implements UnFlyable, NoSeeThrough{
     private int row;
     private int column;
@@ -11,9 +13,11 @@ public class Wall extends Tiles implements UnFlyable, NoSeeThrough{
     {
         super(x, y, map);
         code = SpriteSheetCode.WALL;
-        setHitBox(1,1,30,30);
+        setHitBox(0,0,32,32);
         this.row = row;
         this.column = column;
+        this.x = round(x/32)* 32;
+        this.y = round(y/32) * 32;
     }
 
     @Override
