@@ -1,6 +1,11 @@
 package GameObject;
 
-public class EnergyOrb extends Orb {
+import SpriteManager.SpriteSheet;
+import javafx.scene.canvas.GraphicsContext;
+
+import java.io.IOException;
+
+public class EnergyOrb extends Particle {
 
     public EnergyOrb(double x, double y, GameMap map) {
         super(x, y, map);

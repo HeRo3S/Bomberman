@@ -2,10 +2,10 @@ package GameObject;
 
 import javafx.scene.canvas.GraphicsContext;
 
-public abstract class Orb extends Drop {
+public abstract class Particle extends Drop {
     double range;
     double amount;
-    public Orb(double x, double y, GameMap map) {
+    public Particle(double x, double y, GameMap map) {
         super(x, y, map);
         range = 50;
         speed = 2;
@@ -19,7 +19,7 @@ public abstract class Orb extends Drop {
 
     @Override
     public void update() {
-        dropLogic();
+        dx = dy = 0;
         for(Entity entity : map.getContent(x,y,range)){
             if(entity instanceof Player){
                 moveTo(entity.getCenterX(),entity.getCenterY());

@@ -1,9 +1,7 @@
 package GameObject;
 
 
-import javafx.scene.shape.Path;
-import javafx.scene.shape.Shape;
-
+import java.awt.*;
 import java.awt.geom.Point2D;
 
 import static GameObject.GameMap.*;
@@ -63,17 +61,17 @@ public abstract class Movable extends Entity {
     public void move(){
         boolean canMoveX = true;
         boolean canMoveY = true;
-        for(Entity entity : map.getContent(x,y,CHUNK_SIZE + 1)) {
+        for(Entity entity : map.getContent(x,y,1)) {
             if(entity != this){
                 //Calculate
-                if (((Path)Shape.intersect(getModifiedHitBox(dx*speed, 0),entity.getHitBox())).getElements().size() > 0 && canMoveX) {
+                if (getModifiedHitBox(dx*speed, 0).intersects(entity.getHitBox()) && canMoveX) {
                     solveCollision(entity);
                     if (noPass(entity)) {
                         dx = 0;
                         canMoveX = false;
                     }
                 }
-                if (((Path)Shape.intersect(getModifiedHitBox(0, dy * speed),entity.getHitBox())).getElements().size() > 0  && canMoveY) {
+                if (getModifiedHitBox(0, dy*speed).intersects(entity.getHitBox()) && canMoveY) {
                     solveCollision(entity);
                     if (noPass(entity)) {
                         dy = 0;

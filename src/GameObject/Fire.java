@@ -1,8 +1,5 @@
 package GameObject;
 
-import javafx.scene.shape.Path;
-import javafx.scene.shape.Shape;
-
 public class Fire extends Floor {
     int frame = 20;
     public Fire(double x, double y, GameMap map, int row, int column) {
@@ -25,8 +22,8 @@ public class Fire extends Floor {
         if(--health <= 0){
             map.removeContent(x,y,this);
         }
-        for(Entity entity : map.getContent(x,y,GameMap.CHUNK_SIZE + 1)){
-            if(entity instanceof Destructible && ((Path) Shape.intersect(getHitBox(),entity.getHitBox())).getElements().size() > 0 ){
+        for(Entity entity : map.getContent(x,y,1)){
+            if(entity instanceof Destructible && entity.getHitBox().intersects(getHitBox())){
                 if (entity.status.getBurningTimer() < 80) {
                     if(!entity.status.isBurning()) {
                         entity.health -= 20;

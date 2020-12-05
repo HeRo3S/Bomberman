@@ -3,7 +3,6 @@ package GameObject;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
-import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;

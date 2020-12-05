@@ -1,23 +1,29 @@
 package GameObject;
 
+import SpriteManager.SpriteSheet;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.shape.Path;
-import javafx.scene.shape.Shape;
 import view.GameViewManager;
+
+
+import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 
-import static java.lang.Math.*;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 import static javafx.scene.paint.Color.BLUE;
 
 public class Green extends Player implements Destructible, Impassable {
     private HashSet<String> input = GameViewManager.getInput();
     private int direction;
 
+    private final String bombPlantedSFX = "src/GameObject/sfx/bomb_planted.mp3";
+
     public Green(double x, double y, GameMap map) {
         super(x, y, map);
-        setHitBox(6, 1, 20, 30);
-        speed = 3;
+        setHitBox(6, 0, 20, 32);
+        setSpeed(3);
         direction = 1;
         code = SpriteSheetCode.GREEN;
         maxHp = 400;
@@ -89,14 +95,15 @@ public class Green extends Player implements Destructible, Impassable {
         if(input.contains("K")){
             if(energy >= 100) {
                 boolean canPlace = true;
-                for(Entity entity : map.getContent(x,y,GameMap.CHUNK_SIZE + 1)){
-                    if(entity != this &&(((Path) Shape.intersect(getHitBox(),entity.getHitBox())).getElements().size() > 0)){
+                for(Entity entity : map.getContent(x,y,1)){
+                    if(entity != this &&!(entity instanceof Floor) && getHitBox().intersects(entity.getHitBox())){
                         canPlace = false;
                     }
                 }
                 if(canPlace) {
                     new FireRune(x, y, map);
                     energy -= 100;
+                    sfx.playWithLoop(bombPlantedSFX);
                 }
             }
             input.remove("K");
@@ -104,20 +111,21 @@ public class Green extends Player implements Destructible, Impassable {
         if(input.contains("J")){
             if(energy >= 50) {
                 boolean canPlace = true;
-                for(Entity entity : map.getContent(x,y,GameMap.CHUNK_SIZE + 1)){
-                    if(entity != this &&(((Path) Shape.intersect(getHitBox(),entity.getHitBox())).getElements().size() > 0)){
+                for(Entity entity : map.getContent(x,y,1)){
+                    if(entity != this &&!(entity instanceof Floor) && getHitBox().intersects(entity.getHitBox())){
                         canPlace = false;
                     }
                 }
                 if(canPlace) {
                     new BasicRune(x, y, map);
                     energy -= 50;
+                    sfx.playWithLoop(bombPlantedSFX);
                 }
             }
             input.remove("J");
         }
         if(input.contains("L")){
-            new Wall(x+ 32,y + 32, map,0, 0);
+            new Wall(x - 32, y - 32, map,0, 0);
             input.remove("L");
         }
     }

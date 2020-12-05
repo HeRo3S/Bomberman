@@ -2,7 +2,6 @@ package GameObject;
 
 import javafx.scene.canvas.GraphicsContext;
 
-
 import java.awt.geom.Point2D;
 
 import static GameObject.SpriteSheetCode.PHANTOM;
@@ -10,12 +9,12 @@ import static GameObject.Status.currentStatus.ATTACK_CD;
 import static GameObject.Status.currentStatus.STUN;
 
 public class Phantom extends Hostile implements Destructible {
-    private Point2D spawnPos;
+    private Point2D lastPos;
     private int directionSprite;
     private int statusSprite;
     public Phantom(double x, double y, GameMap map) {
         super(x, y, map);
-        spawnPos = new Point2D.Double(getCenterX(),getCenterY());
+        lastPos = new Point2D.Double(getCenterX(),getCenterY());
         attackRange = 30;
         attackSpeed = 1;
         damage = 50;
@@ -30,7 +29,7 @@ public class Phantom extends Hostile implements Destructible {
 
     @Override
     public void idle() {
-        moveTo(spawnPos);
+        moveTo(lastPos);
     }
 
     @Override

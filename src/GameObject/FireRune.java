@@ -7,6 +7,8 @@ import java.awt.geom.Point2D;
 import static java.lang.Math.max;
 
 public class FireRune extends Rune {
+    private String explosionSFX = "src/GameObject/sfx/bomb_explosion.wav";
+
     public FireRune(double x, double y, GameMap map) {
         super(x, y, map);
         damage = 50;
@@ -31,6 +33,7 @@ public class FireRune extends Rune {
     public void update() {
         if(--explodeTimer <= 0){
             explode();
+            sfx.playWithLoop(explosionSFX);
         }
         basicLogic();
 

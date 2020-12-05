@@ -14,7 +14,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -32,7 +31,7 @@ public class GameViewManager {
     private AnimationTimer gameTimer;
     private long startTime = System.nanoTime();
 
-    private Canvas canvas;
+    private static Canvas canvas;
     private static GraphicsContext gc;
 
     private SpriteSheet background;
@@ -44,10 +43,13 @@ public class GameViewManager {
         return input;
     }
 
+    private static SoundEffect sfx = new SoundEffect();
+    public static SoundEffect getSoundEffect() {
+        return sfx;
+    }
+
     private GameMap gameMap;
-    private Green green;
-    private Wisp wisp;
-    private Phantom phantom;
+
 
     public GameViewManager() {
         initializeScene();
@@ -113,9 +115,11 @@ public class GameViewManager {
         }
         return gameMap;
     }
-    public static GraphicsContext getGc(){
+
+    public static GraphicsContext getGc() {
         return gc;
     }
+
     private void createGameBackground() {
             background = new SpriteSheet("view/resources/gameBackground.png", 1, 9);
 
@@ -136,15 +140,6 @@ public class GameViewManager {
         gc.drawImage(background.getSprite(2, 0), gameMap.getMapWidth() - 64, 0);
         gc.drawImage(background.getSprite(6, 0), 0, gameMap.getMapHeight() - 64);
         gc.drawImage(background.getSprite(8, 0), gameMap.getMapWidth() - 64, gameMap.getMapHeight() - 64);
-    }
-
-    private void createGameMap() {
-        gameMap = new GameMap();
-        green = new Green(10, 10, gameMap);
-        wisp = new Wisp(400, 300, gameMap);
-        phantom = new Phantom(350, 200, gameMap);
-        new Thrower(300,150,gameMap);
-        new Wall(200,100,gameMap,0,0);
     }
 
     public void keyboardCheck() {

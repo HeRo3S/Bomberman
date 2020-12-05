@@ -1,8 +1,6 @@
 package GameObject;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.shape.Path;
-import javafx.scene.shape.Shape;
 import sun.security.krb5.internal.crypto.Des;
 
 import java.awt.geom.Point2D;
@@ -31,8 +29,8 @@ public class FireSpread extends Projectile {
 
         //Spread fire
         boolean canPlace = true;
-        for(Entity entity : map.getContent(x,y,CHUNK_SIZE + 1)){
-            if(entity instanceof Fire && ((Path) Shape.intersect(getHitBox(),entity.getHitBox())).getElements().size() > 0 ){
+        for(Entity entity : map.getContent(x,y,1)){
+            if(entity instanceof Fire && getHitBox().intersects(entity.getHitBox())){
                 if(entity == lastFire) {
                     canPlace = false;
                 }

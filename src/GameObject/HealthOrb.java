@@ -1,7 +1,7 @@
 package GameObject;
 
 
-public class HealthOrb extends Orb {
+public class HealthOrb extends Particle {
     public HealthOrb(double x, double y, GameMap map) {
         super(x, y, map);
         amount = 20;
