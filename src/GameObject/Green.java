@@ -14,6 +14,8 @@ public class Green extends Player implements Destructible, Impassable {
     private HashSet<String> input = GameViewManager.getInput();
     private int direction;
 
+    private final String bombPlantedSFX = "src/GameObject/sfx/bomb_planted.mp3";
+
     public Green(double x, double y, GameMap map) {
         super(x, y, map);
         setHitBox(6, 1, 20, 30);
@@ -97,6 +99,7 @@ public class Green extends Player implements Destructible, Impassable {
                 if(canPlace) {
                     new FireRune(x, y, map);
                     energy -= 100;
+                    sfx.playWithLoop(bombPlantedSFX);
                 }
             }
             input.remove("K");
@@ -112,6 +115,7 @@ public class Green extends Player implements Destructible, Impassable {
                 if(canPlace) {
                     new BasicRune(x, y, map);
                     energy -= 50;
+                    sfx.playWithLoop(bombPlantedSFX);
                 }
             }
             input.remove("J");

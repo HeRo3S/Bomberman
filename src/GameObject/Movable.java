@@ -79,10 +79,7 @@ public abstract class Movable extends Entity {
         }
     }
     protected boolean noPass(Entity entity) {
-        if(entity instanceof Impassable){
-            return true;
-        }
-        return false;
+        return entity instanceof Impassable;
     }
     public double getAngle(Point2D target) {
         double angle = (double) Math.toDegrees(Math.atan2( target.getY() - getCenterY(), target.getX() - getCenterX()));

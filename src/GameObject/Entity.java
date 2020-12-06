@@ -3,6 +3,7 @@ import SpriteManager.SpriteSheet;
 import SpriteManager.SpriteSheetManager;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Rectangle;
+import view.GameViewManager;
 
 import java.awt.geom.Point2D;
 import java.io.Serializable;
@@ -11,6 +12,10 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static javafx.scene.paint.Color.GREEN;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+import static javafx.scene.paint.Color.GREEN;
+import static javafx.scene.paint.Color.RED;
 
 public abstract class Entity implements Serializable {
     protected int dyingFrameCount = 48;
@@ -27,6 +32,8 @@ public abstract class Entity implements Serializable {
     protected double height = 32;
     protected Status status = new Status();
     protected int invincibleFrame;
+    protected static SoundEffect sfx = GameViewManager.getSoundEffect();
+
     public Entity(double x, double y, GameMap map) {
         this.map = map;
         this.x = x;

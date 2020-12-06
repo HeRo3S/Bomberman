@@ -2,7 +2,6 @@ package GameObject;
 
 import javafx.scene.canvas.GraphicsContext;
 
-
 import java.awt.geom.Point2D;
 
 import static GameObject.SpriteSheetCode.PHANTOM;

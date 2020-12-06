@@ -19,7 +19,7 @@ public abstract class Orb extends Drop {
 
     @Override
     public void update() {
-        dropLogic();
+        dx = dy = 0;
         for(Entity entity : map.getContent(x,y,range)){
             if(entity instanceof Player){
                 moveTo(entity.getCenterX(),entity.getCenterY());

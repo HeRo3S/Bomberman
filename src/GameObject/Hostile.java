@@ -44,7 +44,6 @@ public abstract class Hostile extends Movable implements Destructible {
             }
         }
     }
-
     public void moveToTarget(){
         moveTo(target.x,target.y);
     }

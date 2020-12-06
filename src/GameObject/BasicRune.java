@@ -8,6 +8,7 @@ import static java.lang.Math.*;
 import static javafx.scene.paint.Color.*;
 
 public class BasicRune extends Rune {
+    private String explosionSFX = "src/GameObject/sfx/bomb_explosion.wav";
     public BasicRune(double x, double y, GameMap map) {
         super(x, y, map);
         damage = 100;
@@ -31,6 +32,7 @@ public class BasicRune extends Rune {
     public void update() {
         if(explodeTimer-- <= 0){
             explode();
+            sfx.playWithLoop(explosionSFX);
         }
         basicLogic();
 
