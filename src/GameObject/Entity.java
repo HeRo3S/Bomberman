@@ -32,7 +32,7 @@ public abstract class Entity implements Serializable {
     protected double height = 32;
     protected Status status = new Status();
     protected int invincibleFrame;
-    protected static SoundEffect sfx = GameViewManager.getSoundEffect();
+    protected static SoundEffect sfx;
 
     public Entity(double x, double y, GameMap map) {
         this.map = map;
@@ -40,6 +40,7 @@ public abstract class Entity implements Serializable {
         this.y = y;
         health = maxHp;
         map.addContent(x, y, this);
+        sfx = new SoundEffect();
     }
 
     /**

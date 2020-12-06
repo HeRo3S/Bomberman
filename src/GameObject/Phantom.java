@@ -12,6 +12,9 @@ public class Phantom extends Hostile implements Destructible {
     private Point2D spawnPos;
     private int directionSprite;
     private int statusSprite;
+
+    private final String PHANTOM_ATTACK_SFX = "src/GameObject/sfx/phantom_attack.wav";
+
     public Phantom(double x, double y, GameMap map) {
         super(x, y, map);
         spawnPos = new Point2D.Double(getCenterX(),getCenterY());
@@ -38,6 +41,7 @@ public class Phantom extends Hostile implements Destructible {
             target.modifyHealth(-damage);
             status.add(ATTACK_CD,5);
             status.add(STUN,3);
+            sfx.playWithFlag(PHANTOM_ATTACK_SFX);
         }
     }
 
