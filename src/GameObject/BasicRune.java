@@ -21,7 +21,7 @@ public class BasicRune extends Rune {
     protected void explode() {
         for(Entity entity : map.getContent(x,y,range)){
             if(getDistance(entity) <= range && (entity instanceof Destructible)){
-                entity.health -= damage;
+                entity.modifyHealth(-damage);
             }
         }
         health = 0;

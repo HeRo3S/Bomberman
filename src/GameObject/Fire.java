@@ -29,7 +29,7 @@ public class Fire extends Floor {
             if(entity instanceof Destructible && ((Path) Shape.intersect(getHitBox(),entity.getHitBox())).getElements().size() > 0 ){
                 if (entity.status.getBurningTimer() < 80) {
                     if(!entity.status.isBurning()) {
-                        entity.health -= 20;
+                        entity.modifyHealth(-20);
                     }
                     entity.status.setBurningTimer(80);
                 }

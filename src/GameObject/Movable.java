@@ -16,22 +16,8 @@ public abstract class Movable extends Entity {
     protected double dy;
     protected Point2D lastPos;
     //render components
-    protected int dyingFrameCount = 48;
-    protected boolean isAnimateDying = false;
     protected int frame;
     protected final double frameTime = 0.100;
-    @Override
-    protected void basicLogic() {
-        if (getHealth() <= 0) {
-            if (--dyingFrameCount <= 0) {
-                map.removeContent(x, y, this);
-            } else {
-                isAnimateDying = true;
-                dx = 0;
-                dy = 0;
-            }
-        }
-    }
     public void moveTo(double x, double y){
         double steps = max(abs(x - getCenterX()), abs(y - getCenterY()));
         if (steps == 0)

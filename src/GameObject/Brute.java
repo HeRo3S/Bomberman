@@ -3,7 +3,6 @@ package GameObject;
 import javafx.scene.canvas.GraphicsContext;
 
 import static GameObject.SpriteSheetCode.BRUTE;
-import static GameObject.SpriteSheetCode.THROWER;
 import static java.lang.Math.*;
 
 public class Brute extends Hostile implements Impassable, Destructible {
@@ -26,13 +25,6 @@ public class Brute extends Hostile implements Impassable, Destructible {
         idleTime = 60;
         dyingFrameCount = 0;
         setHitBox(9,9,29,39);
-    }
-
-    @Override
-    protected void basicLogic() {
-        if (getHealth() <= 0) {
-            map.removeContent(x, y, this);
-        }
     }
 
 

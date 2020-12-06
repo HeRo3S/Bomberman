@@ -36,7 +36,7 @@ public class Phantom extends Hostile implements Destructible {
     @Override
     protected void attack() {
         if(status.canAttack()){
-            target.health -= damage;
+            target.modifyHealth(-damage);
             status.add(ATTACK_CD,5);
             status.add(STUN,3);
         }

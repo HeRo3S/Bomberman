@@ -34,7 +34,7 @@ public class Green extends Player implements Destructible, Impassable {
         energy = min(++energy,maxEnergy);
         inputHandle();
         if(status.isBurning()){
-            health -= 0.5;
+            modifyHealth(-10);
         }
         basicLogic();
         move();

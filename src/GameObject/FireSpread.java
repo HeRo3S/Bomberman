@@ -59,7 +59,7 @@ public class FireSpread extends Projectile {
     @Override
     protected void solveCollision(Entity entity) {
         if(entity instanceof Destructible){
-            entity.health -= 5;
+            entity.modifyHealth(-5);
         }
     }
 

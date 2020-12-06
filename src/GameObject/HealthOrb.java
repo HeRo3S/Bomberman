@@ -10,7 +10,7 @@ public class HealthOrb extends Orb {
 
     @Override
     protected void effect(Entity entity) {
-        entity.health += amount;
+        entity.modifyHealth(amount);
         health = 0;
     }
 }

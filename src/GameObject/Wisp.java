@@ -79,7 +79,7 @@ public class Wisp extends Hostile implements Impassable, Destructible {
     protected void solveCollision(Entity entity) {
     }
     protected void attack(){
-            target.health -= damage;
+            target.modifyHealth(-damage);
             status.add(Status.currentStatus.ATTACK_CD, 5);
     }
 

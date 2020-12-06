@@ -1,5 +1,7 @@
 package GameObject;
 
+import static java.lang.Math.min;
+
 public abstract class Player extends Movable {
     protected double energy;
     protected double maxEnergy = 200;
@@ -15,7 +17,9 @@ public abstract class Player extends Movable {
         health += heathRegen;
         energy += energyRegen;
     }
-
+    public void modifyEnergy(double amount){
+        energy = min(maxEnergy,energy + amount);
+    }
     /**
      * Getter/Setter
      */

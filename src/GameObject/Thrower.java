@@ -25,14 +25,6 @@ public class Thrower extends Hostile implements Destructible,Impassable {
     }
 
     @Override
-    protected void basicLogic() {
-        if (getHealth() <= 0)
-        {
-            map.removeContent(x, y, this);
-        }
-    }
-
-    @Override
     public void idle() {
         if (--idleTimer <= 0) {
             int rand = (int) (random() * 10);

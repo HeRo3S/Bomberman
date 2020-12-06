@@ -12,7 +12,7 @@ public class EnergyOrb extends Orb {
     @Override
     protected void effect(Entity entity) {
         Player player = (Player) entity;
-        player.energy += amount;
+        player.modifyEnergy(amount);
         health = 0;
     }
 }

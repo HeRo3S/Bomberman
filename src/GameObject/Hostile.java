@@ -93,7 +93,7 @@ public abstract class Hostile extends Movable implements Destructible {
             idle();
         }
         if(status.isBurning()){
-            health -= 0.5;
+            modifyHealth(-10);
         }
         if (!status.isChannelling() && !status.isStunning()) {
             move();

@@ -5,12 +5,16 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Rectangle;
 
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
+
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 import static javafx.scene.paint.Color.GREEN;
 
 
 public abstract class Entity implements Serializable {
+    protected int dyingFrameCount = 48;
+    protected boolean isAnimateDying = false;
     protected SpriteSheetCode code;
     protected GameMap map;
     protected double x;
@@ -22,6 +26,7 @@ public abstract class Entity implements Serializable {
     protected double width = 32;
     protected double height = 32;
     protected Status status = new Status();
+    protected int invincibleFrame;
     public Entity(double x, double y, GameMap map) {
         this.map = map;
         this.x = x;
@@ -55,9 +60,14 @@ public abstract class Entity implements Serializable {
         return (new Point2D.Double(getCenterX(),getCenterY()).distance(entity.getCenterX(), entity.getCenterY()));
     }
     protected abstract void animate(GraphicsContext gc, double time);
-    protected void basicLogic(){
-        if (health <= 0) {
-            map.removeContent(x, y, this);
+    protected void basicLogic() {
+        invincibleFrame = max(--invincibleFrame,0);
+        if (getHealth() <= 0) {
+            if (--dyingFrameCount <= 0) {
+                map.removeContent(x, y, this);
+            } else {
+                isAnimateDying = true;
+            }
         }
     }
 
@@ -80,6 +90,15 @@ public abstract class Entity implements Serializable {
     protected void drawHealthBar(GraphicsContext gc){
         gc.setFill(GREEN);
         gc.fillRect(x, y - 10, health/(maxHp/30), 2);
+    }
+    public void modifyHealth(double amount){
+        if(amount < 0 && invincibleFrame > 0){
+            return;
+        }
+        if(invincibleFrame <= 0){
+            invincibleFrame = 5;
+        }
+        health = min(maxHp,health + amount);
     }
     /**
      * Setter/Getter
