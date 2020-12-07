@@ -84,11 +84,21 @@ public class GameMap implements Serializable {
     }
 
     public void render(GraphicsContext gc, double time) {
+        ArrayList<ArrayList<Entity>> render = new ArrayList<>();
+        for(int i = 0; i < 10; i++){
+            render.add(new ArrayList<>());
+        }
         for(int i = 0; i < map.size(); i++){
             for (int j = 0; j < map.get(i).size(); j++){
                 for(int k = 0; k < map.get(i).get(j).size(); k++){
-                    map.get(i).get(j).get(k).animate(gc, time);
+                    Entity temp = map.get(i).get(j).get(k);
+                    render.get(temp.getLayer()).add(temp);
                 }
+            }
+        }
+        for(int i = 0; i < 10; i++){
+            for(Entity entity : render.get(i)){
+                entity.animate(gc,time);
             }
         }
     }

@@ -1,7 +1,6 @@
 package GameObject;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 
 public class Wall extends Tiles implements UnFlyable, NoSeeThrough{
     private int row;
@@ -17,8 +16,13 @@ public class Wall extends Tiles implements UnFlyable, NoSeeThrough{
     }
 
     @Override
-    protected void animate(GraphicsContext gc, double time) {
+    public void animate(GraphicsContext gc, double time) {
         gc.drawImage(getSpriteSheet().getSprite(column,row), x, y);
         drawHitBox(gc);
+    }
+
+    @Override
+    public int getLayer() {
+        return 2;
     }
 }

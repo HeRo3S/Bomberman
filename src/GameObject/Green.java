@@ -49,7 +49,7 @@ public class Green extends Player implements Destructible, Impassable {
     }
 
     @Override
-    protected void animate(GraphicsContext gc, double time) {
+    public void animate(GraphicsContext gc, double time) {
         frame = (int) ((time % (4 * frameTime)) / frameTime);
         if (isAnimateDying) {
             direction = 4;
@@ -92,7 +92,7 @@ public class Green extends Player implements Destructible, Impassable {
             if(energy >= 100) {
                 boolean canPlace = true;
                 for(Entity entity : map.getContent(x,y,GameMap.CHUNK_SIZE + 1)){
-                    if(entity != this &&(((Path) Shape.intersect(getHitBox(),entity.getHitBox())).getElements().size() > 0)){
+                    if(!(entity instanceof Floor) && entity != this &&(((Path) Shape.intersect(getHitBox(),entity.getHitBox())).getElements().size() > 0)){
                         canPlace = false;
                     }
                 }
@@ -108,7 +108,7 @@ public class Green extends Player implements Destructible, Impassable {
             if(energy >= 50) {
                 boolean canPlace = true;
                 for(Entity entity : map.getContent(x,y,GameMap.CHUNK_SIZE + 1)){
-                    if(entity != this &&(((Path) Shape.intersect(getHitBox(),entity.getHitBox())).getElements().size() > 0)){
+                    if(!(entity instanceof Floor) && entity != this &&(((Path) Shape.intersect(getHitBox(),entity.getHitBox())).getElements().size() > 0)){
                         canPlace = false;
                     }
                 }

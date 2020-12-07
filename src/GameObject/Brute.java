@@ -98,7 +98,7 @@ public class Brute extends Hostile implements Impassable, Destructible {
     }
 
     @Override
-    protected void animate(GraphicsContext gc, double time) {
+    public void animate(GraphicsContext gc, double time) {
         frame = (int) ((time % (4 * frameTime)) / frameTime) + statusSprite;
         gc.drawImage(getSpriteSheet().getSprite(frame, directionSprite), getX(), getY());
         drawHealthBar(gc);
@@ -107,4 +107,5 @@ public class Brute extends Hostile implements Impassable, Destructible {
             gc.strokeLine(getCenterX(),getCenterY(),target.getCenterX(),target.getCenterY());
         }
     }
-}
+
+    }

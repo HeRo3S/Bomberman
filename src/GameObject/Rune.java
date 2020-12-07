@@ -20,4 +20,9 @@ public abstract class Rune extends Movable {
         setHitBox(1,1,30,30);
     }
     protected abstract void explode();
+
+    @Override
+    public int getLayer() {
+        return 1;
+    }
 }

@@ -11,13 +11,7 @@ import java.io.Serializable;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static javafx.scene.paint.Color.GREEN;
-
-import static java.lang.Math.max;
-import static java.lang.Math.min;
-import static javafx.scene.paint.Color.GREEN;
-import static javafx.scene.paint.Color.RED;
-
-public abstract class Entity implements Serializable {
+public abstract class Entity implements Serializable, Animate {
     protected int dyingFrameCount = 48;
     protected boolean isAnimateDying = false;
     protected SpriteSheetCode code;
@@ -66,7 +60,6 @@ public abstract class Entity implements Serializable {
     protected double getDistance(Entity entity){
         return (new Point2D.Double(getCenterX(),getCenterY()).distance(entity.getCenterX(), entity.getCenterY()));
     }
-    protected abstract void animate(GraphicsContext gc, double time);
     protected void basicLogic() {
         invincibleFrame = max(--invincibleFrame,0);
         if (getHealth() <= 0) {

@@ -64,7 +64,7 @@ public class FireSpread extends Projectile {
     }
 
     @Override
-    protected void animate(GraphicsContext gc, double time) {
+    public void animate(GraphicsContext gc, double time) {
         gc.drawImage(getSpriteSheet().getSprite(0,0),x,y);
     }
 }

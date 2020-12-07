@@ -1,7 +1,6 @@
 package GameObject;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 
 
 public class Floor extends Tiles{
@@ -16,8 +15,12 @@ public class Floor extends Tiles{
     }
 
     @Override
-    protected void animate(GraphicsContext gc, double time) {
+    public void animate(GraphicsContext gc, double time) {
         gc.drawImage(getSpriteSheet().getSprite(row,column), x, y);
     }
 
+    @Override
+    public int getLayer() {
+        return 0;
+    }
 }

@@ -85,7 +85,7 @@ public class Wisp extends Hostile implements Impassable, Destructible {
 
 
     @Override
-    protected void animate(GraphicsContext gc, double time) {
+    public void animate(GraphicsContext gc, double time) {
         if (isAnimateDying) {
             directionSprite= 2;
             statusSprite = 0;

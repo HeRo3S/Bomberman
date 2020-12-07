@@ -41,7 +41,7 @@ public class SpearProjectile extends Projectile implements Rotatable {
 
     }
     @Override
-    protected void animate(GraphicsContext gc, double time) {
+    public void animate(GraphicsContext gc, double time) {
         Utility.drawRotated(gc,getSpriteSheet().getSprite(0,0),x,y,getAngle(getCenterX() + dx, getCenterY() + dy));
     }
     @Override

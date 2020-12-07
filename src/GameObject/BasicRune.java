@@ -44,7 +44,7 @@ public class BasicRune extends Rune {
     }
 
     @Override
-    protected void animate(GraphicsContext gc, double time) {
+    public void animate(GraphicsContext gc, double time) {
         gc.setFill(ORANGE);
         gc.fillOval(x+16-(primeTime - explodeTimer)* range/primeTime,
                 y+16-(primeTime - explodeTimer)* range/primeTime,
@@ -55,4 +55,5 @@ public class BasicRune extends Rune {
         gc.drawImage(getSpriteSheet().getSprite(max(0,3-(explodeTimer/(primeTime/4))),0), getX(), getY());
         gc.setStroke(BLACK);
     }
+
 }

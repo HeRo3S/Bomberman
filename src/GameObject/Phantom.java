@@ -71,7 +71,7 @@ public class Phantom extends Hostile implements Destructible {
     }
 
     @Override
-    protected void animate(GraphicsContext gc, double time) {
+    public void animate(GraphicsContext gc, double time) {
         frame = (int) ((time % (4 * frameTime)) / frameTime);
         if (isAnimateDying) {
             directionSprite = 0;

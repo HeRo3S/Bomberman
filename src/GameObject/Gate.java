@@ -13,7 +13,12 @@ public class Gate extends Tiles implements Portal {
     }
 
     @Override
-    protected void animate(GraphicsContext gc, double time) {
+    public void animate(GraphicsContext gc, double time) {
         gc.drawImage(image, x, y);
+    }
+
+    @Override
+    public int getLayer() {
+        return 2;
     }
 }

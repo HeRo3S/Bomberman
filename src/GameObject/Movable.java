@@ -125,4 +125,9 @@ public abstract class Movable extends Entity {
     public void setDy(double dy) {
         this.dy = dy;
     }
+
+    @Override
+    public int getLayer() {
+        return 2;
+    }
 }
