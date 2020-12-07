@@ -2,11 +2,12 @@ package GameObject;
 
 import static java.lang.Math.min;
 
-public abstract class Player extends Movable {
+public abstract class Player extends Movable implements Regen{
     protected double energy;
     protected double maxEnergy = 200;
-    protected double energyRegen = 10;
-    protected double heathRegen = 0;
+    protected double energyRegen = 20;
+    protected double heathRegen = 10;
+    private int regenTimer = regenDelay;
     public Player(double x, double y, GameMap map) {
         super(x, y, map);
         energy = maxEnergy;
@@ -14,8 +15,12 @@ public abstract class Player extends Movable {
     }
 
     public void regen(){
-        health += heathRegen;
-        energy += energyRegen;
+        regenTimer --;
+        if(regenTimer <= 0 && !status.isBurning()){
+            modifyHealth(heathRegen);
+            modifyEnergy(energyRegen);
+            regenTimer = regenDelay;
+        }
     }
     public void modifyEnergy(double amount){
         energy = min(maxEnergy,energy + amount);

@@ -6,7 +6,6 @@ package GameObject;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Shape;
-import view.GameViewManager;
 
 import static java.lang.Math.random;
 
@@ -29,7 +28,7 @@ public abstract class Hostile extends Movable implements Destructible {
             if (entity instanceof Player) {
                 target = entity;
                 lineOfSight= new Line(target.getCenterX(), target.getCenterY(),getCenterX(),getCenterY());
-                for (Entity entity1 : map.getContent(target.x, target.y, GameMap.CHUNK_SIZE + 1)) {
+                for (Entity entity1 : map.getContent(target.x, target.y, GameMap.TILE_SIZE + 1)) {
                     if (entity1 instanceof NoSeeThrough &&
                             ((Path)Shape.intersect(lineOfSight, entity1.getHitBox())).getElements().size() > 0) {
                         target = null;

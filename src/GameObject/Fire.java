@@ -25,13 +25,13 @@ public class Fire extends Floor {
         if(--health <= 0){
             map.removeContent(x,y,this);
         }
-        for(Entity entity : map.getContent(x,y,GameMap.CHUNK_SIZE + 1)){
+        for(Entity entity : map.getContent(x,y,GameMap.TILE_SIZE + 1)){
             if(entity instanceof Destructible && ((Path) Shape.intersect(getHitBox(),entity.getHitBox())).getElements().size() > 0 ){
-                if (entity.status.getBurningTimer() < 80) {
+                if (entity.status.getBurningTimer() < 120) {
                     if(!entity.status.isBurning()) {
                         entity.modifyHealth(-20);
                     }
-                    entity.status.setBurningTimer(80);
+                    entity.status.setBurningTimer(120);
                 }
             }
         }

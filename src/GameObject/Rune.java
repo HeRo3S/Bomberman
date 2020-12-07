@@ -1,6 +1,6 @@
 package GameObject;
 
-import static GameObject.GameMap.CHUNK_SIZE;
+import static GameObject.GameMap.TILE_SIZE;
 import static java.lang.Math.round;
 
 public abstract class Rune extends Movable {
@@ -14,8 +14,8 @@ public abstract class Rune extends Movable {
         health = maxHp;
         dyingFrameCount = 0;
         map.removeContent(x,y,this);
-        this.x = round(x/CHUNK_SIZE) * CHUNK_SIZE;
-        this.y = round(y/CHUNK_SIZE) * CHUNK_SIZE;
+        this.x = round(x/TILE_SIZE) * TILE_SIZE;
+        this.y = round(y/TILE_SIZE) * TILE_SIZE;
         map.addContent(this.x,this.y,this);
         setHitBox(1,1,30,30);
     }

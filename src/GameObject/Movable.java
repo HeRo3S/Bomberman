@@ -44,12 +44,12 @@ public abstract class Movable extends Entity {
     }
     public Movable(double x, double y, GameMap map) {
         super(x, y, map);
-        lastPos = new Point2D.Double((int) (x / CHUNK_SIZE), (int) (y / CHUNK_SIZE));
+        lastPos = new Point2D.Double((int) (x / TILE_SIZE), (int) (y / TILE_SIZE));
     }
     public void move(){
         boolean canMoveX = true;
         boolean canMoveY = true;
-        for(Entity entity : map.getContent(x,y,CHUNK_SIZE + 1)) {
+        for(Entity entity : map.getContent(x,y, TILE_SIZE + 1)) {
             if(entity != this){
                 //Calculate
                 if (((Path)Shape.intersect(getModifiedHitBox(dx*speed, 0),entity.getHitBox())).getElements().size() > 0 && canMoveX) {
@@ -68,15 +68,14 @@ public abstract class Movable extends Entity {
                 }
             }
         }
+        if(!(new Point2D.Double(x + dx*speed/ TILE_SIZE, y + dy*speed/ TILE_SIZE).equals(lastPos))){
+            map.moveContent(x + dx*speed ,y + dy*speed ,this);
+            lastPos = new Point2D.Double(x / TILE_SIZE, y / TILE_SIZE);
+        }
         x += dx * speed;
         y += dy * speed;
         x = max(min(x,MAP_WIDTH - 32),0);
         y = max(min(y,MAP_HEIGHT - 32),0);
-        if(!(new Point2D.Double(x/ CHUNK_SIZE, y/ CHUNK_SIZE).equals(lastPos))){
-            map.removeContent(lastPos.getX() * CHUNK_SIZE,lastPos.getY() * CHUNK_SIZE, this);
-            map.addContent(x ,y ,this);
-            lastPos = new Point2D.Double(x / CHUNK_SIZE, y / CHUNK_SIZE);
-        }
     }
     protected boolean noPass(Entity entity) {
         return entity instanceof Impassable;

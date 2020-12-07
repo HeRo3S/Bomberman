@@ -14,7 +14,7 @@ public class SpearProjectile extends Projectile implements Rotatable {
     public SpearProjectile(double x, double y, GameMap map, Point2D target) {
         super(x, y, map, target);
         code = SpriteSheetCode.SPEAR;
-        damage = 30;
+        damage = 50;
         setHitBox(6,6,6,6);
         moveTo(target);
         speed = 4;

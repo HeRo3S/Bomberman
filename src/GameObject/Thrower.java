@@ -63,7 +63,7 @@ public class Thrower extends Hostile implements Destructible,Impassable {
     protected void attack() {
         if(status.canAttack()) {
             new SpearProjectile(getCenterX(), getCenterY(), map, target.getCenter());
-            status.add(Status.currentStatus.ATTACK_CD, 5);
+            status.add(Status.currentStatus.ATTACK_CD, 2);
             sfx.playWithFlag(THROWER_ATTACK_SFX);
         }
     }

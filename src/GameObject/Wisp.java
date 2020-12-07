@@ -1,14 +1,7 @@
 package GameObject;
 
-import SpriteManager.SpriteSheet;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 
-import java.awt.geom.Point2D;
-import java.io.IOException;
-
-import static GameObject.GameMap.*;
-import static GameObject.GameMap.CHUNK_SIZE;
 import static java.lang.Math.*;
 
 public class Wisp extends Hostile implements Impassable, Destructible {

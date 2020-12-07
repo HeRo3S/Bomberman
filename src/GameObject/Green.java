@@ -7,7 +7,6 @@ import javafx.scene.shape.Shape;
 import view.GameViewManager;
 import java.util.HashSet;
 
-import static java.lang.Math.*;
 import static javafx.scene.paint.Color.BLUE;
 
 public class Green extends Player implements Destructible, Impassable {
@@ -24,7 +23,7 @@ public class Green extends Player implements Destructible, Impassable {
         code = SpriteSheetCode.GREEN;
         maxHp = 400;
         health = maxHp;
-        maxEnergy = 400;
+        maxEnergy = 200;
         energy = maxEnergy;
     }
 
@@ -32,8 +31,7 @@ public class Green extends Player implements Destructible, Impassable {
 
     @Override
     public void update() {
-        health = min(health,maxHp);
-        energy = min(++energy,maxEnergy);
+        regen();
         inputHandle();
         if(status.isBurning()){
             modifyHealth(-10);
@@ -92,7 +90,7 @@ public class Green extends Player implements Destructible, Impassable {
         if(input.contains("K")){
             if(energy >= 100) {
                 boolean canPlace = true;
-                for(Entity entity : map.getContent(x,y,GameMap.CHUNK_SIZE + 1)){
+                for(Entity entity : map.getContent(x,y,GameMap.TILE_SIZE + 1)){
                     if(!(entity instanceof Floor) && entity != this &&(((Path) Shape.intersect(getHitBox(),entity.getHitBox())).getElements().size() > 0)){
                         canPlace = false;
                     }
@@ -108,7 +106,7 @@ public class Green extends Player implements Destructible, Impassable {
         if(input.contains("J")){
             if(energy >= 50) {
                 boolean canPlace = true;
-                for(Entity entity : map.getContent(x,y,GameMap.CHUNK_SIZE + 1)){
+                for(Entity entity : map.getContent(x,y,GameMap.TILE_SIZE + 1)){
                     if(!(entity instanceof Floor) && entity != this &&(((Path) Shape.intersect(getHitBox(),entity.getHitBox())).getElements().size() > 0)){
                         canPlace = false;
                     }

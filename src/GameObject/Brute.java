@@ -5,7 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import static GameObject.SpriteSheetCode.BRUTE;
 import static java.lang.Math.*;
 
-public class Brute extends Hostile implements Impassable, Destructible {
+public class Brute extends Hostile implements Impassable, Destructible, Regen {
     double healthRegen = 20;
     double regenTimer = 20;
     private int directionSprite;
@@ -76,11 +76,7 @@ public class Brute extends Hostile implements Impassable, Destructible {
 
     @Override
     public void update() {
-        regenTimer --;
-        if(!status.isBurning() && regenTimer <= 0){
-            health = min(health += healthRegen,maxHp);
-            regenTimer = 20;
-        }
+        regen();
         hostileLogic();
         if (getDx() == 0) {
             statusSprite = 0;
@@ -111,4 +107,12 @@ public class Brute extends Hostile implements Impassable, Destructible {
         }
     }
 
+    @Override
+    public void regen() {
+        regenTimer --;
+        if(!status.isBurning() && regenTimer <= 0){
+            health = min(health += healthRegen,maxHp);
+            regenTimer = regenDelay;
+        }
     }
+}
