@@ -54,9 +54,10 @@ public class Green extends Player implements Destructible, Impassable {
         if (isAnimateDying) {
             direction = 4;
             frame = (48 - dyingFrameCount ) / 12;
-        }
-        if (!input.isEmpty()) {
-            frame += 4;
+        } else {
+            if (!input.isEmpty()) {
+                frame += 4;
+            }
         }
         gc.drawImage(getSpriteSheet().getSprite(frame, direction), getX(), getY());
         drawHitBox(gc);
@@ -99,7 +100,7 @@ public class Green extends Player implements Destructible, Impassable {
                 if(canPlace) {
                     new FireRune(x, y, map);
                     energy -= 100;
-                    sfx.playWithLoop(bombPlantedSFX);
+                    sfx.playWithoutFlag(bombPlantedSFX);
                 }
             }
             input.remove("K");
@@ -115,7 +116,7 @@ public class Green extends Player implements Destructible, Impassable {
                 if(canPlace) {
                     new BasicRune(x, y, map);
                     energy -= 50;
-                    sfx.playWithLoop(bombPlantedSFX);
+                    sfx.playWithoutFlag(bombPlantedSFX);
                 }
             }
             input.remove("J");

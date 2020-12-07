@@ -9,6 +9,8 @@ public class Thrower extends Hostile implements Destructible,Impassable {
     private int directionSprite;
     private int statusSprite;
 
+    private final String THROWER_ATTACK_SFX = "src/GameObject/sfx/bt_attack.wav";
+
     public Thrower(double x, double y, GameMap map) {
         super(x, y, map);
         attackRange = 30;
@@ -62,6 +64,7 @@ public class Thrower extends Hostile implements Destructible,Impassable {
         if(status.canAttack()) {
             new SpearProjectile(getCenterX(), getCenterY(), map, target.getCenter());
             status.add(Status.currentStatus.ATTACK_CD, 5);
+            sfx.playWithFlag(THROWER_ATTACK_SFX);
         }
     }
 

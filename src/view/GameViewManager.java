@@ -43,11 +43,6 @@ public class GameViewManager {
         return input;
     }
 
-    private static SoundEffect sfx = new SoundEffect();
-    public static SoundEffect getSoundEffect() {
-        return sfx;
-    }
-
     private GameMap gameMap;
 
 

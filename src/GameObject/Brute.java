@@ -11,6 +11,8 @@ public class Brute extends Hostile implements Impassable, Destructible {
     private int directionSprite;
     private int statusSprite;
 
+    private final String BRUTE_ATTACK_SFX = "src/GameObject/sfx/bt_attack.wav";
+
     public Brute(double x, double y, GameMap map) {
         super(x, y, map);
         attackRange = 30;
@@ -66,6 +68,7 @@ public class Brute extends Hostile implements Impassable, Destructible {
         if(target instanceof Player){
             target.health -= damage;
             status.add(Status.currentStatus.ATTACK_CD,10);
+            sfx.playWithFlag(BRUTE_ATTACK_SFX);
         }
     }
 

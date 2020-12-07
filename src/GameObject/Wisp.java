@@ -15,6 +15,9 @@ public class Wisp extends Hostile implements Impassable, Destructible {
     private final double frameTime = 0.100;
     private int directionSprite;
     private int statusSprite;
+
+    private final String WISP_ATTACK_SFX = "src/GameObject/sfx/wisp_attack.wav";
+
     public Wisp(double x, double y, GameMap map) {
         super(x, y, map);
         detectionRange = 50;
@@ -78,9 +81,12 @@ public class Wisp extends Hostile implements Impassable, Destructible {
     @Override
     protected void solveCollision(Entity entity) {
     }
+
+    @Override
     protected void attack(){
             target.modifyHealth(-damage);
             status.add(Status.currentStatus.ATTACK_CD, 5);
+            sfx.playWithFlag(WISP_ATTACK_SFX);
     }
 
 

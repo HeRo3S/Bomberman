@@ -33,7 +33,7 @@ public class FireRune extends Rune {
     public void update() {
         if(--explodeTimer <= 0){
             explode();
-            sfx.playWithLoop(explosionSFX);
+            sfx.playWithoutFlag(explosionSFX);
         }
         basicLogic();
 
