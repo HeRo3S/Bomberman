@@ -168,6 +168,7 @@ public class Editor extends Application {
 
         canvas = new Canvas(1024, 576);
         gc = canvas.getGraphicsContext2D();
+        group.getChildren().add(canvas);
 
         hbox.getChildren().add(imageView);
         hbox.setLayoutX(0);
@@ -233,7 +234,6 @@ public class Editor extends Application {
                             Wisp wisp = new Wisp(toadoX, toadoY, gameMap);
                             System.out.println("Da tao mot Wisp");
                             gameMap.render(gc, 0);
-                            group.getChildren().add(canvas);
                             location[clickX][clickY] = 2;
                             break;
                         case GREEN:
@@ -241,7 +241,6 @@ public class Editor extends Application {
                                 System.out.println("Da tao mot Green");
                                 Green green1 = new Green(toadoX, toadoY, gameMap);
                                 gameMap.render(gc, 0);
-                                group.getChildren().add(canvas);
                                 location[clickX][clickY] = 1;
                                 status = 1;
                                 break;
@@ -252,7 +251,6 @@ public class Editor extends Application {
                         case FLOOR:
                             Floor floor = new Floor(toadoX, toadoY, gameMap, colSprite, rowSprite);
                             gameMap.render(gc, 0);
-                            group.getChildren().add(canvas);
                             location[clickX][clickY] = 0;
                             System.out.println("Đã tạo một floor hình:" + rowSprite + "-" + colSprite);
                             break;
@@ -260,7 +258,6 @@ public class Editor extends Application {
                         case WALL:
                             Wall wall = new Wall(toadoX, toadoY, gameMap, colSprite, rowSprite);
                             gameMap.render(gc, 0);
-                            group.getChildren().add(canvas);
                             location[clickX][clickY] = 3;
                             System.out.println("Đã tạo một wall hình:" + rowSprite + "-" + colSprite);
                             break;
@@ -268,7 +265,6 @@ public class Editor extends Application {
                         case PHANTOM:
                             Phantom phantom = new Phantom(toadoX, toadoY, gameMap);
                             gameMap.render(gc, 0);
-                            group.getChildren().add(canvas);
                             location[clickX][clickY] = 4;
                             System.out.println("Đã tạo một PhanTom");
                             break;
@@ -276,7 +272,6 @@ public class Editor extends Application {
                         case BRUTE:
                             Brute brute = new Brute(toadoX, toadoY, gameMap);
                             gameMap.render(gc, 0);
-                            group.getChildren().add(canvas);
                             location[clickX][clickY] = 4;
                             System.out.println("Đã tạo một Brute");
                             break;
@@ -284,7 +279,6 @@ public class Editor extends Application {
                         case THROWER:
                             Thrower thrower = new Thrower(toadoX, toadoY, gameMap);
                             gameMap.render(gc, 0);
-                            group.getChildren().add(canvas);
                             location[clickX][clickY] = 4;
                             System.out.println("Đã tạo một Thrower");
                             break;
@@ -296,7 +290,6 @@ public class Editor extends Application {
                     if (entitySelect == Select.FLOOR) {
                         Floor floor = new Floor(toadoX, toadoY, gameMap, rowSprite, colSprite);
                         gameMap.render(gc, 0);
-                        group.getChildren().add(canvas);
                         System.out.println("Đã tạo một floor hình:" + rowSprite + "-" + colSprite);
                     } else System.out.println("Ở đây đã có entity");
                 }
