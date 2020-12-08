@@ -166,6 +166,9 @@ public class Editor extends Application {
         hBox.getChildren().add(load);
         hBox.getChildren().add(save);
 
+        canvas = new Canvas(1024, 576);
+        gc = canvas.getGraphicsContext2D();
+
         hbox.getChildren().add(imageView);
         hbox.setLayoutX(0);
         hbox.setLayoutY(650);
@@ -229,8 +232,6 @@ public class Editor extends Application {
                         case WISP:
                             Wisp wisp = new Wisp(toadoX, toadoY, gameMap);
                             System.out.println("Da tao mot Wisp");
-                            canvas = new Canvas(1024, 576);
-                            gc = canvas.getGraphicsContext2D();
                             gameMap.render(gc, 0);
                             group.getChildren().add(canvas);
                             location[clickX][clickY] = 2;
@@ -239,8 +240,6 @@ public class Editor extends Application {
                             if (status == 0) {
                                 System.out.println("Da tao mot Green");
                                 Green green1 = new Green(toadoX, toadoY, gameMap);
-                                canvas = new Canvas(1024, 576);
-                                gc = canvas.getGraphicsContext2D();
                                 gameMap.render(gc, 0);
                                 group.getChildren().add(canvas);
                                 location[clickX][clickY] = 1;
@@ -252,8 +251,6 @@ public class Editor extends Application {
                             }
                         case FLOOR:
                             Floor floor = new Floor(toadoX, toadoY, gameMap, colSprite, rowSprite);
-                            canvas = new Canvas(1024, 576);
-                            gc = canvas.getGraphicsContext2D();
                             gameMap.render(gc, 0);
                             group.getChildren().add(canvas);
                             location[clickX][clickY] = 0;
@@ -262,8 +259,6 @@ public class Editor extends Application {
 
                         case WALL:
                             Wall wall = new Wall(toadoX, toadoY, gameMap, colSprite, rowSprite);
-                            canvas = new Canvas(1024, 576);
-                            gc = canvas.getGraphicsContext2D();
                             gameMap.render(gc, 0);
                             group.getChildren().add(canvas);
                             location[clickX][clickY] = 3;
@@ -272,8 +267,6 @@ public class Editor extends Application {
 
                         case PHANTOM:
                             Phantom phantom = new Phantom(toadoX, toadoY, gameMap);
-                            canvas = new Canvas(1024, 576);
-                            gc = canvas.getGraphicsContext2D();
                             gameMap.render(gc, 0);
                             group.getChildren().add(canvas);
                             location[clickX][clickY] = 4;
@@ -282,8 +275,6 @@ public class Editor extends Application {
 
                         case BRUTE:
                             Brute brute = new Brute(toadoX, toadoY, gameMap);
-                            canvas = new Canvas(1024, 576);
-                            gc = canvas.getGraphicsContext2D();
                             gameMap.render(gc, 0);
                             group.getChildren().add(canvas);
                             location[clickX][clickY] = 4;
@@ -292,8 +283,6 @@ public class Editor extends Application {
 
                         case THROWER:
                             Thrower thrower = new Thrower(toadoX, toadoY, gameMap);
-                            canvas = new Canvas(1024, 576);
-                            gc = canvas.getGraphicsContext2D();
                             gameMap.render(gc, 0);
                             group.getChildren().add(canvas);
                             location[clickX][clickY] = 4;
@@ -306,8 +295,6 @@ public class Editor extends Application {
                 } else {
                     if (entitySelect == Select.FLOOR) {
                         Floor floor = new Floor(toadoX, toadoY, gameMap, rowSprite, colSprite);
-                        canvas = new Canvas(1024, 576);
-                        gc = canvas.getGraphicsContext2D();
                         gameMap.render(gc, 0);
                         group.getChildren().add(canvas);
                         System.out.println("Đã tạo một floor hình:" + rowSprite + "-" + colSprite);
