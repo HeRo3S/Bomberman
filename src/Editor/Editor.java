@@ -251,7 +251,7 @@ public class Editor extends Application {
                                 break;
                             }
                         case FLOOR:
-                            Floor floor = new Floor(toadoX, toadoY, gameMap, rowSprite, colSprite);
+                            Floor floor = new Floor(toadoX, toadoY, gameMap, colSprite, rowSprite);
                             canvas = new Canvas(1024, 576);
                             gc = canvas.getGraphicsContext2D();
                             gameMap.render(gc, 0);
@@ -261,7 +261,7 @@ public class Editor extends Application {
                             break;
 
                         case WALL:
-                            Wall wall = new Wall(toadoX, toadoY, gameMap, rowSprite, colSprite);
+                            Wall wall = new Wall(toadoX, toadoY, gameMap, colSprite, rowSprite);
                             canvas = new Canvas(1024, 576);
                             gc = canvas.getGraphicsContext2D();
                             gameMap.render(gc, 0);
