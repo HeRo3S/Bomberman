@@ -111,7 +111,7 @@ public class ViewManager {
             public void handle(ActionEvent event) {
                 mediaPlayer.stop();
                 GameViewManager gameViewManager = new GameViewManager();
-                gameViewManager.createNewLevel(mainStage);
+                gameViewManager.createOpeningLevel(mainStage);
             }
         });
     }

@@ -28,6 +28,8 @@ public class GameViewManager {
 
     private Stage menuStage;
 
+    private String mapPath;
+
     private AnimationTimer gameTimer;
     private long startTime = System.nanoTime();
 
@@ -69,25 +71,38 @@ public class GameViewManager {
         SpriteSheetManager.initialize();
     }
 
-    public void createNewLevel(Stage menuStage) {
+    public void createOpeningLevel(Stage menuStage) {
         this.menuStage = menuStage;
         menuStage.hide();
         gameMap = new GameMap();
-        gameMap = Restore("GameMap.dat");
-        keyboardCheck();
+        //gameMap = Restore("GameMap.dat");
+        new Green(10, 10, gameMap);
+        new Gate(100, 100, gameMap);
         createGameLoop();
+        keyboardCheck();
         gameStage.show();
+    }
+
+    public void createNewLevel(int level) {
+        this.mapPath = String.format("map%d.dat", level);
+        this.gameStage.hide();
+        this.gameMap = Restore(mapPath);
+        this.gameStage.show();
     }
 
     private void createGameLoop() {
         gameTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                double t = (now - startTime) / 1000000000.0;
-                gameMap.updateContent();
-                canvas.getGraphicsContext2D().clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-                createGameBackground();
-                gameMap.render(gc, t);
+                if (gameMap.isWalkedThrough()) {
+                    createNewLevel(gameMap.getMapLevel());
+                } else {
+                    double t = (now - startTime) / 1000000000.0;
+                    gameMap.updateContent();
+                    canvas.getGraphicsContext2D().clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+                    createGameBackground();
+                    gameMap.render(gc, t);
+                }
             }
         };
         gameTimer.start();

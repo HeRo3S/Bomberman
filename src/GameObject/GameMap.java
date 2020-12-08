@@ -18,6 +18,26 @@ public class GameMap implements Serializable {
     public static final int TILE_SIZE = 32;
     private ArrayList<ArrayList<ArrayList<Entity>>> map = new ArrayList<>();
     private ArrayList<ArrayList<Entity>> renderMap = new ArrayList<>();
+
+    private int mapLevel;
+    private boolean isWalkedThrough = false;
+
+    public int getMapLevel() {
+        return mapLevel;
+    }
+
+    public void setMapLevel(int mapLevel) {
+        this.mapLevel = mapLevel;
+    }
+
+    public boolean isWalkedThrough() {
+        return isWalkedThrough;
+    }
+
+    public void setWalkedThrough(boolean walkedThrough) {
+        isWalkedThrough = walkedThrough;
+    }
+
     public static int getMapWidth() {
         return MAP_WIDTH;
     }

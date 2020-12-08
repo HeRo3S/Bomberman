@@ -43,7 +43,10 @@ public class Green extends Player implements Destructible, Impassable {
 
     @Override
     protected void solveCollision(Entity entity) {
-
+        if (entity instanceof Portal) {
+            map.setWalkedThrough(true);
+            map.setMapLevel(map.getMapLevel() + 1);
+        }
     }
 
     @Override
