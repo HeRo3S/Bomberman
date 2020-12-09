@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import java.io.*;
 
 import static SpriteManager.SpriteSheetManager.getSheet;
+import static java.lang.Math.round;
 
 
 public class Editor extends Application {
@@ -210,6 +211,7 @@ public class Editor extends Application {
                 if (clickY > 19 && clickY < 19 + floorRow ) {
                     rowSprite = clickX ;
                     colSprite = clickY - 20;
+                    System.out.println(rowSprite + " " + colSprite);
                     System.out.println("rowSprite = " + rowSprite + " colSprite = " + colSprite);
                 }
             }
@@ -218,6 +220,7 @@ public class Editor extends Application {
                 if (clickY > 19 && clickY < 19 + wallRow){
                     rowSprite = clickX;
                     colSprite = clickY - 20;
+                    System.out.println(rowSprite + " " + colSprite);
                     System.out.println("rowSprite = " + rowSprite + " colSprite = " + colSprite);
                 }
             }
