@@ -78,7 +78,8 @@ public class Wisp extends Hostile implements Impassable, Destructible {
     @Override
     protected void attack(){
             target.modifyHealth(-damage);
-            status.add(Status.currentStatus.ATTACK_CD, 5);
+            status.add(Status.currentStatus.ATTACK_CD, 3);
+            status.add(Status.currentStatus.STUN,1);
             sfx.playWithFlag(WISP_ATTACK_SFX);
     }
 

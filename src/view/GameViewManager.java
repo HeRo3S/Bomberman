@@ -74,10 +74,7 @@ public class GameViewManager {
     public void createOpeningLevel(Stage menuStage) {
         this.menuStage = menuStage;
         menuStage.hide();
-        gameMap = new GameMap();
-        //gameMap = Restore("GameMap.dat");
-        new Green(10, 10, gameMap);
-        new Gate(100, 100, gameMap);
+        createNewLevel(1);
         createGameLoop();
         keyboardCheck();
         gameStage.show();
@@ -95,7 +92,7 @@ public class GameViewManager {
             @Override
             public void handle(long now) {
                 if (gameMap.isWalkedThrough()) {
-                    createNewLevel(gameMap.getMapLevel());
+                    createNewLevel(gameMap.getMapLevel() + 1);
                 } else {
                     double t = (now - startTime) / 1000000000.0;
                     gameMap.updateContent();

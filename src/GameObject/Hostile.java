@@ -28,15 +28,15 @@ public abstract class Hostile extends Movable implements Destructible {
             if (entity instanceof Player) {
                 target = entity;
                 lineOfSight= new Line(target.getCenterX(), target.getCenterY(),getCenterX(),getCenterY());
-                for (Entity entity1 : map.getContent(target.x, target.y, GameMap.TILE_SIZE + 1)) {
-                    if (entity1 instanceof NoSeeThrough &&
+                for (Entity entity1 : map.getContent(target.x, target.y, GameMap.CHUNK_SIZE + 1)) {
+                    if (checkSeeThrough(entity1) &&
                             ((Path)Shape.intersect(lineOfSight, entity1.getHitBox())).getElements().size() > 0) {
                         target = null;
                         break;
                     }
                 }
             }
-            if(entity instanceof NoSeeThrough && target != null) {
+            if(checkSeeThrough(entity) && target != null) {
                 if (((Path)Shape.intersect(lineOfSight, entity.getHitBox())).getElements().size() > 0) {
                     target = null;
                 }
@@ -103,6 +103,9 @@ public abstract class Hostile extends Movable implements Destructible {
             }
         }
         status.update();
+    }
+    protected boolean checkSeeThrough(Entity entity){
+        return entity instanceof NoSeeThrough;
     }
     /**
      * Getter/Setter

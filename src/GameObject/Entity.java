@@ -97,7 +97,7 @@ public abstract class Entity implements Serializable, Animate {
             return;
         }
         if(invincibleFrame <= 0){
-            invincibleFrame = 10;
+            invincibleFrame = 20;
         }
         health = min(maxHp,health + amount);
     }

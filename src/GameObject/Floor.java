@@ -2,6 +2,9 @@ package GameObject;
 
 import javafx.scene.canvas.GraphicsContext;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 
 public class Floor extends Tiles{
     int row;
@@ -10,8 +13,8 @@ public class Floor extends Tiles{
     public Floor(double x, double y, GameMap map, int column, int row) {
         super(x, y, map);
         code = SpriteSheetCode.FLOOR;
-        this.row = row;
-        this.column = column;
+        this.row = min(row,3);
+        this.column = min(column,1);
     }
 
     @Override

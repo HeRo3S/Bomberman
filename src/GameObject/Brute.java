@@ -15,15 +15,14 @@ public class Brute extends Hostile implements Impassable, Destructible, Regen {
 
     public Brute(double x, double y, GameMap map) {
         super(x, y, map);
-        attackRange = 30;
         attackSpeed = 1;
         damage = 100;
         maxHp = 500;
         health = maxHp;
-        speed = 2;
+        speed = 1.5;
         code = BRUTE;
         detectionRange = 150;
-        attackRange = 25;
+        attackRange = 60;
         idleTime = 60;
         dyingFrameCount = 0;
         setHitBox(9,9,29,39);
@@ -65,11 +64,9 @@ public class Brute extends Hostile implements Impassable, Destructible, Regen {
 
     @Override
     protected void attack() {
-        if(target instanceof Player){
-            target.health -= damage;
-            status.add(Status.currentStatus.ATTACK_CD,10);
-            sfx.playWithFlag(BRUTE_ATTACK_SFX);
-        }
+            target.modifyHealth(-damage);
+            status.add(Status.currentStatus.ATTACK_CD,5);
+            status.add(Status.currentStatus.STUN,1);
     }
 
 
@@ -93,7 +90,16 @@ public class Brute extends Hostile implements Impassable, Destructible, Regen {
 
     @Override
     protected void solveCollision(Entity entity) {
-
+        if(entity instanceof Crate && target != null){
+            entity.modifyHealth(-damage);
+        }
+    }
+    @Override
+    protected boolean checkSeeThrough(Entity entity){
+        if(entity instanceof  Crate){
+            return false;
+        }
+        return entity instanceof NoSeeThrough;
     }
 
     @Override

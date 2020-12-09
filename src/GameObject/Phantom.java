@@ -23,7 +23,7 @@ public class Phantom extends Hostile implements Destructible {
         damage = 50;
         maxHp = 100;
         health = maxHp;
-        speed = 3.5;
+        speed = 3;
         code = PHANTOM;
         detectionRange = 200;
         attackRange = 30;
@@ -39,8 +39,8 @@ public class Phantom extends Hostile implements Destructible {
     protected void attack() {
         if(status.canAttack()){
             target.modifyHealth(-damage);
-            status.add(ATTACK_CD,5);
-            status.add(STUN,3);
+            status.add(ATTACK_CD,3);
+            status.add(Status.currentStatus.STUN,1);
             sfx.playWithFlag(PHANTOM_ATTACK_SFX);
         }
     }
@@ -55,6 +55,15 @@ public class Phantom extends Hostile implements Destructible {
 
     @Override
     public void update() {
+        speed = 3;
+        for(Entity entity : map.getContent(x,y,detectionRange)){
+            if (entity instanceof Rune){
+                if(getDistance(entity) <= ((Rune) entity).range) {
+                    speed = 5;
+                    break;
+                }
+            }
+        }
         hostileLogic();
         if (getDx() == 0) {
           directionSprite = 0;
@@ -72,6 +81,14 @@ public class Phantom extends Hostile implements Destructible {
     @Override
     protected void solveCollision(Entity entity) {
 
+    }
+
+    @Override
+    protected boolean checkSeeThrough(Entity entity){
+        if(entity instanceof  Crate){
+            return false;
+        }
+        return entity instanceof NoSeeThrough;
     }
 
     @Override
