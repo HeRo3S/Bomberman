@@ -37,6 +37,7 @@ public class BasicRune extends Rune {
         }
         if(explodeTimer <= 0){
             explode();
+            new Effect(x, y, map);
             sfx.playWithoutFlag(explosionSFX);
         }
         move();

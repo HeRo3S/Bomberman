@@ -6,7 +6,6 @@ import javafx.scene.shape.Path;
 import javafx.scene.shape.Shape;
 import view.GameViewManager;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import static javafx.scene.paint.Color.*;
@@ -36,10 +35,15 @@ public class Green extends Player implements Destructible, Impassable {
     public void update() {
         coolDown[0]--;
         coolDown[1]--;
+        inputHandle();
         if(!isAnimateDying) {
             regen();
+        } else {
+            input.clear();
+            if (dyingFrameCount == 0) {
+                map.setMainWasDead(true);
+            }
         }
-        inputHandle();
         if(status.isBurning()){
             modifyHealth(-10);
         }
@@ -55,7 +59,6 @@ public class Green extends Player implements Destructible, Impassable {
     protected void solveCollision(Entity entity) {
         if (entity instanceof Portal) {
             map.setWalkedThrough(true);
-            map.setMapLevel(map.getMapLevel() + 1);
         }
     }
 
