@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 public class Crate extends Wall implements Destructible, Impassable {
     Image image;
 
-    public Crate(double x, double y, double maxHp, GameMap map) {
+    public Crate(double x, double y, GameMap map) {
         super(x, y, map,0,0);
         code = SpriteSheetCode.CRATE;
         image = getSpriteSheet().getSprite(0, 0);
@@ -14,6 +14,5 @@ public class Crate extends Wall implements Destructible, Impassable {
 
     @Override
     public void animate(GraphicsContext gc, double time) {
-
     }
 }

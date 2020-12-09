@@ -73,7 +73,7 @@ public class GameViewManager {
         this.menuStage = menuStage;
         menuStage.hide();
         gameMap = new GameMap();
-        gameMap = Restore("GameMap.dat");
+        gameMap = Restore("GameData1.dat");
         keyboardCheck();
         createGameLoop();
         gameStage.show();
