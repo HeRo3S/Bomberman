@@ -1,9 +1,14 @@
 package GameObject;
 
+import java.util.ArrayList;
+
 import static java.lang.Math.min;
 
 public abstract class Player extends Movable implements Regen{
+    protected ArrayList<Rune> runes = new ArrayList<>();
+    protected int maxRune = 1;
     protected double energy;
+    protected double energyModifier = 1;
     protected double maxEnergy = 200;
     protected double energyRegen = 20;
     protected double heathRegen = 10;
@@ -23,7 +28,12 @@ public abstract class Player extends Movable implements Regen{
         }
     }
     public void modifyEnergy(double amount){
-        energy = min(maxEnergy,energy + amount);
+        if(amount < 0){
+            energy = min(maxEnergy,energy + amount*energyModifier);
+        }
+        else {
+            energy = min(maxEnergy, energy + amount);
+        }
     }
     /**
      * Getter/Setter

@@ -5,15 +5,18 @@ import javafx.scene.image.Image;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Shape;
 import view.GameViewManager;
+
+import java.util.ArrayList;
 import java.util.HashSet;
 
-import static javafx.scene.paint.Color.BLUE;
+import static javafx.scene.paint.Color.*;
 
 public class Green extends Player implements Destructible, Impassable {
     private HashSet<String> input = GameViewManager.getInput();
     private int direction;
-
+    private int skillDuration;
     private final String bombPlantedSFX = "src/GameObject/sfx/bomb_planted.mp3";
+    protected int[] coolDown = {0,0};
 
     public Green(double x, double y, GameMap map) {
         super(x, y, map);
@@ -21,9 +24,9 @@ public class Green extends Player implements Destructible, Impassable {
         speed = 3;
         direction = 1;
         code = SpriteSheetCode.GREEN;
-        maxHp = 400;
+        maxHp = 200;
         health = maxHp;
-        maxEnergy = 200;
+        maxEnergy = 150;
         energy = maxEnergy;
     }
 
@@ -31,10 +34,17 @@ public class Green extends Player implements Destructible, Impassable {
 
     @Override
     public void update() {
-        regen();
+        coolDown[0]--;
+        coolDown[1]--;
+        if(!isAnimateDying) {
+            regen();
+        }
         inputHandle();
         if(status.isBurning()){
             modifyHealth(-10);
+        }
+        if(health <= 0){
+            runes.clear();
         }
         basicLogic();
         move();
@@ -51,6 +61,19 @@ public class Green extends Player implements Destructible, Impassable {
 
     @Override
     public void animate(GraphicsContext gc, double time) {
+        if(skillDuration >= 0){
+            skillDuration--;
+            if(maxRune < 3){
+                maxRune = 5;
+            }
+            energyRegen = 40;
+            energyModifier = 0.5;
+        }
+        else {
+            maxRune = 2;
+            energyRegen = 20;
+            energyModifier = 1;
+        }
         frame = (int) ((time % (4 * frameTime)) / frameTime);
         if (isAnimateDying) {
             direction = 4;
@@ -65,6 +88,12 @@ public class Green extends Player implements Destructible, Impassable {
         drawHealthBar(gc);
         gc.setFill(BLUE);
         gc.fillRect(x,y - 7, energy / (maxEnergy/30), 2);
+
+        //Skill indicator
+        gc.setFill(SILVER);
+        gc.fillRect(1024 - 40, 576 - 60 + ((1200 - (double) coolDown[1])/1200)*60,40,60);
+        gc.setFill(GRAY);
+        gc.fillRect(1024 - 80, 576 - 60 + ((300 - (double) coolDown[0])/300)*60,40,60);
     }
 
     private void inputHandle() {
@@ -91,40 +120,69 @@ public class Green extends Player implements Destructible, Impassable {
             direction = 2;
         }
         if(input.contains("K")){
-            if(energy >= 100) {
+            if(energy >= 100 && runes.size() < maxRune) {
                 boolean canPlace = true;
-                for(Entity entity : map.getContent(x,y,GameMap.TILE_SIZE + 1)){
+                for(Entity entity : map.getContent(x,y,GameMap.CHUNK_SIZE + 1)){
                     if(!(entity instanceof Floor) && entity != this &&(((Path) Shape.intersect(getHitBox(),entity.getHitBox())).getElements().size() > 0)){
                         canPlace = false;
                     }
                 }
                 if(canPlace) {
-                    new FireRune(x, y, map);
-                    energy -= 100;
+                    new FireRune(x, y, map, this);
+                    modifyEnergy(-100);
                     sfx.playWithoutFlag(bombPlantedSFX);
                 }
             }
             input.remove("K");
         }
         if(input.contains("J")){
-            if(energy >= 50) {
+            if(energy >= 50 && runes.size() < maxRune) {
                 boolean canPlace = true;
-                for(Entity entity : map.getContent(x,y,GameMap.TILE_SIZE + 1)){
+                for(Entity entity : map.getContent(x,y,GameMap.CHUNK_SIZE + 1)){
                     if(!(entity instanceof Floor) && entity != this &&(((Path) Shape.intersect(getHitBox(),entity.getHitBox())).getElements().size() > 0)){
                         canPlace = false;
                     }
                 }
                 if(canPlace) {
-                    new BasicRune(x, y, map);
-                    energy -= 50;
+                    new BasicRune(x, y, map, this);
+                    modifyEnergy(-50);
                     sfx.playWithoutFlag(bombPlantedSFX);
                 }
             }
             input.remove("J");
         }
-        if(input.contains("L")){
-            new Wall(x+ 32,y + 32, map,0, 0);
-            input.remove("L");
+        if(input.contains("Q")){
+            input.remove("Q");
+            if(coolDown[0] <= 0 && energy >= 50 && runes.size() > 0){
+                double targetX = getCenterX();
+                double targetY = getCenterY();
+                for(Rune rune : runes){
+                    switch (direction){
+                        case 0:
+                            targetY -= 150;
+                            break;
+                        case 1:
+                            targetY += 150;
+                            break;
+                        case 2:
+                            targetX += 150;
+                            break;
+                        case 3:
+                            targetX -= 150;
+                            break;
+                    }
+                    rune.moveTo(targetX,targetY);
+                }
+                modifyEnergy(-50);
+                coolDown[0] = 5*60;
+            }
+        }
+        if(input.contains("E")){
+            input.remove("E");
+            if(coolDown[1] <= 0){
+                skillDuration = 600;
+                coolDown[1] = 20*60;
+            }
         }
     }
 

@@ -17,7 +17,7 @@ public class Thrower extends Hostile implements Destructible,Impassable {
         attackSpeed = 1;
         maxHp = 200;
         health = maxHp;
-        speed = 3;
+        speed = 2.5;
         code = THROWER;
         detectionRange = 200;
         attackRange = 120;

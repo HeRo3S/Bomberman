@@ -32,7 +32,6 @@ public class SpearProjectile extends Projectile implements Rotatable {
     protected void solveCollision(Entity entity) {
         if (entity instanceof Player){
             entity.modifyHealth(-damage);
-            System.out.println(entity.health);
             health = 0;
         }
         if (entity instanceof Wall){

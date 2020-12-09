@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Shape;
 
+import static GameObject.GameMap.CHUNK_SIZE;
 import static GameObject.GameMap.TILE_SIZE;
 import static java.lang.Math.round;
 
@@ -28,7 +29,7 @@ public class FireSpread extends Projectile {
 
         //Spread fire
         boolean canPlace = true;
-        for(Entity entity : map.getContent(x,y, TILE_SIZE + 1)){
+        for(Entity entity : map.getContent(x,y, CHUNK_SIZE + 1)){
             if(entity instanceof Fire && ((Path) Shape.intersect(getHitBox(),entity.getHitBox())).getElements().size() > 0 ){
                 if(entity == lastFire) {
                     canPlace = false;
@@ -60,7 +61,7 @@ public class FireSpread extends Projectile {
 
     @Override
     protected void solveCollision(Entity entity) {
-        if(entity instanceof Destructible){
+        if(entity instanceof Destructible && !(entity instanceof Phantom)){
             entity.modifyHealth(-50);
         }
     }
