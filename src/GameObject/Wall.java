@@ -2,6 +2,8 @@ package GameObject;
 
 import javafx.scene.canvas.GraphicsContext;
 
+import static java.lang.Math.min;
+
 public class Wall extends Tiles implements UnFlyable, NoSeeThrough{
     private int row;
     private int column;
@@ -11,14 +13,13 @@ public class Wall extends Tiles implements UnFlyable, NoSeeThrough{
         super(x, y, map);
         code = SpriteSheetCode.WALL;
         setHitBox(1,1,30,30);
-        this.row = row;
-        this.column = column;
+        this.row = min(row,12);
+        this.column = min(column,3);
     }
 
     @Override
     public void animate(GraphicsContext gc, double time) {
-        gc.drawImage(getSpriteSheet().getSprite(column,row), x, y);
-        drawHitBox(gc);
+        gc.drawImage(getSpriteSheet().getSprite(row,column), x, y);
     }
 
     @Override
