@@ -29,6 +29,7 @@ public class GameViewManager {
     private Stage menuStage;
 
     private String mapPath;
+    private static final int MAXLEVEL = 2;
 
     private AnimationTimer gameTimer;
     private long startTime = System.nanoTime();
@@ -84,6 +85,7 @@ public class GameViewManager {
         this.mapPath = String.format("map%d.dat", level);
         this.gameStage.hide();
         this.gameMap = Restore(mapPath);
+        this.gameMap.setMapLevel(level);
         this.gameStage.show();
     }
 
@@ -92,7 +94,14 @@ public class GameViewManager {
             @Override
             public void handle(long now) {
                 if (gameMap.isWalkedThrough()) {
-                    createNewLevel(gameMap.getMapLevel() + 1);
+                    if (gameMap.getMapLevel() == MAXLEVEL) {
+                        gameStage.close();
+                    } else {
+                        createNewLevel(gameMap.getMapLevel() + 1);
+                    }
+                } else if (gameMap.isMainWasDead()) {
+                    createNewLevel(gameMap.getMapLevel());
+                    gameMap.setMainWasDead(false);
                 } else {
                     double t = (now - startTime) / 1000000000.0;
                     gameMap.updateContent();

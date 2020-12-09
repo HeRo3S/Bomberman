@@ -21,6 +21,11 @@ public class GameMap implements Serializable {
 
     private int mapLevel;
     private boolean isWalkedThrough = false;
+    private boolean mainWasDead = false;
+
+    public boolean isMainWasDead() { return mainWasDead; }
+
+    public void setMainWasDead(boolean mainWasDead) { this.mainWasDead = mainWasDead; }
 
     public int getMapLevel() {
         return mapLevel;

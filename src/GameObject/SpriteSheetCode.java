@@ -15,4 +15,5 @@ public enum SpriteSheetCode {
     BRUTE,
     SPEAR,
     FIRE,
+    EFFECT,
 }
