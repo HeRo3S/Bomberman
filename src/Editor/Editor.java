@@ -37,11 +37,13 @@ public class Editor extends Application {
     private static final int col = HEIGHT / 32;
     private GraphicsContext gc;
     private Canvas canvas;
+    private static int deleteStatus = 0;
     private final int floorRow = 4;
     private final int floorCol = 2;
     private final int wallRow = 13;
     private final int wallCol = 4;
     public static Entity[][] location = new Entity[row + 1][col + 1];
+    public static Floor[][] floorstatus = new Floor[row + 1][col + 1];
     public static GameMap gameMap = new GameMap();
 //    private Image image;
     private static ImageView imageView = new ImageView();
@@ -129,6 +131,17 @@ public class Editor extends Application {
         Select select8 = Select.GATE;
         Button gateButton = CreatButton(select8, getSheet(SpriteSheetCode.GATE).getSprite(0,0));
 
+        Button deleteButton = new Button("Delete");
+        deleteButton.setOnMouseClicked(event -> {
+            if (deleteStatus == 0){
+                deleteStatus = 1;
+                System.out.println("Chế độ xóa ô đã bật");
+            }else {
+                deleteStatus = 0;
+                System.out.println("Chế độ xóa ô đã tắt");
+            }
+        });
+
         hBox.getChildren().add(button2);
         hBox.getChildren().add(button3);
         hBox.getChildren().add(button4);
@@ -159,6 +172,7 @@ public class Editor extends Application {
 
         });
         hBox.getChildren().add(textField);
+        hBox.getChildren().add(deleteButton);
         hBox.getChildren().add(load);
         hBox.getChildren().add(save);
 
@@ -225,10 +239,10 @@ public class Editor extends Application {
                 }
             }
 
-            if (clickX < row + 1 && clickY < col + 1) {
+            if (clickX < row + 1 && clickY < col + 1 && deleteStatus == 0) {
                     switch (entitySelect) {
                         case WISP:
-                            if (location[clickX][clickY] == null) {
+                            if (location[clickX][clickY] == null || location[clickX][clickY] instanceof Floor) {
                                 Wisp wisp = new Wisp(toadoX, toadoY, gameMap);
                                 System.out.println("Da tao mot Wisp");
                                 gameMap.render(gc, 0);
@@ -237,6 +251,8 @@ public class Editor extends Application {
                             }else {
                                 gameMap.removeContent(toadoX,toadoY,location[clickX][clickY]);
                                 System.out.println("Đã xóa entity");
+                                canvas.getGraphicsContext2D().clearRect(0, 0,1024 , 512);
+                                gameMap.render(gc, 0);
                                 Wisp wisp = new Wisp(toadoX, toadoY, gameMap);
                                 System.out.println("Da tao mot Wisp");
                                 gameMap.render(gc, 0);
@@ -245,7 +261,7 @@ public class Editor extends Application {
                             }
                         case GREEN:
                             if (status == 0) {
-                                if (location[clickX][clickY] == null) {
+                                if (location[clickX][clickY] == null || location[clickX][clickY] instanceof Floor) {
                                     System.out.println("Da tao mot Green");
                                     Green green1 = new Green(toadoX, toadoY, gameMap);
                                     gameMap.render(gc, 0);
@@ -255,6 +271,8 @@ public class Editor extends Application {
                                 }else {
                                     gameMap.removeContent(toadoX,toadoY,location[clickX][clickY]);
                                     System.out.println("Đã xóa entity");
+                                    canvas.getGraphicsContext2D().clearRect(0, 0,1024 , 512);
+                                    gameMap.render(gc, 0);
                                     System.out.println("Da tao mot Green");
                                     Green green1 = new Green(toadoX, toadoY, gameMap);
                                     gameMap.render(gc, 0);
@@ -267,14 +285,28 @@ public class Editor extends Application {
                                 break;
                             }
                         case FLOOR:
-                            Floor floor = new Floor(toadoX, toadoY, gameMap, colSprite, rowSprite);
-                            gameMap.render(gc, 0);
-                            location[clickX][clickY] = floor;
-                            System.out.println("Đã tạo một floor hình:" + rowSprite + "-" + colSprite);
-                            break;
+                            if (location[clickX][clickY] instanceof Floor){
+                                gameMap.removeContent(toadoX,toadoY,location[clickX][clickY]);
+                                System.out.println("Đã xóa một Floor");
+                                canvas.getGraphicsContext2D().clearRect(0, 0,1024 , 512);
+                                gameMap.render(gc, 0);
+                                Floor floor = new Floor(toadoX, toadoY, gameMap, colSprite, rowSprite);
+                                gameMap.render(gc, 0);
+                                location[clickX][clickY] = floor;
+                                floorstatus[clickX][clickY] = floor;
+                                System.out.println("Đã tạo một floor hình:" + rowSprite + "-" + colSprite);
+                                break;
+                            } else {
+                                Floor floor = new Floor(toadoX, toadoY, gameMap, colSprite, rowSprite);
+                                gameMap.render(gc, 0);
+                                location[clickX][clickY] = floor;
+                                floorstatus[clickX][clickY] = floor;
+                                System.out.println("Đã tạo một floor hình:" + rowSprite + "-" + colSprite);
+                                break;
+                            }
 
                         case WALL:
-                            if (location[clickX][clickY] == null) {
+                            if (location[clickX][clickY] == null  || location[clickX][clickY] instanceof Floor) {
                                 Wall wall = new Wall(toadoX, toadoY, gameMap, colSprite, rowSprite);
                                 gameMap.render(gc, 0);
                                 location[clickX][clickY] = wall;
@@ -283,6 +315,8 @@ public class Editor extends Application {
                             }else {
                                 gameMap.removeContent(toadoX,toadoY,location[clickX][clickY]);
                                 System.out.println("Đã xóa entity");
+                                canvas.getGraphicsContext2D().clearRect(0, 0,1024 , 512);
+                                gameMap.render(gc, 0);
                                 Wall wall = new Wall(toadoX, toadoY, gameMap, colSprite, rowSprite);
                                 gameMap.render(gc, 0);
                                 location[clickX][clickY] = wall;
@@ -291,7 +325,7 @@ public class Editor extends Application {
                             }
 
                         case PHANTOM:
-                            if (location[clickX][clickY] == null) {
+                            if (location[clickX][clickY] == null  || location[clickX][clickY] instanceof Floor) {
                                 Phantom phantom = new Phantom(toadoX, toadoY, gameMap);
                                 gameMap.render(gc, 0);
                                 location[clickX][clickY] = phantom;
@@ -300,6 +334,8 @@ public class Editor extends Application {
                             }else {
                                 gameMap.removeContent(toadoX,toadoY,location[clickX][clickY]);
                                 System.out.println("Đã xóa entity");
+                                canvas.getGraphicsContext2D().clearRect(0, 0,1024 , 512);
+                                gameMap.render(gc, 0);
                                 Phantom phantom = new Phantom(toadoX, toadoY, gameMap);
                                 gameMap.render(gc, 0);
                                 location[clickX][clickY] = phantom;
@@ -308,7 +344,7 @@ public class Editor extends Application {
                             }
 
                         case BRUTE:
-                            if (location[clickX][clickY] == null) {
+                            if (location[clickX][clickY] == null || location[clickX][clickY] instanceof Floor) {
                                 Brute brute = new Brute(toadoX, toadoY, gameMap);
                                 gameMap.render(gc, 0);
                                 location[clickX][clickY] = brute;
@@ -317,6 +353,8 @@ public class Editor extends Application {
                             }else {
                                 gameMap.removeContent(toadoX,toadoY,location[clickX][clickY]);
                                 System.out.println("Đã xóa entity");
+                                canvas.getGraphicsContext2D().clearRect(0, 0,1024 , 512);
+                                gameMap.render(gc, 0);
                                 Brute brute = new Brute(toadoX, toadoY, gameMap);
                                 gameMap.render(gc, 0);
                                 location[clickX][clickY] = brute;
@@ -325,7 +363,7 @@ public class Editor extends Application {
                             }
 
                         case THROWER:
-                            if (location[clickX][clickY] == null) {
+                            if (location[clickX][clickY] == null || location[clickX][clickY] instanceof Floor) {
                                 Thrower thrower = new Thrower(toadoX, toadoY, gameMap);
                                 gameMap.render(gc, 0);
                                 location[clickX][clickY] = thrower;
@@ -334,6 +372,8 @@ public class Editor extends Application {
                             }else {
                                 gameMap.removeContent(toadoX,toadoY,location[clickX][clickY]);
                                 System.out.println("Đã xóa entity");
+                                canvas.getGraphicsContext2D().clearRect(0, 0,1024 , 512);
+                                gameMap.render(gc, 0);
                                 Thrower thrower = new Thrower(toadoX, toadoY, gameMap);
                                 gameMap.render(gc, 0);
                                 location[clickX][clickY] = thrower;
@@ -342,7 +382,7 @@ public class Editor extends Application {
                             }
 
                         case CRATE:
-                            if (location[clickX][clickY] == null) {
+                            if (location[clickX][clickY] == null || location[clickX][clickY] instanceof Floor) {
                                 Crate crate = new Crate(toadoX, toadoY, gameMap);
                                 gameMap.render(gc, 0);
                                 System.out.println("Đã tạo một Crate");
@@ -351,6 +391,8 @@ public class Editor extends Application {
                             }else {
                                 gameMap.removeContent(toadoX,toadoY,location[clickX][clickY]);
                                 System.out.println("Đã xóa entity");
+                                canvas.getGraphicsContext2D().clearRect(0, 0,1024 , 512);
+                                gameMap.render(gc, 0);
                                 Crate crate = new Crate(toadoX, toadoY, gameMap);
                                 gameMap.render(gc, 0);
                                 System.out.println("Đã tạo một Crate");
@@ -358,7 +400,7 @@ public class Editor extends Application {
                                 break;
                             }
                         default:
-                            if (location[clickX][clickY] == null) {
+                            if (location[clickX][clickY] == null || location[clickX][clickY] instanceof Floor) {
                                 Gate gate = new Gate(toadoX, toadoY, gameMap);
                                 gameMap.render(gc, 0);
                                 System.out.println("Đã tạo một Gate");
@@ -367,6 +409,8 @@ public class Editor extends Application {
                             }else {
                                 gameMap.removeContent(toadoX,toadoY,location[clickX][clickY]);
                                 System.out.println("Đã xóa entity");
+                                canvas.getGraphicsContext2D().clearRect(0, 0,1024 , 512);
+                                gameMap.render(gc, 0);
                                 Gate gate = new Gate(toadoX, toadoY, gameMap);
                                 gameMap.render(gc, 0);
                                 System.out.println("Đã tạo một Gate");
@@ -375,11 +419,19 @@ public class Editor extends Application {
                             }
                     }
 
-                    if (entitySelect == Select.FLOOR) {
-                        Floor floor = new Floor(toadoX, toadoY, gameMap, rowSprite, colSprite);
-                        gameMap.render(gc, 0);
-                        System.out.println("Đã tạo một floor hình:" + rowSprite + "-" + colSprite);
-                    }
+//                    if (entitySelect == Select.FLOOR) {
+//                        Floor floor = new Floor(toadoX, toadoY, gameMap, rowSprite, colSprite);
+//                        gameMap.render(gc, 0);
+//                        System.out.println("Đã tạo một floor hình:" + rowSprite + "-" + colSprite);
+//                    }
+            }else if (deleteStatus == 1){
+                gameMap.removeContent(toadoX,toadoY,location[clickX][clickY]);
+                if (floorstatus[clickX][clickY] != null){
+                    gameMap.removeContent(toadoX,toadoY,floorstatus[clickX][clickY]);
+                }
+                canvas.getGraphicsContext2D().clearRect(0, 0,1024 , 512);
+                gameMap.render(gc, 0);
+                System.out.println("Đã xóa ô có tọa độ :" + clickX + " - " + clickY);
             }
         }
 
