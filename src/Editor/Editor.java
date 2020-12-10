@@ -18,6 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.util.HashSet;
 
 import static SpriteManager.SpriteSheetManager.getSheet;
 import static java.lang.Math.round;
@@ -45,7 +46,7 @@ public class Editor extends Application {
     public static Entity[][] location = new Entity[row + 1][col + 1];
     public static Floor[][] floorstatus = new Floor[row + 1][col + 1];
     public static GameMap gameMap = new GameMap();
-//    private Image image;
+    private static HashSet<Entity> hashSet = new HashSet<>();
     private static ImageView imageView = new ImageView();
 
     HBox hbox = new HBox();
@@ -116,6 +117,17 @@ public class Editor extends Application {
                 gameMap.render(gc, 0);
                 group.getChildren().add(canvas);
                 System.out.println("Đã load lại Map");
+                hashSet = gameMap.getContent(0,0,1024);
+                for (Entity entity : hashSet) {
+                    int x = (int) entity.getX();
+                    int y = (int) entity.getY();
+                    x = x/ 32;
+                    y = y/32;
+                    location[x][y] = entity;
+                    if (entity instanceof Floor) {
+                        floorstatus[x][y] = (Floor) entity;
+                    }
+                }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
