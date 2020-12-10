@@ -25,6 +25,7 @@ public class FireRune extends Rune {
         new FireSpread(x,y,map,range,-1,0);
         new FireSpread(x,y,map,range,0,1);
         new FireSpread(x,y,map,range,0,-1);
+        sfx.playWithoutFlag(explosionSFX);
         player.runes.remove(this);
         health = 0;
     }
@@ -34,7 +35,6 @@ public class FireRune extends Rune {
         explodeTimer--;
         if(explodeTimer <= 0){
             explode();
-            sfx.playWithoutFlag(explosionSFX);
         }
         move();
         basicLogic();

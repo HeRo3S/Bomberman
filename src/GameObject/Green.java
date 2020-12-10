@@ -89,8 +89,6 @@ public class Green extends Player implements Destructible, Impassable {
         gc.drawImage(getSpriteSheet().getSprite(frame, direction), getX(), getY());
         drawHitBox(gc);
         drawHealthBar(gc);
-        gc.setFill(BLUE);
-        gc.fillRect(x,y - 7, energy / (maxEnergy/30), 2);
 
         //Skill indicator
         gc.setFill(SILVER);
@@ -187,6 +185,14 @@ public class Green extends Player implements Destructible, Impassable {
                 coolDown[1] = 20*60;
             }
         }
+    }
+
+    @Override
+    protected void drawHealthBar(GraphicsContext gc) {
+        gc.setFill(GREEN);
+        gc.fillRect(5, 576 - 25, health/(maxHp/150), 10);
+        gc.setFill(BLUE);
+        gc.fillRect(5,576 - 15, energy / (maxEnergy/150), 10);
     }
 
     public Image getSpriteSheet(int x, int y) {

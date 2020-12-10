@@ -27,7 +27,7 @@ public class Effect extends Entity {
     public void animate(GraphicsContext gc, double time) {
         spriteRenderPositionY = (70 - dyingFrameCount) / 10;
         spriteRenderPositionX = (70 - dyingFrameCount) % 10;
-        gc.drawImage(getSpriteSheet().getSprite(spriteRenderPositionX, spriteRenderPositionY), getX() - 32, getY() - 32);
+        gc.drawImage(getSpriteSheet().getSprite(spriteRenderPositionX, spriteRenderPositionY), x, y,160,160);
     }
 
     @Override

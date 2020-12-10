@@ -26,6 +26,8 @@ public class BasicRune extends Rune {
                 entity.invincibleFrame = 0;
             }
         }
+        new Effect(getCenterX() - range, getCenterY() - range, map);
+        sfx.playWithoutFlag(explosionSFX);
         player.runes.remove(this);
         health = 0;
     }
@@ -37,8 +39,6 @@ public class BasicRune extends Rune {
         }
         if(explodeTimer <= 0){
             explode();
-            new Effect(x, y, map);
-            sfx.playWithoutFlag(explosionSFX);
         }
         move();
         basicLogic();

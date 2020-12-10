@@ -56,19 +56,23 @@ public abstract class Hostile extends Movable implements Destructible {
         switch (type){
             case 0:
                 HealthOrb healthOrb = new HealthOrb(x + random() * width,y + random() * height,map);
-                if(random()*2 <= 1){
+                if(random() <= 0.3){
                     drop(0,time);
                 }
                 break;
             case 1:
                 new EnergyOrb(x + random() * width,y + random() * height,map);
-                if(random() * 2 <= 1){
+                if(random() <= 0.3){
                     drop(1,time);
                 }
         }
 
     }
     protected void hostileLogic() {
+        if(health <= 0 && !isAnimateDying){
+            drop(0,0);
+            drop(1,0);
+        }
         target = null;
         if (!status.isStunning() && !status.isChannelling()) {
             findTarget();
@@ -95,12 +99,6 @@ public abstract class Hostile extends Movable implements Destructible {
         }
         if (!status.isChannelling() && !status.isStunning()) {
             move();
-        }
-        if(dyingFrameCount <= 1){
-            if(health <= 0){
-                drop(0,0);
-                drop(1,0);
-            }
         }
         status.update();
     }

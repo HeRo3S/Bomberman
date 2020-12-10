@@ -64,7 +64,9 @@ public abstract class Entity implements Serializable, Animate {
     protected void basicLogic() {
         invincibleFrame = max(--invincibleFrame,0);
         if (getHealth() <= 0) {
+            status.add(Status.currentStatus.STUN,100);
             if (--dyingFrameCount < 0) {
+                isAnimateDying = false;
                 map.removeContent(x, y, this);
             } else {
                 isAnimateDying = true;

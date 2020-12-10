@@ -17,7 +17,7 @@ public class Brute extends Hostile implements Impassable, Destructible, Regen {
         super(x, y, map);
         attackSpeed = 1;
         damage = 100;
-        maxHp = 500;
+        maxHp = 400;
         health = maxHp;
         speed = 1.5;
         code = BRUTE;
@@ -67,6 +67,7 @@ public class Brute extends Hostile implements Impassable, Destructible, Regen {
             target.modifyHealth(-damage);
             status.add(Status.currentStatus.ATTACK_CD,5);
             status.add(Status.currentStatus.STUN,1);
+            sfx.playWithFlag(BRUTE_ATTACK_SFX);
     }
 
 
@@ -107,10 +108,6 @@ public class Brute extends Hostile implements Impassable, Destructible, Regen {
         frame = (int) ((time % (4 * frameTime)) / frameTime) + statusSprite;
         gc.drawImage(getSpriteSheet().getSprite(frame, directionSprite), getX(), getY());
         drawHealthBar(gc);
-        drawHitBox(gc);
-        if(target != null){
-            gc.strokeLine(getCenterX(),getCenterY(),target.getCenterX(),target.getCenterY());
-        }
     }
 
     @Override

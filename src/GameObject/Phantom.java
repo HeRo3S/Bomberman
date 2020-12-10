@@ -97,7 +97,7 @@ public class Phantom extends Hostile implements Destructible {
         if (isAnimateDying) {
             directionSprite = 0;
             statusSprite = 4;
-            frame = (48 - dyingFrameCount ) / 12  + 4;
+            frame = (48 - dyingFrameCount ) / 12  + 3;
         }  else {
             frame = (int) ((time % (4 * frameTime)) / frameTime) + statusSprite;
         }

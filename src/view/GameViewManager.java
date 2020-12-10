@@ -29,7 +29,7 @@ public class GameViewManager {
     private Stage menuStage;
 
     private String mapPath;
-    private static final int MAXLEVEL = 2;
+    private static final int MAX_LEVEL = 3;
 
     private AnimationTimer gameTimer;
     private long startTime = System.nanoTime();
@@ -94,7 +94,7 @@ public class GameViewManager {
             @Override
             public void handle(long now) {
                 if (gameMap.isWalkedThrough()) {
-                    if (gameMap.getMapLevel() == MAXLEVEL) {
+                    if (gameMap.getMapLevel() == MAX_LEVEL) {
                         gameStage.close();
                     } else {
                         createNewLevel(gameMap.getMapLevel() + 1);
